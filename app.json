@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "JobTap",
+    "slug": "jobtap",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#2D5016"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.gscommand.jobtap",
+      "buildNumber": "1"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#2D5016"
+      },
+      "package": "com.gscommand.jobtap",
+      "versionCode": 1
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-font"
+    ]
+  }
+}
