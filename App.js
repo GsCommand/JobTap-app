@@ -175,37 +175,42 @@ let BIZ_CONFIG = {
 
 // ─── CREATE SHEET ────────────────────────────────────────────────────────────
 const CreateSheet = ({ visible, onClose, navigate }) => {
-  const QUICK_ACTIONS = [
-    { key: 'NewJob', icon: '📋', label: 'New Job', highlight: true },
-    { key: 'NewCustomer', icon: '👤', label: 'New Customer' },
-    { key: 'Schedule', icon: '📅', label: 'Block Off Time' },
+  const ACTIONS = [
+    { key: 'NewJob', icon: '🔨', label: 'New Job', highlight: true },
+    { key: 'QuoteBuilder', icon: '🧾', label: 'New Quote', highlight: false },
+    { key: 'NewLead', icon: '👤', label: 'New Lead', highlight: false },
+    { key: 'NewCustomer', icon: '➕', label: 'Add Client', highlight: false },
+    { key: 'BlockTime', icon: '🚫', label: 'Block Off Time', highlight: false },
   ];
 
   return (
-    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+    <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
       <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={onClose}>
-        <TouchableOpacity activeOpacity={1} style={[styles.modalSheet, styles.quickSheet]} onPress={() => {}}>
-          <View style={styles.modalHandle} />
+        <TouchableOpacity activeOpacity={1} style={styles.quickSheet}>
           <Text style={styles.quickSheetTitle}>Quick Create</Text>
           <View style={styles.quickSheetDivider} />
-          {QUICK_ACTIONS.map(action => (
-            <TouchableOpacity
-              key={action.key}
-              style={[styles.quickRow, action.highlight && styles.quickRowHighlight]}
-              onPress={() => {
-                onClose();
-                if (action.label === 'Block Off Time') {
-                  navigate('Schedule');
-                  return;
-                }
-                navigate(action.key);
-              }}
-            >
-              <View style={styles.quickRowIcon}><Text style={{ fontSize: 20 }}>{action.icon}</Text></View>
-              <Text style={styles.quickRowLabel}>{action.label}</Text>
-            </TouchableOpacity>
-          ))}
-          <TouchableOpacity style={styles.quickCancel} onPress={onClose}>
+
+          <View style={{ gap: 10 }}>
+            {ACTIONS.map(a => (
+              <TouchableOpacity
+                key={a.key}
+                style={[styles.quickRow, a.highlight && styles.quickRowHighlight]}
+                onPress={() => {
+                  onClose();
+                  if (a.key === 'BlockTime') navigate('Schedule');
+                  else navigate(a.key);
+                }}
+              >
+                <Text style={styles.quickRowIcon}>{a.icon}</Text>
+                <Text style={[styles.quickRowLabel, a.highlight && { color: C.green, fontWeight: '700' }]}>
+                  {a.label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          <View style={[styles.quickSheetDivider, { marginTop: 16 }]} />
+          <TouchableOpacity onPress={onClose} style={styles.quickCancel}>
             <Text style={styles.quickCancelText}>Cancel</Text>
           </TouchableOpacity>
         </TouchableOpacity>
@@ -3587,15 +3592,62 @@ const styles = StyleSheet.create({
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
   modalSheet: { backgroundColor: C.white, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 20, maxHeight: '75%' },
   modalHandle: { width: 36, height: 4, borderRadius: 2, backgroundColor: C.border, alignSelf: 'center', marginBottom: 16 },
-  quickSheet: { backgroundColor: C.cream },
-  quickSheetTitle: { fontSize: 22, fontWeight: '800', color: C.grey, marginBottom: 10 },
-  quickSheetDivider: { height: 1, backgroundColor: C.border, marginBottom: 8 },
-  quickRow: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: C.cream, borderWidth: 1, borderColor: C.border, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 11, marginBottom: 8 },
-  quickRowHighlight: { backgroundColor: C.greenLight },
-  quickRowIcon: { width: 40, height: 40, borderRadius: 10, backgroundColor: C.white, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: C.border },
-  quickRowLabel: { fontSize: 15, fontWeight: '700', color: C.grey },
-  quickCancel: { alignItems: 'center', paddingTop: 10, paddingBottom: 2 },
-  quickCancelText: { fontSize: 16, color: C.greyMid, fontWeight: '500' },
+  quickSheet: {
+    backgroundColor: C.cream,
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
+    paddingHorizontal: 20,
+    paddingTop: 28,
+    paddingBottom: Platform.OS === 'ios' ? 34 : 20,
+  },
+  quickSheetTitle: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: C.grey,
+    textAlign: 'center',
+    marginBottom: 18,
+    letterSpacing: -0.3,
+  },
+  quickSheetDivider: {
+    height: 1,
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    marginHorizontal: -20,
+    marginBottom: 16,
+  },
+  quickRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.15)',
+    backgroundColor: C.cream,
+  },
+  quickRowHighlight: {
+    backgroundColor: '#E8F0D8',
+    borderColor: 'rgba(45,106,34,0.3)',
+  },
+  quickRowIcon: {
+    fontSize: 20,
+    width: 26,
+    textAlign: 'center',
+  },
+  quickRowLabel: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: C.grey,
+  },
+  quickCancel: {
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  quickCancelText: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: C.grey,
+  },
   modalTitle: { fontSize: 18, fontWeight: '700', color: C.grey, marginBottom: 12 },
   homeHeader: { backgroundColor: C.green, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 20, paddingHorizontal: 18 },
   homeDate: { fontSize: 12, color: 'rgba(255,255,255,0.65)', fontWeight: '500', marginBottom: 2 },
