@@ -293,7 +293,7 @@ const HomeScreen = ({ navigate, params }) => {
         <View style={{ paddingHorizontal: 14 }}>
           {LEADS.length > 0 && (
             <>
-              <Text style={styles.sectionTitle}>URGENT ATTENTION</Text>
+              <Text style={[styles.sectionTitle, { color: '#000', fontSize: 14 }]}>URGENT ATTENTION</Text>
               {LEADS.map(lead => (
                 <TouchableOpacity key={lead.id} style={[styles.attentionCard, { borderLeftColor: C.red }]} onPress={() => navigate('Leads')}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
@@ -313,7 +313,7 @@ const HomeScreen = ({ navigate, params }) => {
             </>
           )}
 
-          <Text style={styles.sectionTitle}>TODAY'S JOBS</Text>
+          <Text style={[styles.sectionTitle, { color: '#000', fontSize: 14 }]}>TODAY'S JOBS</Text>
           {todayJobs.map(job => (
             <TouchableOpacity key={job.id} onPress={() => navigate('ActiveJob', { job })} style={styles.jobCard}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
