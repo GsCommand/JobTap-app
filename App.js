@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { LinearGradient } from 'expo-linear-gradient';
 import {
   View, Text, ScrollView, TouchableOpacity, TextInput,
   StyleSheet, SafeAreaView, StatusBar, Alert, FlatList,
@@ -259,14 +258,9 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: C.bg }]}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: C.bg }}>
-        <LinearGradient
-          colors={['#1E5C15', '#132B0D', '#0F1F0F']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 1 }}
-          style={styles.homeHeader}
-        >
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#F0F0F0' }]}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#F0F0F0' }}>
+        <View style={styles.homeHeader}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
             {BIZ_CONFIG.logo
               ? <Image source={{ uri: BIZ_CONFIG.logo }} style={{ width: 90, height: 30, resizeMode: 'contain' }} />
@@ -294,7 +288,7 @@ const HomeScreen = ({ navigate, params }) => {
               <Text style={styles.homeKpiLabel}>Leads · 7d</Text>
             </TouchableOpacity>
           </View>
-        </LinearGradient>
+        </View>
 
         <View style={{ paddingHorizontal: 14 }}>
           {LEADS.length > 0 && (
@@ -3650,7 +3644,7 @@ const styles = StyleSheet.create({
     color: C.grey,
   },
   modalTitle: { fontSize: 18, fontWeight: '700', color: C.grey, marginBottom: 12 },
-  homeHeader: { paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 20, paddingHorizontal: 18 },
+  homeHeader: { backgroundColor: '#4B5320', paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 20, paddingHorizontal: 18 },
   homeDate: { fontSize: 12, color: 'rgba(255,255,255,0.65)', fontWeight: '500', marginBottom: 2 },
   homeGreeting: { fontSize: 26, fontWeight: '900', color: C.white, letterSpacing: -0.5, marginBottom: 16 },
   homeKpiRow: {
