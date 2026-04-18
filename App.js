@@ -13,6 +13,7 @@ const C = {
   green: '#2D6A22',
   greenDark: '#1E4A17',
   greenLight: '#E8F5E3',
+  cream: '#F5F1E6',
   grey: '#2C2C2C',
   greyMid: '#6B6B6B',
   greyLight: '#F5F5F5',
@@ -118,7 +119,7 @@ const Header = ({ title, subtitle, onBack, action }) => (
   </View>
 );
 
-const BottomNav = ({ active, navigate }) => {
+const BottomNav = ({ active, navigate, onCreate }) => {
   const tabs = [
     { key: 'Home', icon: '🏠', label: 'Home' },
     { key: 'Customers', icon: '👥', label: 'Clients' },
@@ -129,7 +130,18 @@ const BottomNav = ({ active, navigate }) => {
   return (
     <View style={styles.tabBar}>
       {tabs.map(t => (
-        <TouchableOpacity key={t.key} style={styles.tab} onPress={() => navigate(t.key)}>
+        <TouchableOpacity
+          key={t.key}
+          style={styles.tab}
+          onPress={() => {
+            if (t.fab) {
+              if (onCreate) onCreate();
+              else navigate('NewJob');
+              return;
+            }
+            navigate(t.key);
+          }}
+        >
           {t.fab ? (
             <View style={styles.fabBtn}><Text style={{ color: C.white, fontSize: 22, lineHeight: 26 }}>+</Text></View>
           ) : (
@@ -161,10 +173,51 @@ let BIZ_CONFIG = {
   missedCallAutoText: true,
 };
 
+// ─── CREATE SHEET ────────────────────────────────────────────────────────────
+const CreateSheet = ({ visible, onClose, navigate }) => {
+  const CREATE_ACTIONS = [
+    { key: 'new-job', icon: '📋', title: 'New Job', subtitle: 'Create a quote or job', onPress: () => navigate('NewJob') },
+    { key: 'new-customer', icon: '👤', title: 'New Customer', subtitle: 'Add a contact record', onPress: () => navigate('NewCustomer') },
+    { key: 'schedule', icon: '📅', title: 'Schedule', subtitle: 'Open your calendar', onPress: () => navigate('Schedule') },
+  ];
+
+  return (
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+      <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={onClose}>
+        <TouchableOpacity activeOpacity={1} style={[styles.modalSheet, styles.createSheet]} onPress={() => {}}>
+          <View style={styles.modalHandle} />
+          <Text style={styles.createSheetTitle}>Create</Text>
+          <Text style={styles.createSheetSubtitle}>Start something new</Text>
+          <View style={styles.createSheetList}>
+            {CREATE_ACTIONS.map(action => (
+              <TouchableOpacity
+                key={action.key}
+                style={styles.createSheetRow}
+                onPress={() => {
+                  onClose();
+                  action.onPress();
+                }}
+              >
+                <View style={styles.createSheetIcon}><Text style={{ fontSize: 20 }}>{action.icon}</Text></View>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.createSheetRowTitle}>{action.title}</Text>
+                  <Text style={styles.createSheetRowSub}>{action.subtitle}</Text>
+                </View>
+                <Text style={styles.createSheetChevron}>›</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </TouchableOpacity>
+      </TouchableOpacity>
+    </Modal>
+  );
+};
+
 // ─── HOME SCREEN ──────────────────────────────────────────────────────────────
 const HomeScreen = ({ navigate, params }) => {
   const now = new Date();
   const [showMenu, setShowMenu] = useState(params?.openMenu || false);
+  const [showCreateSheet, setShowCreateSheet] = useState(false);
 
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
   const paidJobsMonth = MOCK_JOBS.filter(j => j.status === 'paid' && new Date(j.date) >= startOfMonth);
@@ -298,7 +351,9 @@ const HomeScreen = ({ navigate, params }) => {
           <View style={{ height: 24 }} />
         </View>
       </ScrollView>
-      <BottomNav active="Home" navigate={navigate} />
+
+      <BottomNav active="Home" navigate={navigate} onCreate={() => setShowCreateSheet(true)} />
+      <CreateSheet visible={showCreateSheet} onClose={() => setShowCreateSheet(false)} navigate={navigate} />
 
       <Modal visible={showMenu} animationType="slide" transparent>
         <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setShowMenu(false)}>
@@ -1184,7 +1239,8 @@ const pickPhoto = async (fromCamera, onAdd) => {
 // ─── ACTIVE JOB ───────────────────────────────────────────────────────────────
 const ActiveJobScreen = ({ navigate, params }) => {
   const job = params?.job || MOCK_JOBS[1];
-  const [arrived, setArrived] = useState(false);
+  const onSite = params?.onSite === true;
+  const [arrived, setArrived] = useState(onSite);
   const [beforePhotos, setBeforePhotos] = useState([]);
   const [photosTaken, setPhotosTaken] = useState(false);
   const [elapsed, setElapsed] = useState(0);
@@ -1193,13 +1249,16 @@ const ActiveJobScreen = ({ navigate, params }) => {
   const countdownRef = useRef(null);
 
   useEffect(() => {
-    const t = setTimeout(() => setArrived(true), 800);
+    let arrivalTimeout = null;
+    if (!onSite) {
+      arrivalTimeout = setTimeout(() => setArrived(true), 800);
+    }
     return () => {
-      clearTimeout(t);
+      if (arrivalTimeout) clearTimeout(arrivalTimeout);
       if (timerRef.current) clearInterval(timerRef.current);
       if (countdownRef.current) clearInterval(countdownRef.current);
     };
-  }, []);
+  }, [onSite]);
 
   const startTimers = () => {
     timerRef.current = setInterval(() => setElapsed(e => e + 1), 1000);
@@ -3527,6 +3586,15 @@ const styles = StyleSheet.create({
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
   modalSheet: { backgroundColor: C.white, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 20, maxHeight: '75%' },
   modalHandle: { width: 36, height: 4, borderRadius: 2, backgroundColor: C.border, alignSelf: 'center', marginBottom: 16 },
+  createSheet: { backgroundColor: C.cream },
+  createSheetTitle: { fontSize: 20, fontWeight: '800', color: C.grey },
+  createSheetSubtitle: { fontSize: 12, color: C.greyMid, marginTop: 2, marginBottom: 14 },
+  createSheetList: { gap: 10 },
+  createSheetRow: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 12, padding: 12 },
+  createSheetIcon: { width: 40, height: 40, borderRadius: 12, backgroundColor: C.greenLight, justifyContent: 'center', alignItems: 'center' },
+  createSheetRowTitle: { fontSize: 14, fontWeight: '700', color: C.grey },
+  createSheetRowSub: { fontSize: 12, color: C.greyMid, marginTop: 2 },
+  createSheetChevron: { fontSize: 20, color: C.greyMid },
   modalTitle: { fontSize: 18, fontWeight: '700', color: C.grey, marginBottom: 12 },
   homeHeader: { backgroundColor: C.green, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 20, paddingHorizontal: 18 },
   homeDate: { fontSize: 12, color: 'rgba(255,255,255,0.65)', fontWeight: '500', marginBottom: 2 },
