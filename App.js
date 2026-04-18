@@ -311,7 +311,7 @@ const HomeScreen = ({ navigate, params }) => {
                       <Text style={{ fontSize: 12, color: C.greyMid }}>{lead.time} · {lead.source} · {lead.phone}</Text>
                     </View>
                     <TouchableOpacity style={styles.callBackBtn}>
-                      <Text style={{ color: C.white, fontSize: 12, fontWeight: '700' }}>Call</Text>
+                      <Text style={{ color: C.white, fontSize: 15, fontWeight: '700' }}>Call</Text>
                     </TouchableOpacity>
                   </View>
                 </TouchableOpacity>
@@ -324,7 +324,7 @@ const HomeScreen = ({ navigate, params }) => {
             <TouchableOpacity key={job.id} onPress={() => navigate('ActiveJob', { job })} style={styles.jobCard}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ flex: 1, paddingRight: 12 }}>
-                  <Text style={{ fontSize: 15, fontWeight: '700', color: C.grey }}>{job.customerName}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: '700', color: '#000' }}>{job.customerName}</Text>
                   <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 3 }}>{job.address}</Text>
                 </View>
                 <View style={{ alignItems: 'flex-end' }}>
@@ -333,7 +333,7 @@ const HomeScreen = ({ navigate, params }) => {
                     onPress={() => Linking.openURL(`https://maps.google.com/maps?q=${encodeURIComponent(job.address)}`)}
                     style={[styles.callBackBtn, { marginTop: 6 }]}
                   >
-                    <Text style={{ color: C.white, fontSize: 12, fontWeight: '700' }}>Navigate →</Text>
+                    <Text style={{ color: C.white, fontSize: 15, fontWeight: '700' }}>Navigate →</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -3682,7 +3682,7 @@ const styles = StyleSheet.create({
   },
   attentionCard: { backgroundColor: C.cream, borderRadius: 14, padding: 14, marginBottom: 10, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
   attentionDot: { width: 40, height: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center' },
-  callBackBtn: { backgroundColor: '#34C759', paddingHorizontal: 12, paddingVertical: 7, borderRadius: 10 },
+  callBackBtn: { backgroundColor: '#34C759', paddingHorizontal: 10, paddingVertical: 9, borderRadius: 16 },
   jobCard: { backgroundColor: C.cream, borderRadius: 14, padding: 14, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
   revenueCard: { backgroundColor: '#4338CA', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginTop: 4 },
   scheduleCard: { backgroundColor: '#0F766E', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
