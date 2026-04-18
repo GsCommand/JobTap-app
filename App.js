@@ -331,10 +331,9 @@ const HomeScreen = ({ navigate, params }) => {
                   <Text style={{ fontSize: 15, fontWeight: '800', color: C.green }}>{fmtCurrency(job.amount)}</Text>
                   <TouchableOpacity
                     onPress={() => Linking.openURL(`https://maps.google.com/maps?q=${encodeURIComponent(job.address)}`)}
-                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                    style={{ marginTop: 4 }}
+                    style={[styles.callBackBtn, { marginTop: 6 }]}
                   >
-                    <Text style={{ fontSize: 12, color: C.blue, fontWeight: '600' }}>Navigate →</Text>
+                    <Text style={{ color: C.white, fontSize: 12, fontWeight: '700' }}>Navigate →</Text>
                   </TouchableOpacity>
                 </View>
               </View>
