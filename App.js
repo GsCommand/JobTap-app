@@ -3654,11 +3654,11 @@ const styles = StyleSheet.create({
   homeGreeting: { fontSize: 26, fontWeight: '900', color: C.white, letterSpacing: -0.5, marginBottom: 16 },
   homeKpiRow: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(147,197,253,0.22)',
+    backgroundColor: '#C8D8EA',
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: 'rgba(147,197,253,0.3)',
+    borderColor: 'rgba(147,197,253,0.2)',
   },
   homeKpi: {
     flex: 1,
