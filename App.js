@@ -149,11 +149,11 @@ const BottomNav = ({ active, navigate, onCreate }) => {
           }}
         >
           {t.fab ? (
-            <View style={styles.fabBtn}><Text style={{ color: C.white, fontSize: 22, lineHeight: 26 }}>+</Text></View>
+            <View style={styles.fabBtn}><Text style={{ color: C.white, fontSize: 28, lineHeight: 32 }}>+</Text></View>
           ) : (
             <Text style={[styles.tabIcon, active === t.key && { opacity: 1 }]}>{t.icon}</Text>
           )}
-          <Text style={[styles.tabLabel, active === t.key && { color: C.green, fontWeight: '600' }]}>{t.label}</Text>
+          <Text style={[styles.tabLabel, active === t.key && { color: C.grey, fontWeight: '600' }]}>{t.label}</Text>
         </TouchableOpacity>
       ))}
     </View>
@@ -3533,11 +3533,11 @@ const styles = StyleSheet.create({
   kpiLabel: { fontSize: 10, color: C.greyMid, marginTop: 2, textAlign: 'center' },
   alertBanner: { backgroundColor: '#FFF8E1', borderRadius: 12, padding: 12, marginBottom: 14, flexDirection: 'row', alignItems: 'center', borderLeftWidth: 3, borderLeftColor: C.gold },
   sectionTitle: { fontSize: 12, fontWeight: '700', color: C.greyMid, letterSpacing: 0.5, marginBottom: 8, marginTop: 4 },
-  tabBar: { flexDirection: 'row', backgroundColor: C.white, borderTopWidth: 1, borderTopColor: C.border, paddingBottom: Platform.OS === 'ios' ? 20 : 8, paddingTop: 8 },
-  tab: { flex: 1, alignItems: 'center', gap: 2 },
-  tabIcon: { fontSize: 20, opacity: 0.5 },
-  tabLabel: { fontSize: 10, color: C.greyMid },
-  fabBtn: { width: 44, height: 44, borderRadius: 22, backgroundColor: C.green, justifyContent: 'center', alignItems: 'center', marginTop: -16, shadowColor: C.green, shadowOpacity: 0.4, shadowRadius: 8, elevation: 4 },
+  tabBar: { flexDirection: 'row', backgroundColor: C.white, borderTopWidth: 1, borderTopColor: C.border, paddingBottom: Platform.OS === 'ios' ? 14 : 4, paddingTop: 4 },
+  tab: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 3 },
+  tabIcon: { fontSize: 24, opacity: 0.55 },
+  tabLabel: { fontSize: 11, color: C.greyMid },
+  fabBtn: { width: 53, height: 53, borderRadius: 27, backgroundColor: '#34C759', justifyContent: 'center', alignItems: 'center', marginTop: -20, shadowColor: '#34C759', shadowOpacity: 0.4, shadowRadius: 8, elevation: 4 },
   filterChip: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20, backgroundColor: C.white, marginRight: 8, borderWidth: 1, borderColor: C.border },
   filterChipActive: { backgroundColor: C.green, borderColor: C.green },
   filterChipText: { fontSize: 13, color: C.grey, fontWeight: '500' },
