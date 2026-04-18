@@ -258,8 +258,8 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#F0F0F0' }]}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#F0F0F0' }}>
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#D0D0D0' }]}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#D0D0D0' }}>
         <View style={styles.homeHeader}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
             {BIZ_CONFIG.logo
@@ -319,10 +319,10 @@ const HomeScreen = ({ navigate, params }) => {
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ flex: 1, paddingRight: 12 }}>
                   <Text style={{ fontSize: 15, fontWeight: '700', color: '#000' }}>{job.customerName}</Text>
-                  <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 3 }}>{job.address}</Text>
+                  <Text style={{ fontSize: 12, color: '#000', marginTop: 3 }}>{job.address}</Text>
                 </View>
                 <View style={{ alignItems: 'flex-end' }}>
-                  <Text style={{ fontSize: 15, fontWeight: '800', color: C.green }}>{fmtCurrency(job.amount)}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: '800', color: '#000' }}>{fmtCurrency(job.amount)}</Text>
                   <TouchableOpacity
                     onPress={() => Linking.openURL(`https://maps.google.com/maps?q=${encodeURIComponent(job.address)}`)}
                     style={[styles.callBackBtn, { marginTop: 6 }]}
@@ -3644,7 +3644,7 @@ const styles = StyleSheet.create({
     color: C.grey,
   },
   modalTitle: { fontSize: 18, fontWeight: '700', color: C.grey, marginBottom: 12 },
-  homeHeader: { backgroundColor: '#4B5320', paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 20, paddingHorizontal: 18 },
+  homeHeader: { backgroundColor: '#4A5568', paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 20, paddingHorizontal: 18 },
   homeDate: { fontSize: 12, color: 'rgba(255,255,255,0.65)', fontWeight: '500', marginBottom: 2 },
   homeGreeting: { fontSize: 26, fontWeight: '900', color: C.white, letterSpacing: -0.5, marginBottom: 16 },
   homeKpiRow: {
