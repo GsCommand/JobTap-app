@@ -3682,7 +3682,7 @@ const styles = StyleSheet.create({
   },
   attentionCard: { backgroundColor: C.cream, borderRadius: 14, padding: 14, marginBottom: 10, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
   attentionDot: { width: 40, height: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center' },
-  callBackBtn: { backgroundColor: C.green, paddingHorizontal: 12, paddingVertical: 7, borderRadius: 10 },
+  callBackBtn: { backgroundColor: '#34C759', paddingHorizontal: 12, paddingVertical: 7, borderRadius: 10 },
   jobCard: { backgroundColor: C.cream, borderRadius: 14, padding: 14, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
   revenueCard: { backgroundColor: '#4338CA', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginTop: 4 },
   scheduleCard: { backgroundColor: '#0F766E', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
