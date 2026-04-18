@@ -258,8 +258,8 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#D0D0D0' }]}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#D0D0D0' }}>
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#C0CAD6' }]}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#C0CAD6' }}>
         <View style={styles.homeHeader}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
             {BIZ_CONFIG.logo
@@ -3649,11 +3649,11 @@ const styles = StyleSheet.create({
   homeGreeting: { fontSize: 26, fontWeight: '900', color: C.white, letterSpacing: -0.5, marginBottom: 16 },
   homeKpiRow: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(255,255,255,0.08)',
+    backgroundColor: 'rgba(147,197,253,0.22)',
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: 'rgba(147,197,253,0.3)',
   },
   homeKpi: {
     flex: 1,
@@ -3678,7 +3678,7 @@ const styles = StyleSheet.create({
   attentionDot: { width: 40, height: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center' },
   callBackBtn: { backgroundColor: '#34C759', paddingHorizontal: 10, paddingVertical: 9, borderRadius: 16 },
   jobCard: { backgroundColor: C.cream, borderRadius: 14, padding: 14, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
-  revenueCard: { backgroundColor: '#4338CA', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginTop: 4 },
+  revenueCard: { backgroundColor: '#1D6FD8', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginTop: 4 },
   scheduleCard: { backgroundColor: '#0F766E', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
   eventCard: { backgroundColor: C.white, borderRadius: 12, padding: 14, marginBottom: 8, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 4, elevation: 1 },
   jobStatChip: { flex: 1, backgroundColor: 'rgba(255,255,255,0.12)', borderRadius: 10, padding: 10, alignItems: 'center' },
