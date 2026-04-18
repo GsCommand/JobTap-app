@@ -336,20 +336,6 @@ const HomeScreen = ({ navigate, params }) => {
             </TouchableOpacity>
           ))}
 
-          <TouchableOpacity style={styles.scheduleCard} onPress={() => navigate('Schedule')}>
-            <View style={{ flex: 1 }}>
-              <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 11, fontWeight: '700', letterSpacing: 0.5 }}>SCHEDULE</Text>
-              <Text style={{ color: C.white, fontSize: 20, fontWeight: '900', marginTop: 2 }}>{todayJobs.length} jobs today</Text>
-              <Text style={{ color: 'rgba(255,255,255,0.65)', fontSize: 12, marginTop: 2 }}>Tap to view full calendar</Text>
-            </View>
-            <View style={{ alignItems: 'flex-end', gap: 6 }}>
-              <Text style={{ fontSize: 32 }}>📅</Text>
-              <View style={{ backgroundColor: 'rgba(255,255,255,0.2)', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 10 }}>
-                <Text style={{ color: C.white, fontSize: 11, fontWeight: '700' }}>View Month →</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-
           <View style={styles.revenueCard}>
             <View style={{ flex: 1 }}>
               <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 11, fontWeight: '700', letterSpacing: 0.5 }}>MONTH REVENUE</Text>
