@@ -33,20 +33,20 @@ const C = {
 
 // ─── MOCK DATA ────────────────────────────────────────────────────────────────
 let MOCK_CUSTOMERS = [
-  { id: '1', name: 'Mike Reynolds', address: '142 Palmetto Ct, Nocatee', phone: '(904) 555-0182', email: 'mike@example.com', status: 'active', jobs: 3, lastJob: '2026-04-08' },
-  { id: '2', name: 'Sarah Chen', address: '88 Harbour View Dr, Fleming Island', phone: '(904) 555-0247', email: 'schen@example.com', status: 'vip', jobs: 6, lastJob: '2026-04-01' },
-  { id: '3', name: 'Dave & Lisa Torres', address: '310 Creekside Blvd, St Johns', phone: '(904) 555-0391', email: 'dtorres@example.com', status: 'due', jobs: 1, lastJob: '2025-10-12' },
-  { id: '4', name: 'Brenda Walsh', address: '57 Oak Hollow Ln, Orange Park', phone: '(904) 555-0554', email: 'bwalsh@example.com', status: 'lead', jobs: 0, lastJob: null },
+  { id: '1', name: 'Mike Reynolds', street: '142 Palmetto Ct', city: 'Nocatee', state: 'FL', zip: '32081', address: '142 Palmetto Ct, Nocatee, FL 32081', phone: '(904) 555-0182', email: 'mike@example.com', status: 'active', jobs: 3, lastJob: '2026-04-08' },
+  { id: '2', name: 'Sarah Chen', street: '88 Harbour View Dr', city: 'Fleming Island', state: 'FL', zip: '32003', address: '88 Harbour View Dr, Fleming Island, FL 32003', phone: '(904) 555-0247', email: 'schen@example.com', status: 'vip', jobs: 6, lastJob: '2026-04-01' },
+  { id: '3', name: 'Dave & Lisa Torres', street: '310 Creekside Blvd', city: 'St. Johns', state: 'FL', zip: '32259', address: '310 Creekside Blvd, St. Johns, FL 32259', phone: '(904) 555-0391', email: 'dtorres@example.com', status: 'due', jobs: 1, lastJob: '2025-10-12' },
+  { id: '4', name: 'Brenda Walsh', street: '57 Oak Hollow Ln', city: 'Orange Park', state: 'FL', zip: '32065', address: '57 Oak Hollow Ln, Orange Park, FL 32065', phone: '(904) 555-0554', email: 'bwalsh@example.com', status: 'lead', jobs: 0, lastJob: null },
 ];
 
 let MOCK_JOBS = [
-  { id: 'j1', customerId: '1', customerName: 'Mike Reynolds', address: '142 Palmetto Ct', city: 'Nocatee', state: 'FL', zip: '32081', service: 'Paver Sealing', sqft: 800, status: 'paid', date: '2026-04-08', amount: 1200 },
-  { id: 'j4', customerId: '1', customerName: 'Mike Reynolds', address: '142 Palmetto Ct', city: 'Nocatee', state: 'FL', zip: '32081', service: 'Pressure Wash + Seal', sqft: 800, status: 'paid', date: '2026-01-15', amount: 1120 },
-  { id: 'j6', customerId: '1', customerName: 'Mike Reynolds', address: '142 Palmetto Ct', city: 'Nocatee', state: 'FL', zip: '32081', service: 'Joint Sand Stabilizer', sqft: 800, status: 'paid', date: '2025-09-03', amount: 340 },
-  { id: 'j2', customerId: '2', customerName: 'Sarah Chen', address: '88 Harbour View Dr', city: 'Fleming Island', state: 'FL', zip: '32003', service: 'Paver Sealing + Clean', sqft: 1400, status: 'pending', date: '2026-04-10', amount: 2100 },
-  { id: 'j3', customerId: '3', customerName: 'Dave & Lisa Torres', address: '310 Creekside Blvd', city: 'St. Johns', state: 'FL', zip: '32259', service: 'Driveway Seal', sqft: 600, status: 'paid', date: '2026-04-08', amount: 900 },
-  { id: 'j5', customerId: '2', customerName: 'Sarah Chen', address: '88 Harbour View Dr', city: 'Fleming Island', state: 'FL', zip: '32003', service: 'Paver Sealing', sqft: 1200, status: 'overdue', date: '2026-03-01', amount: 1800 },
-  { id: 'j7', customerId: '4', customerName: 'Brenda Walsh', address: '57 Oak Hollow Ln', city: 'Orange Park', state: 'FL', zip: '32065', service: 'Paver Sealing', sqft: 950, status: 'scheduled', date: '2026-04-14', amount: 1425 },
+  { id: 'j1', customerId: '1', customerName: 'Mike Reynolds', service: 'Paver Sealing', sqft: 800, status: 'paid', date: '2026-04-08', amount: 1200 },
+  { id: 'j4', customerId: '1', customerName: 'Mike Reynolds', service: 'Pressure Wash + Seal', sqft: 800, status: 'paid', date: '2026-01-15', amount: 1120 },
+  { id: 'j6', customerId: '1', customerName: 'Mike Reynolds', service: 'Joint Sand Stabilizer', sqft: 800, status: 'paid', date: '2025-09-03', amount: 340 },
+  { id: 'j2', customerId: '2', customerName: 'Sarah Chen', service: 'Paver Sealing + Clean', sqft: 1400, status: 'pending', date: '2026-04-10', amount: 2100 },
+  { id: 'j3', customerId: '3', customerName: 'Dave & Lisa Torres', service: 'Driveway Seal', sqft: 600, status: 'paid', date: '2026-04-08', amount: 900 },
+  { id: 'j5', customerId: '2', customerName: 'Sarah Chen', service: 'Paver Sealing', sqft: 1200, status: 'overdue', date: '2026-03-01', amount: 1800 },
+  { id: 'j7', customerId: '4', customerName: 'Brenda Walsh', service: 'Paver Sealing', sqft: 950, status: 'scheduled', date: '2026-04-14', amount: 1425 },
 ];
 
 const SERVICE_ITEMS = [
@@ -314,26 +314,29 @@ const HomeScreen = ({ navigate, params }) => {
           )}
 
           <Text style={[styles.sectionTitle, { color: '#000', fontSize: 14 }]}>TODAY'S JOBS</Text>
-          {todayJobs.map(job => (
-            <TouchableOpacity key={job.id} onPress={() => navigate('ActiveJob', { job })} style={styles.jobCard}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flex: 1, paddingRight: 12 }}>
-                  <Text style={{ fontSize: 15, fontWeight: '700', color: '#000' }}>{job.customerName}</Text>
-                  <Text style={{ fontSize: 12, color: '#000', marginTop: 3 }}>{job.address}</Text>
-                  <Text style={{ fontSize: 12, color: '#000', marginTop: 1 }}>{job.city}, {job.state} {job.zip}</Text>
+          {todayJobs.map(job => {
+            const client = MOCK_CUSTOMERS.find(c => c.id === job.customerId);
+            return (
+              <TouchableOpacity key={job.id} onPress={() => navigate('ActiveJob', { job })} style={styles.jobCard}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <View style={{ flex: 1, paddingRight: 12 }}>
+                    <Text style={{ fontSize: 15, fontWeight: '700', color: '#000' }}>{job.customerName}</Text>
+                    <Text style={{ fontSize: 12, color: '#000', marginTop: 3 }}>{client?.street}</Text>
+                    <Text style={{ fontSize: 12, color: '#000', marginTop: 1 }}>{client?.city}, {client?.state} {client?.zip}</Text>
+                  </View>
+                  <View style={{ alignItems: 'flex-end' }}>
+                    <Text style={{ fontSize: 15, fontWeight: '800', color: '#000' }}>{fmtCurrency(job.amount)}</Text>
+                    <TouchableOpacity
+                      onPress={() => Linking.openURL(`https://maps.google.com/maps?q=${encodeURIComponent(client?.address || job.customerName)}`)}
+                      style={[styles.callBackBtn, { marginTop: 6 }]}
+                    >
+                      <Text style={{ color: C.white, fontSize: 15, fontWeight: '700' }}>Navigate →</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-                <View style={{ alignItems: 'flex-end' }}>
-                  <Text style={{ fontSize: 15, fontWeight: '800', color: '#000' }}>{fmtCurrency(job.amount)}</Text>
-                  <TouchableOpacity
-                    onPress={() => Linking.openURL(`https://maps.google.com/maps?q=${encodeURIComponent(job.address)}`)}
-                    style={[styles.callBackBtn, { marginTop: 6 }]}
-                  >
-                    <Text style={{ color: C.white, fontSize: 15, fontWeight: '700' }}>Navigate →</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </TouchableOpacity>
-          ))}
+              </TouchableOpacity>
+            );
+          })}
 
           <View style={styles.revenueCard}>
             <View style={{ flex: 1 }}>
@@ -1241,6 +1244,7 @@ const pickPhoto = async (fromCamera, onAdd) => {
 // ─── ACTIVE JOB ───────────────────────────────────────────────────────────────
 const ActiveJobScreen = ({ navigate, params }) => {
   const job = params?.job || MOCK_JOBS[1];
+  const jobClient = MOCK_CUSTOMERS.find(c => c.id === job.customerId);
   const onSite = params?.onSite === true;
   const [arrived, setArrived] = useState(onSite);
   const [beforePhotos, setBeforePhotos] = useState([]);
@@ -1298,7 +1302,7 @@ const ActiveJobScreen = ({ navigate, params }) => {
       <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} showsVerticalScrollIndicator={false}>
         <View style={{ backgroundColor: C.green, paddingHorizontal: 18, paddingBottom: 20, paddingTop: 6 }}>
           <Text style={{ color: C.white, fontSize: 26, fontWeight: '900', letterSpacing: -0.5 }}>{job.customerName}</Text>
-          <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, marginTop: 2 }}>{job.address} · {job.service}</Text>
+          <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, marginTop: 2 }}>{jobClient?.street} · {job.service}</Text>
           <View style={{ flexDirection: 'row', gap: 8, marginTop: 14 }}>
             {[{ label: 'Quote', val: fmtCurrency(job.amount) }, { label: 'Started', val: photosTaken ? fmtTime(elapsed) : '—' }, { label: 'Sq ft', val: job.sqft || '—' }].map(k => (
               <View key={k.label} style={styles.jobStatChip}>
