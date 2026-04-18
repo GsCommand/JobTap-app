@@ -40,13 +40,13 @@ let MOCK_CUSTOMERS = [
 ];
 
 let MOCK_JOBS = [
-  { id: 'j1', customerId: '1', customerName: 'Mike Reynolds', address: '142 Palmetto Ct', service: 'Paver Sealing', sqft: 800, status: 'paid', date: '2026-04-08', amount: 1200 },
-  { id: 'j4', customerId: '1', customerName: 'Mike Reynolds', address: '142 Palmetto Ct', service: 'Pressure Wash + Seal', sqft: 800, status: 'paid', date: '2026-01-15', amount: 1120 },
-  { id: 'j6', customerId: '1', customerName: 'Mike Reynolds', address: '142 Palmetto Ct', service: 'Joint Sand Stabilizer', sqft: 800, status: 'paid', date: '2025-09-03', amount: 340 },
-  { id: 'j2', customerId: '2', customerName: 'Sarah Chen', address: '88 Harbour View Dr', service: 'Paver Sealing + Clean', sqft: 1400, status: 'pending', date: '2026-04-10', amount: 2100 },
-  { id: 'j3', customerId: '3', customerName: 'Dave & Lisa Torres', address: '310 Creekside Blvd', service: 'Driveway Seal', sqft: 600, status: 'paid', date: '2026-04-08', amount: 900 },
-  { id: 'j5', customerId: '2', customerName: 'Sarah Chen', address: '88 Harbour View Dr', service: 'Paver Sealing', sqft: 1200, status: 'overdue', date: '2026-03-01', amount: 1800 },
-  { id: 'j7', customerId: '4', customerName: 'Brenda Walsh', address: '57 Oak Hollow Ln', service: 'Paver Sealing', sqft: 950, status: 'scheduled', date: '2026-04-14', amount: 1425 },
+  { id: 'j1', customerId: '1', customerName: 'Mike Reynolds', address: '142 Palmetto Ct', city: 'Nocatee', state: 'FL', zip: '32081', service: 'Paver Sealing', sqft: 800, status: 'paid', date: '2026-04-08', amount: 1200 },
+  { id: 'j4', customerId: '1', customerName: 'Mike Reynolds', address: '142 Palmetto Ct', city: 'Nocatee', state: 'FL', zip: '32081', service: 'Pressure Wash + Seal', sqft: 800, status: 'paid', date: '2026-01-15', amount: 1120 },
+  { id: 'j6', customerId: '1', customerName: 'Mike Reynolds', address: '142 Palmetto Ct', city: 'Nocatee', state: 'FL', zip: '32081', service: 'Joint Sand Stabilizer', sqft: 800, status: 'paid', date: '2025-09-03', amount: 340 },
+  { id: 'j2', customerId: '2', customerName: 'Sarah Chen', address: '88 Harbour View Dr', city: 'Fleming Island', state: 'FL', zip: '32003', service: 'Paver Sealing + Clean', sqft: 1400, status: 'pending', date: '2026-04-10', amount: 2100 },
+  { id: 'j3', customerId: '3', customerName: 'Dave & Lisa Torres', address: '310 Creekside Blvd', city: 'St. Johns', state: 'FL', zip: '32259', service: 'Driveway Seal', sqft: 600, status: 'paid', date: '2026-04-08', amount: 900 },
+  { id: 'j5', customerId: '2', customerName: 'Sarah Chen', address: '88 Harbour View Dr', city: 'Fleming Island', state: 'FL', zip: '32003', service: 'Paver Sealing', sqft: 1200, status: 'overdue', date: '2026-03-01', amount: 1800 },
+  { id: 'j7', customerId: '4', customerName: 'Brenda Walsh', address: '57 Oak Hollow Ln', city: 'Orange Park', state: 'FL', zip: '32065', service: 'Paver Sealing', sqft: 950, status: 'scheduled', date: '2026-04-14', amount: 1425 },
 ];
 
 const SERVICE_ITEMS = [
@@ -258,8 +258,8 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#C0CAD6' }]}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#C0CAD6' }}>
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#C8D8EA' }]}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#C8D8EA' }}>
         <View style={styles.homeHeader}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
             {BIZ_CONFIG.logo
@@ -320,6 +320,7 @@ const HomeScreen = ({ navigate, params }) => {
                 <View style={{ flex: 1, paddingRight: 12 }}>
                   <Text style={{ fontSize: 15, fontWeight: '700', color: '#000' }}>{job.customerName}</Text>
                   <Text style={{ fontSize: 12, color: '#000', marginTop: 3 }}>{job.address}</Text>
+                  <Text style={{ fontSize: 12, color: '#000', marginTop: 1 }}>{job.city}, {job.state} {job.zip}</Text>
                 </View>
                 <View style={{ alignItems: 'flex-end' }}>
                   <Text style={{ fontSize: 15, fontWeight: '800', color: '#000' }}>{fmtCurrency(job.amount)}</Text>
