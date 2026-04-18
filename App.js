@@ -175,38 +175,39 @@ let BIZ_CONFIG = {
 
 // ─── CREATE SHEET ────────────────────────────────────────────────────────────
 const CreateSheet = ({ visible, onClose, navigate }) => {
-  const CREATE_ACTIONS = [
-    { key: 'new-job', icon: '📋', title: 'New Job', subtitle: 'Create a quote or job', onPress: () => navigate('NewJob') },
-    { key: 'new-customer', icon: '👤', title: 'New Customer', subtitle: 'Add a contact record', onPress: () => navigate('NewCustomer') },
-    { key: 'schedule', icon: '📅', title: 'Schedule', subtitle: 'Open your calendar', onPress: () => navigate('Schedule') },
+  const QUICK_ACTIONS = [
+    { key: 'NewJob', icon: '📋', label: 'New Job', highlight: true },
+    { key: 'NewCustomer', icon: '👤', label: 'New Customer' },
+    { key: 'Schedule', icon: '📅', label: 'Block Off Time' },
   ];
 
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={onClose}>
-        <TouchableOpacity activeOpacity={1} style={[styles.modalSheet, styles.createSheet]} onPress={() => {}}>
+        <TouchableOpacity activeOpacity={1} style={[styles.modalSheet, styles.quickSheet]} onPress={() => {}}>
           <View style={styles.modalHandle} />
-          <Text style={styles.createSheetTitle}>Create</Text>
-          <Text style={styles.createSheetSubtitle}>Start something new</Text>
-          <View style={styles.createSheetList}>
-            {CREATE_ACTIONS.map(action => (
-              <TouchableOpacity
-                key={action.key}
-                style={styles.createSheetRow}
-                onPress={() => {
-                  onClose();
-                  action.onPress();
-                }}
-              >
-                <View style={styles.createSheetIcon}><Text style={{ fontSize: 20 }}>{action.icon}</Text></View>
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.createSheetRowTitle}>{action.title}</Text>
-                  <Text style={styles.createSheetRowSub}>{action.subtitle}</Text>
-                </View>
-                <Text style={styles.createSheetChevron}>›</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          <Text style={styles.quickSheetTitle}>Quick Create</Text>
+          <View style={styles.quickSheetDivider} />
+          {QUICK_ACTIONS.map(action => (
+            <TouchableOpacity
+              key={action.key}
+              style={[styles.quickRow, action.highlight && styles.quickRowHighlight]}
+              onPress={() => {
+                onClose();
+                if (action.label === 'Block Off Time') {
+                  navigate('Schedule');
+                  return;
+                }
+                navigate(action.key);
+              }}
+            >
+              <View style={styles.quickRowIcon}><Text style={{ fontSize: 20 }}>{action.icon}</Text></View>
+              <Text style={styles.quickRowLabel}>{action.label}</Text>
+            </TouchableOpacity>
+          ))}
+          <TouchableOpacity style={styles.quickCancel} onPress={onClose}>
+            <Text style={styles.quickCancelText}>Cancel</Text>
+          </TouchableOpacity>
         </TouchableOpacity>
       </TouchableOpacity>
     </Modal>
@@ -3586,15 +3587,15 @@ const styles = StyleSheet.create({
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
   modalSheet: { backgroundColor: C.white, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 20, maxHeight: '75%' },
   modalHandle: { width: 36, height: 4, borderRadius: 2, backgroundColor: C.border, alignSelf: 'center', marginBottom: 16 },
-  createSheet: { backgroundColor: C.cream },
-  createSheetTitle: { fontSize: 20, fontWeight: '800', color: C.grey },
-  createSheetSubtitle: { fontSize: 12, color: C.greyMid, marginTop: 2, marginBottom: 14 },
-  createSheetList: { gap: 10 },
-  createSheetRow: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 12, padding: 12 },
-  createSheetIcon: { width: 40, height: 40, borderRadius: 12, backgroundColor: C.greenLight, justifyContent: 'center', alignItems: 'center' },
-  createSheetRowTitle: { fontSize: 14, fontWeight: '700', color: C.grey },
-  createSheetRowSub: { fontSize: 12, color: C.greyMid, marginTop: 2 },
-  createSheetChevron: { fontSize: 20, color: C.greyMid },
+  quickSheet: { backgroundColor: C.cream },
+  quickSheetTitle: { fontSize: 22, fontWeight: '800', color: C.grey, marginBottom: 10 },
+  quickSheetDivider: { height: 1, backgroundColor: C.border, marginBottom: 8 },
+  quickRow: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: C.cream, borderWidth: 1, borderColor: C.border, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 11, marginBottom: 8 },
+  quickRowHighlight: { backgroundColor: C.greenLight },
+  quickRowIcon: { width: 40, height: 40, borderRadius: 10, backgroundColor: C.white, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: C.border },
+  quickRowLabel: { fontSize: 15, fontWeight: '700', color: C.grey },
+  quickCancel: { alignItems: 'center', paddingTop: 10, paddingBottom: 2 },
+  quickCancelText: { fontSize: 16, color: C.greyMid, fontWeight: '500' },
   modalTitle: { fontSize: 18, fontWeight: '700', color: C.grey, marginBottom: 12 },
   homeHeader: { backgroundColor: C.green, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 20, paddingHorizontal: 18 },
   homeDate: { fontSize: 12, color: 'rgba(255,255,255,0.65)', fontWeight: '500', marginBottom: 2 },
