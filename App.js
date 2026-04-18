@@ -3,7 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {
   View, Text, ScrollView, TouchableOpacity, TextInput,
   StyleSheet, SafeAreaView, StatusBar, Alert, FlatList,
-  Modal, ActivityIndicator, Platform, Dimensions, Keyboard, Image
+  Modal, ActivityIndicator, Platform, Dimensions, Keyboard, Image, Linking
 } from 'react-native';
 
 // ─── MOCK USER (auth bypassed) ───────────────────────────────────────────────
@@ -322,16 +322,21 @@ const HomeScreen = ({ navigate, params }) => {
           <Text style={styles.sectionTitle}>TODAY'S JOBS</Text>
           {todayJobs.map(job => (
             <TouchableOpacity key={job.id} onPress={() => navigate('ActiveJob', { job })} style={styles.jobCard}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
-                <Text style={{ fontSize: 14, fontWeight: '700', color: C.grey }}>{job.customerName}</Text>
-                <Text style={{ fontSize: 14, fontWeight: '800', color: C.green }}>{fmtCurrency(job.amount)}</Text>
-              </View>
-              <Text style={{ fontSize: 12, color: C.greyMid }}>{job.service} · {job.address}</Text>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>
-                <View style={[styles.statusPill, { backgroundColor: statusColor(job.status) }]}>
-                  <Text style={{ color: C.white, fontSize: 11, fontWeight: '700' }}>{statusLabel(job.status)}</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flex: 1, paddingRight: 12 }}>
+                  <Text style={{ fontSize: 15, fontWeight: '700', color: C.grey }}>{job.customerName}</Text>
+                  <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 3 }}>{job.address}</Text>
                 </View>
-                <Text style={{ fontSize: 12, color: C.green, fontWeight: '600' }}>Start Job →</Text>
+                <View style={{ alignItems: 'flex-end' }}>
+                  <Text style={{ fontSize: 15, fontWeight: '800', color: C.green }}>{fmtCurrency(job.amount)}</Text>
+                  <TouchableOpacity
+                    onPress={() => Linking.openURL(`https://maps.google.com/maps?q=${encodeURIComponent(job.address)}`)}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                    style={{ marginTop: 4 }}
+                  >
+                    <Text style={{ fontSize: 12, color: C.blue, fontWeight: '600' }}>Navigate →</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </TouchableOpacity>
           ))}
