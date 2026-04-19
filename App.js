@@ -443,7 +443,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
 
   return (
     <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#C0CAD6' }]}>
-      <View style={[styles.header, { paddingBottom: 18, backgroundColor: '#4A5568' }]}>
+      <View style={[styles.header, { paddingTop: 18, paddingBottom: 18, backgroundColor: '#4A5568' }]}>
         <View style={styles.headerRow}>
           <View style={{ flex: 1 }}>
             <Text style={[styles.headerTitle, { fontSize: 26, letterSpacing: -0.5 }]}>Clients</Text>
