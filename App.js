@@ -330,7 +330,7 @@ const HomeScreen = ({ navigate, params }) => {
                       onPress={() => Linking.openURL(`https://maps.google.com/maps?q=${encodeURIComponent(client?.address || job.customerName)}`)}
                       style={[styles.callBackBtn, { marginTop: 6 }]}
                     >
-                      <Text style={{ color: C.white, fontSize: 15, fontWeight: '700' }}>Navigate →</Text>
+                      <Text style={{ color: C.white, fontSize: 15, fontWeight: '700' }}>▲ Navigate</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
