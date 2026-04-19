@@ -412,7 +412,7 @@ const HomeScreen = ({ navigate, params }) => {
   );
 };
 
-// ─── CUSTOMERS SCREEN ─────────────────────────────────────────────────────────
+// ─── CLIENTS SCREEN ───────────────────────────────────────────────────────────
 const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('All');
@@ -442,22 +442,22 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
   });
 
   return (
-    <SafeAreaView style={styles.screenGreen}>
-      <View style={[styles.header, { paddingBottom: 18 }]}>
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#C0CAD6' }]}>
+      <View style={[styles.header, { paddingBottom: 18, backgroundColor: '#4A5568' }]}>
         <View style={styles.headerRow}>
           <View style={{ flex: 1 }}>
-            <Text style={[styles.headerTitle, { fontSize: 26, letterSpacing: -0.5 }]}>Customers</Text>
+            <Text style={[styles.headerTitle, { fontSize: 26, letterSpacing: -0.5 }]}>Clients</Text>
             <Text style={styles.headerSub}>{customers.length} total · {customers.filter(c => c.status === "lead").length} new leads</Text>
           </View>
           <TouchableOpacity onPress={() => navigate('NewCustomer')} style={styles.headerActionBtn}>
             <Text style={{ color: C.white, fontSize: 22 }}>+</Text>
           </TouchableOpacity>
         </View>
-        <View style={[styles.headerSearch, { backgroundColor: 'rgba(232,245,227,0.25)', marginTop: 14 }]}>
+        <View style={[styles.headerSearch, { backgroundColor: 'rgba(255,255,255,0.15)', marginTop: 14 }]}>
           <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 14, marginRight: 6 }}>🔍</Text>
           <TextInput
             style={{ flex: 1, fontSize: 14, color: C.white }}
-            placeholder="Search customers..."
+            placeholder="Search clients..."
             placeholderTextColor="rgba(255,255,255,0.55)"
             value={search}
             onChangeText={setSearch}
@@ -479,7 +479,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
         data={visible}
         keyExtractor={i => i.id}
         contentContainerStyle={{ padding: 14 }}
-        style={{ backgroundColor: C.greyLight }}
+        style={{ backgroundColor: '#C0CAD6' }}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => navigate('CustomerDetail', { customer: item })} style={styles.clientRow}>
             <View style={[styles.avatar, { backgroundColor: statusColor(item.status) + '22' }]}>
@@ -3549,7 +3549,7 @@ const styles = StyleSheet.create({
   clientRow: { backgroundColor: C.white, borderRadius: 12, padding: 12, marginBottom: 8, flexDirection: 'row', alignItems: 'center', gap: 12, shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 4, elevation: 1 },
   avatar: { width: 42, height: 42, borderRadius: 21, justifyContent: 'center', alignItems: 'center' },
   avatarText: { fontSize: 18, fontWeight: '700' },
-  clientName: { fontSize: 14, fontWeight: '700', color: C.grey },
+  clientName: { fontSize: 14, fontWeight: '700', color: '#000' },
   clientAddr: { fontSize: 12, color: C.greyMid, marginTop: 1 },
   clientJobs: { fontSize: 11, color: C.greyMid, marginTop: 2 },
   statusPill: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20 },
