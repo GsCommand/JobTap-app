@@ -128,11 +128,11 @@ const Header = ({ title, subtitle, onBack, action }) => (
 
 const BottomNav = ({ active, navigate, onCreate }) => {
   const tabs = [
-    { key: 'Home', icon: '🏠', label: 'Home' },
-    { key: 'Customers', icon: '👥', label: 'Clients' },
-    { key: 'NewJob', icon: '＋', label: 'New', fab: true },
-    { key: 'Jobs', icon: '📋', label: 'Jobs' },
-    { key: 'Schedule', icon: '📅', label: 'Schedule' },
+    { key: 'Home',      icon: '🏠', label: 'Home'     },
+    { key: 'Customers', icon: '👥', label: 'Clients'  },
+    { key: 'NewJob',    icon: '＋', label: 'New Job',  fab: true  },
+    { key: 'Schedule',  icon: '📅', label: 'Schedule' },
+    { key: 'More',      icon: '⋯',  label: 'More',    more: true },
   ];
   return (
     <View style={styles.tabBar}>
@@ -141,11 +141,8 @@ const BottomNav = ({ active, navigate, onCreate }) => {
           key={t.key}
           style={styles.tab}
           onPress={() => {
-            if (t.fab) {
-              if (onCreate) onCreate();
-              else navigate('NewJob');
-              return;
-            }
+            if (t.fab) { if (onCreate) onCreate(); else navigate('NewJob'); return; }
+            if (t.more) { navigate('Home', { openMenu: true }); return; }
             navigate(t.key);
           }}
         >
@@ -232,18 +229,18 @@ const HomeScreen = ({ navigate, params }) => {
   const [showMenu, setShowMenu] = useState(params?.openMenu || false);
   const [showCreateSheet, setShowCreateSheet] = useState(false);
 
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const paidJobsMonth = MOCK_JOBS.filter(j => j.status === 'paid' && new Date(j.date) >= startOfMonth);
   const thirtyDaysAgo = new Date(now); thirtyDaysAgo.setDate(now.getDate() - 30);
-  const activeQuotes = MOCK_JOBS.filter(j => j.status === 'pending' && new Date(j.date) >= thirtyDaysAgo);
   const activeLeads = MOCK_CUSTOMERS.filter(c => c.status === 'lead');
+  const activeQuotes = MOCK_JOBS.filter(j => j.status === 'pending' && new Date(j.date) >= thirtyDaysAgo);
+  const unpaidTotal = activeQuotes.reduce((s, j) => s + j.amount, 0);
+  const unpaidFmt = unpaidTotal >= 1000 ? `$${(unpaidTotal / 1000).toFixed(1)}k` : `$${unpaidTotal}`;
+  const dueCt = MOCK_CUSTOMERS.filter(c => c.status === 'due').length;
   const todayJobs = MOCK_JOBS.filter(j => ['scheduled', 'active', 'pending'].includes(j.status));
-  const dow = now.toLocaleDateString('en-US', { weekday: 'long' });
-  const dateStr = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
 
-  const LEADS = [
-    { id: 'l1', name: 'Sandra Ortiz', phone: '(904) 555-0199', time: '8:14 AM', source: 'Website form' },
-    { id: 'l2', name: 'Carlos Mendez', phone: '(904) 555-0312', time: 'Yesterday', source: 'Facebook' },
+  const ATTENTION = [
+    { id: 'a1', icon: '📞', title: 'Missed call — 18 min ago', sub: '904-555-5821', action: 'Call',   actionColor: C.red    },
+    { id: 'a2', icon: '⭐', title: 'Review not sent',          sub: 'Sarah Jones · 2 days ago', action: 'Send',   actionColor: C.orange },
+    { id: 'a3', icon: '👤', title: 'Mike T — 90 days',         sub: 'Follow-up due',            action: 'Remind', actionColor: C.green  },
   ];
 
   const MENU_ITEMS = [
@@ -262,109 +259,88 @@ const HomeScreen = ({ navigate, params }) => {
   return (
     <SafeAreaView style={[styles.screenGreen, { backgroundColor: C.greyLight }]}>
       <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: C.greyLight }}>
+
+        {/* ── GREEN HEADER ── */}
         <View style={styles.homeHeader}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-            {BIZ_CONFIG.logo
-              ? <Image source={{ uri: BIZ_CONFIG.logo }} style={{ width: 90, height: 30, resizeMode: 'contain' }} />
-              : <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12, fontWeight: '700', letterSpacing: 1.5 }}>JOBTAP</Text>
-            }
-            <Text style={styles.homeDate}>{dow}, {dateStr}</Text>
-          </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-            <Text style={styles.homeGreeting}>Hey, Greg 👋</Text>
-            <TouchableOpacity onPress={() => setShowMenu(true)}>
-              <Text style={{ fontSize: 28 }}>⚙️</Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10 }}>
+            <TouchableOpacity onPress={() => setShowMenu(true)} hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}>
+              <Text style={{ fontSize: 22 }}>⚙️</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.homeKpiRow}>
-            <TouchableOpacity style={styles.homeKpi} onPress={() => navigate('Jobs')}>
-              <Text style={styles.homeKpiVal}>{paidJobsMonth.length}</Text>
-              <Text style={styles.homeKpiLabel}>Jobs · Month</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.homeKpi, { borderLeftWidth: 1, borderLeftColor: 'rgba(255,255,255,0.2)' }]} onPress={() => navigate('Jobs')}>
-              <Text style={[styles.homeKpiVal, { color: activeQuotes.length > 0 ? '#FCD34D' : C.white }]}>{activeQuotes.length}</Text>
-              <Text style={styles.homeKpiLabel}>Quotes · 30d</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.homeKpi, { borderLeftWidth: 1, borderLeftColor: 'rgba(255,255,255,0.2)' }]} onPress={() => navigate('Leads')}>
-              <Text style={[styles.homeKpiVal, { color: activeLeads.length > 0 ? '#FCD34D' : C.white }]}>{activeLeads.length}</Text>
-              <Text style={styles.homeKpiLabel}>Leads · 7d</Text>
-            </TouchableOpacity>
+          <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: 14, fontWeight: '500', marginBottom: 2 }}>Good morning</Text>
+          <Text style={{ color: C.white, fontSize: 34, fontWeight: '900', letterSpacing: -1, marginBottom: 18 }}>Hey Greg</Text>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            {[
+              { val: activeLeads.length,   label: 'Leads',  nav: 'Leads'        },
+              { val: activeQuotes.length,  label: 'Quotes', nav: 'Jobs'         },
+              { val: unpaidFmt,            label: 'Unpaid', nav: 'Jobs'         },
+              { val: dueCt,                label: 'Due',    nav: 'CustomersDue' },
+            ].map((k, i) => (
+              <TouchableOpacity
+                key={i}
+                onPress={() => navigate(k.nav)}
+                style={{ flex: 1, backgroundColor: 'rgba(255,255,255,0.18)', borderRadius: 12, paddingVertical: 12, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' }}
+              >
+                <Text style={{ color: C.white, fontSize: 20, fontWeight: '900', letterSpacing: -0.5 }}>{k.val}</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 10, fontWeight: '600', marginTop: 2 }}>{k.label}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
 
-        <View style={{ paddingHorizontal: 14 }}>
-          {LEADS.length > 0 && (
-            <>
-              <Text style={[styles.sectionTitle, { color: '#000', fontSize: 14 }]}>URGENT ATTENTION</Text>
-              {LEADS.map(lead => (
-                <TouchableOpacity key={lead.id} style={[styles.attentionCard, { borderLeftColor: C.red }]} onPress={() => navigate('Leads')}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                    <View style={[styles.attentionDot, { backgroundColor: C.red + '22' }]}>
-                      <Text style={{ fontSize: 16 }}>📋</Text>
-                    </View>
-                    <View style={{ flex: 1 }}>
-                      <Text style={{ fontSize: 15, fontWeight: '800', color: C.grey }}>{lead.name}</Text>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 3 }}>
-                        <View style={{ backgroundColor: '#FEE2E2', paddingHorizontal: 7, paddingVertical: 2, borderRadius: 6 }}>
-                          <Text style={{ fontSize: 11, fontWeight: '700', color: C.red }}>Needs a call</Text>
-                        </View>
-                        <Text style={{ fontSize: 12, color: C.greyMid }}>{lead.time} · {lead.source}</Text>
-                      </View>
-                      <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 1 }}>{lead.phone}</Text>
-                    </View>
-                    <TouchableOpacity style={styles.callBackBtn}>
-                      <Text style={{ color: C.white, fontSize: 15, fontWeight: '700' }}>Call</Text>
-                    </TouchableOpacity>
-                  </View>
-                </TouchableOpacity>
-              ))}
-            </>
-          )}
+        <View style={{ paddingHorizontal: 14, paddingTop: 18 }}>
 
-          <Text style={[styles.sectionTitle, { color: '#000', fontSize: 14 }]}>TODAY'S JOBS</Text>
+          {/* ── NEEDS ATTENTION ── */}
+          <Text style={[styles.sectionTitle, { color: '#000', fontSize: 13 }]}>NEEDS ATTENTION</Text>
+          {ATTENTION.map(item => (
+            <View key={item.id} style={[styles.attentionCard, { borderLeftColor: item.actionColor }]}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                <View style={[styles.attentionDot, { backgroundColor: item.actionColor + '22' }]}>
+                  <Text style={{ fontSize: 16 }}>{item.icon}</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontSize: 14, fontWeight: '700', color: C.grey }}>{item.title}</Text>
+                  <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 1 }}>{item.sub}</Text>
+                </View>
+                <TouchableOpacity style={{ backgroundColor: item.actionColor + '18', paddingHorizontal: 12, paddingVertical: 7, borderRadius: 20, borderWidth: 1, borderColor: item.actionColor }}>
+                  <Text style={{ color: item.actionColor, fontSize: 12, fontWeight: '700' }}>{item.action}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
+
+          {/* ── TODAY'S JOBS ── */}
+          <Text style={[styles.sectionTitle, { color: '#000', fontSize: 13, marginTop: 8 }]}>TODAY'S JOBS</Text>
           {todayJobs.map(job => {
             const client = MOCK_CUSTOMERS.find(c => c.id === job.customerId);
             return (
-              <TouchableOpacity key={job.id} onPress={() => navigate('ActiveJob', { job })} style={styles.jobCard}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <View style={{ flex: 1, paddingRight: 12 }}>
-                    <Text style={{ fontSize: 15, fontWeight: '700', color: '#000' }}>{job.customerName}</Text>
-                    <Text style={{ fontSize: 12, fontWeight: '700', color: '#000', marginTop: 3 }}>{client?.street}</Text>
-                    <Text style={{ fontSize: 12, fontWeight: '700', color: '#000', marginTop: 1 }}>{client?.city}, {client?.state} {client?.zip}</Text>
-                  </View>
-                  <View style={{ alignItems: 'flex-end' }}>
-                    <Text style={{ fontSize: 15, fontWeight: '800', color: '#000' }}>{fmtCurrency(job.amount)}</Text>
-                    <TouchableOpacity
-                      onPress={() => Linking.openURL(`https://maps.google.com/maps?q=${encodeURIComponent(client?.address || job.customerName)}`)}
-                      style={[styles.callBackBtn, { marginTop: 6 }]}
-                    >
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                      <Ionicons name="navigate" size={14} color="#fff" />
-                      <Text style={{ color: C.white, fontSize: 15, fontWeight: '700' }}>Navigate →</Text>
-                    </View>
-                    </TouchableOpacity>
+              <View key={job.id} style={{ backgroundColor: '#111', borderRadius: 16, padding: 16, marginBottom: 10 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
+                  <Text style={{ fontSize: 17, fontWeight: '800', color: '#fff', flex: 1 }}>{job.customerName}</Text>
+                  <View style={{ backgroundColor: '#2a2a2a', paddingHorizontal: 10, paddingVertical: 3, borderRadius: 20, marginLeft: 8 }}>
+                    <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>9am</Text>
                   </View>
                 </View>
-              </TouchableOpacity>
+                <Text style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginBottom: 14 }}>
+                  {client?.street} · {job.service}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => Linking.openURL(`https://maps.google.com/maps?q=${encodeURIComponent(client?.address || job.customerName)}`)}
+                  style={{ backgroundColor: C.green, borderRadius: 12, paddingVertical: 14, alignItems: 'center' }}
+                >
+                  <Text style={{ color: '#fff', fontSize: 15, fontWeight: '800' }}>Navigate + start job</Text>
+                </TouchableOpacity>
+              </View>
             );
           })}
 
-          <View style={styles.revenueCard}>
-            <View style={{ flex: 1 }}>
-              <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 11, fontWeight: '700', letterSpacing: 0.5 }}>MONTH REVENUE</Text>
-              <Text style={{ color: C.white, fontSize: 32, fontWeight: '900', letterSpacing: -1, marginTop: 2 }}>$11,340</Text>
-              <Text style={{ color: 'rgba(255,255,255,0.65)', fontSize: 12, marginTop: 2 }}>April · {paidJobsMonth.length} jobs paid</Text>
-            </View>
-            <View style={{ alignItems: 'flex-end', gap: 8 }}>
-              <View style={{ backgroundColor: 'rgba(255,255,255,0.18)', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12 }}>
-                <Text style={{ color: C.white, fontSize: 12, fontWeight: '700' }}>↑18% vs last mo</Text>
-              </View>
-              <TouchableOpacity onPress={() => navigate('RevenueDashboard')} style={{ backgroundColor: C.white, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 10 }}>
-                <Text style={{ color: '#4338CA', fontSize: 12, fontWeight: '700' }}>View Report</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={{ height: 24 }} />
+          {/* ── NEW QUOTE SHORTCUT ── */}
+          <TouchableOpacity
+            onPress={() => navigate('QuoteBuilder')}
+            style={{ backgroundColor: C.greenLight, borderRadius: 16, paddingVertical: 18, alignItems: 'center', borderWidth: 1.5, borderColor: C.green, marginTop: 4, marginBottom: 24 }}
+          >
+            <Text style={{ color: C.green, fontSize: 16, fontWeight: '700' }}>+ New quote</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
 
