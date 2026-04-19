@@ -517,7 +517,7 @@ const CustomerDetailScreen = ({ navigate, params }) => {
   const initials = customer.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.greyLight }}>
       {/* ── GREEN HERO ── */}
       <View style={{ backgroundColor: C.green, paddingBottom: 20 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 16 }}>
@@ -544,14 +544,14 @@ const CustomerDetailScreen = ({ navigate, params }) => {
 
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         {/* ── STATS ── */}
-        <View style={{ flexDirection: 'row', backgroundColor: '#222', borderBottomWidth: 1, borderBottomColor: '#333' }}>
-          <View style={{ flex: 1, alignItems: 'center', paddingVertical: 18, borderRightWidth: 1, borderRightColor: '#333' }}>
-            <Text style={{ color: '#fff', fontSize: 22, fontWeight: '900' }}>{fmtCurrency(totalRevenue)}</Text>
-            <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 11, fontWeight: '600', marginTop: 2 }}>Lifetime value</Text>
+        <View style={{ flexDirection: 'row', backgroundColor: C.white, borderBottomWidth: 1, borderBottomColor: C.border }}>
+          <View style={{ flex: 1, alignItems: 'center', paddingVertical: 18, borderRightWidth: 1, borderRightColor: C.border }}>
+            <Text style={{ color: C.dark, fontSize: 22, fontWeight: '900' }}>{fmtCurrency(totalRevenue)}</Text>
+            <Text style={{ color: C.greyMid, fontSize: 11, fontWeight: '600', marginTop: 2 }}>Lifetime value</Text>
           </View>
           <View style={{ flex: 1, alignItems: 'center', paddingVertical: 18 }}>
-            <Text style={{ color: '#fff', fontSize: 22, fontWeight: '900' }}>{custJobs.length}</Text>
-            <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 11, fontWeight: '600', marginTop: 2 }}>Jobs done</Text>
+            <Text style={{ color: C.dark, fontSize: 22, fontWeight: '900' }}>{custJobs.length}</Text>
+            <Text style={{ color: C.greyMid, fontSize: 11, fontWeight: '600', marginTop: 2 }}>Jobs done</Text>
           </View>
         </View>
 
