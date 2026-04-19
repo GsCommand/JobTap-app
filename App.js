@@ -262,13 +262,14 @@ const HomeScreen = ({ navigate, params }) => {
 
         {/* ── GREEN HEADER ── */}
         <View style={styles.homeHeader}>
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10 }}>
-            <TouchableOpacity onPress={() => setShowMenu(true)} hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}>
-              <Text style={{ fontSize: 22 }}>⚙️</Text>
+          <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: '700', letterSpacing: 1, textAlign: 'center', marginBottom: 14 }}>JobTap</Text>
+          <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: 14, fontWeight: '500', marginBottom: 2 }}>Good morning</Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
+            <Text style={{ color: C.white, fontSize: 34, fontWeight: '900', letterSpacing: -1 }}>Hey Greg</Text>
+            <TouchableOpacity onPress={() => setShowMenu(true)} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+              <Text style={{ fontSize: 34, lineHeight: 38 }}>⚙️</Text>
             </TouchableOpacity>
           </View>
-          <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: 14, fontWeight: '500', marginBottom: 2 }}>Good morning</Text>
-          <Text style={{ color: C.white, fontSize: 34, fontWeight: '900', letterSpacing: -1, marginBottom: 18 }}>Hey Greg</Text>
           <View style={{ flexDirection: 'row', gap: 8 }}>
             {[
               { val: activeLeads.length,   label: 'Leads',  nav: 'Leads'        },
