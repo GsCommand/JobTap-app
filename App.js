@@ -487,14 +487,14 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
           return (
             <TouchableOpacity
               onPress={() => navigate('CustomerDetail', { customer: item })}
-              style={{ backgroundColor: C.white, borderRadius: 14, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 12, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 }}
+              style={{ backgroundColor: '#2a2a2a', borderRadius: 14, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 12 }}
             >
               <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: statusColor(item.status) + '22', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ fontSize: 16, fontWeight: '700', color: statusColor(item.status) }}>{initials}</Text>
               </View>
               <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 15, fontWeight: '700', color: '#000' }}>{item.name}</Text>
-                <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 2 }}>{lastAction(item)}</Text>
+                <Text style={{ fontSize: 15, fontWeight: '700', color: '#fff' }}>{item.name}</Text>
+                <Text style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>{lastAction(item)}</Text>
               </View>
               <View style={{ paddingHorizontal: 10, paddingVertical: 5, borderRadius: 20, backgroundColor: statusColor(item.status) + '18', borderWidth: 1, borderColor: statusColor(item.status) }}>
                 <Text style={{ color: statusColor(item.status), fontSize: 11, fontWeight: '700' }}>{pillLabel(item.status)}</Text>
