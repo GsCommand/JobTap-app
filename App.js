@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 import {
   View, Text, ScrollView, TouchableOpacity, TextInput,
   StyleSheet, SafeAreaView, StatusBar, Alert, FlatList,
@@ -330,7 +331,10 @@ const HomeScreen = ({ navigate, params }) => {
                       onPress={() => Linking.openURL(`https://maps.google.com/maps?q=${encodeURIComponent(client?.address || job.customerName)}`)}
                       style={[styles.callBackBtn, { marginTop: 6 }]}
                     >
-                      <Text style={{ color: C.white, fontSize: 15, fontWeight: '700' }}>▲ Navigate</Text>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                      <Ionicons name="navigate" size={14} color="#fff" />
+                      <Text style={{ color: C.white, fontSize: 15, fontWeight: '700' }}>Navigate →</Text>
+                    </View>
                     </TouchableOpacity>
                   </View>
                 </View>
