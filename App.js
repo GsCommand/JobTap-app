@@ -443,7 +443,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
 
   return (
     <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#C0CAD6' }]}>
-      <View style={[styles.header, { paddingTop: 18, paddingBottom: 18, backgroundColor: '#4A5568' }]}>
+      <View style={[styles.header, { paddingTop: 18, paddingBottom: 18, backgroundColor: C.green }]}>
         <View style={styles.headerRow}>
           <View style={{ flex: 1 }}>
             <Text style={[styles.headerTitle, { fontSize: 26, letterSpacing: -0.5 }]}>Clients</Text>
@@ -3649,16 +3649,16 @@ const styles = StyleSheet.create({
     color: C.grey,
   },
   modalTitle: { fontSize: 18, fontWeight: '700', color: C.grey, marginBottom: 12 },
-  homeHeader: { backgroundColor: '#4A5568', paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 20, paddingHorizontal: 18 },
+  homeHeader: { backgroundColor: C.green, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 20, paddingHorizontal: 18 },
   homeDate: { fontSize: 12, color: 'rgba(255,255,255,0.65)', fontWeight: '500', marginBottom: 2 },
   homeGreeting: { fontSize: 26, fontWeight: '900', color: C.white, letterSpacing: -0.5, marginBottom: 16 },
   homeKpiRow: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(147,197,253,0.22)',
+    backgroundColor: 'rgba(255,255,255,0.18)',
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: 'rgba(147,197,253,0.2)',
+    borderColor: 'rgba(255,255,255,0.2)',
   },
   homeKpi: {
     flex: 1,
