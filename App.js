@@ -259,8 +259,8 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#C0CAD6' }]}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#C0CAD6' }}>
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: C.greyLight }]}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: C.greyLight }}>
         <View style={styles.homeHeader}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
             {BIZ_CONFIG.logo
@@ -446,7 +446,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
   });
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#C0CAD6' }]}>
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: C.greyLight }]}>
       <View style={[styles.header, { paddingTop: 18, paddingBottom: 18, backgroundColor: C.green }]}>
         <View style={styles.headerRow}>
           <View style={{ flex: 1 }}>
@@ -483,7 +483,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
         data={visible}
         keyExtractor={i => i.id}
         contentContainerStyle={{ padding: 14 }}
-        style={{ backgroundColor: '#C0CAD6' }}
+        style={{ backgroundColor: C.greyLight }}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => navigate('CustomerDetail', { customer: item })} style={styles.clientRow}>
             <View style={[styles.avatar, { backgroundColor: statusColor(item.status) + '22' }]}>
