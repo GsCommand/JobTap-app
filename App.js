@@ -544,7 +544,7 @@ const CustomerDetailScreen = ({ navigate, params }) => {
 
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         {/* ── STATS ── */}
-        <View style={{ flexDirection: 'row', backgroundColor: '#1a1a1a', borderBottomWidth: 1, borderBottomColor: '#333' }}>
+        <View style={{ flexDirection: 'row', backgroundColor: '#222', borderBottomWidth: 1, borderBottomColor: '#333' }}>
           <View style={{ flex: 1, alignItems: 'center', paddingVertical: 18, borderRightWidth: 1, borderRightColor: '#333' }}>
             <Text style={{ color: '#fff', fontSize: 22, fontWeight: '900' }}>{fmtCurrency(totalRevenue)}</Text>
             <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 11, fontWeight: '600', marginTop: 2 }}>Lifetime value</Text>
