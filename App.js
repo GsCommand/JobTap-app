@@ -151,9 +151,9 @@ const BottomNav = ({ active, navigate, onCreate }) => {
           {t.fab ? (
             <View style={styles.fabBtn}><Text style={{ color: C.white, fontSize: 28, lineHeight: 32 }}>+</Text></View>
           ) : (
-            <Text style={[styles.tabIcon, active === t.key && { opacity: 1 }]}>{t.icon}</Text>
+            <Text style={[styles.tabIcon, active === t.key && { opacity: 0.4 }]}>{t.icon}</Text>
           )}
-          <Text style={[styles.tabLabel, active === t.key && { color: C.grey, fontWeight: '600' }]}>{t.label}</Text>
+          <Text style={[styles.tabLabel, { color: '#4A90D9' }, active === t.key && { color: C.greyMid, fontWeight: '600' }]}>{t.label}</Text>
         </TouchableOpacity>
       ))}
     </View>
@@ -321,8 +321,8 @@ const HomeScreen = ({ navigate, params }) => {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                   <View style={{ flex: 1, paddingRight: 12 }}>
                     <Text style={{ fontSize: 15, fontWeight: '700', color: '#000' }}>{job.customerName}</Text>
-                    <Text style={{ fontSize: 12, color: '#000', marginTop: 3 }}>{client?.street}</Text>
-                    <Text style={{ fontSize: 12, color: '#000', marginTop: 1 }}>{client?.city}, {client?.state} {client?.zip}</Text>
+                    <Text style={{ fontSize: 12, fontWeight: '700', color: '#000', marginTop: 3 }}>{client?.street}</Text>
+                    <Text style={{ fontSize: 12, fontWeight: '700', color: '#000', marginTop: 1 }}>{client?.city}, {client?.state} {client?.zip}</Text>
                   </View>
                   <View style={{ alignItems: 'flex-end' }}>
                     <Text style={{ fontSize: 15, fontWeight: '800', color: '#000' }}>{fmtCurrency(job.amount)}</Text>
@@ -3540,7 +3540,7 @@ const styles = StyleSheet.create({
   sectionTitle: { fontSize: 12, fontWeight: '700', color: C.greyMid, letterSpacing: 0.5, marginBottom: 8, marginTop: 4 },
   tabBar: { flexDirection: 'row', backgroundColor: C.white, borderTopWidth: 1, borderTopColor: C.border, paddingBottom: Platform.OS === 'ios' ? 14 : 4, paddingTop: 4 },
   tab: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 3 },
-  tabIcon: { fontSize: 24, opacity: 0.55 },
+  tabIcon: { fontSize: 24, opacity: 1 },
   tabLabel: { fontSize: 11, color: C.greyMid },
   fabBtn: { width: 53, height: 53, borderRadius: 27, backgroundColor: '#34C759', justifyContent: 'center', alignItems: 'center', marginTop: -20, shadowColor: '#34C759', shadowOpacity: 0.4, shadowRadius: 8, elevation: 4 },
   filterChip: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20, backgroundColor: C.white, marginRight: 8, borderWidth: 1, borderColor: C.border },
