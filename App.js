@@ -257,8 +257,8 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#222' }]}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#222' }}>
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: C.greyLight }]}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: C.greyLight }}>
 
         {/* ── GREEN HEADER ── */}
         <View style={styles.homeHeader}>
