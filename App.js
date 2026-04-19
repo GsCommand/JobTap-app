@@ -259,8 +259,8 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#C0CAD6' }]}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#C0CAD6' }}>
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: C.greyLight }]}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: C.greyLight }}>
         <View style={styles.homeHeader}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
             {BIZ_CONFIG.logo
@@ -446,7 +446,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
   });
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#C0CAD6' }]}>
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: C.greyLight }]}>
       <View style={[styles.header, { paddingTop: 18, paddingBottom: 18, backgroundColor: C.green }]}>
         <View style={styles.headerRow}>
           <View style={{ flex: 1 }}>
@@ -483,7 +483,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
         data={visible}
         keyExtractor={i => i.id}
         contentContainerStyle={{ padding: 14 }}
-        style={{ backgroundColor: '#C0CAD6' }}
+        style={{ backgroundColor: C.greyLight }}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => navigate('CustomerDetail', { customer: item })} style={styles.clientRow}>
             <View style={[styles.avatar, { backgroundColor: statusColor(item.status) + '22' }]}>
@@ -3546,7 +3546,7 @@ const styles = StyleSheet.create({
   tab: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 3 },
   tabIcon: { fontSize: 24, opacity: 1 },
   tabLabel: { fontSize: 11, color: C.greyMid },
-  fabBtn: { width: 53, height: 53, borderRadius: 27, backgroundColor: '#34C759', justifyContent: 'center', alignItems: 'center', marginTop: -20, shadowColor: '#34C759', shadowOpacity: 0.4, shadowRadius: 8, elevation: 4 },
+  fabBtn: { width: 53, height: 53, borderRadius: 27, backgroundColor: C.green, justifyContent: 'center', alignItems: 'center', marginTop: -20, shadowColor: C.green, shadowOpacity: 0.4, shadowRadius: 8, elevation: 4 },
   filterChip: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20, backgroundColor: C.white, marginRight: 8, borderWidth: 1, borderColor: C.border },
   filterChipActive: { backgroundColor: C.green, borderColor: C.green },
   filterChipText: { fontSize: 13, color: C.grey, fontWeight: '500' },
@@ -3683,10 +3683,10 @@ const styles = StyleSheet.create({
     textTransform: 'lowercase',
     letterSpacing: 0.2,
   },
-  attentionCard: { backgroundColor: C.cream, borderRadius: 14, padding: 14, marginBottom: 10, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
+  attentionCard: { backgroundColor: C.white, borderRadius: 14, padding: 14, marginBottom: 10, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
   attentionDot: { width: 40, height: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center' },
   callBackBtn: { backgroundColor: '#34C759', paddingHorizontal: 10, paddingVertical: 9, borderRadius: 8 },
-  jobCard: { backgroundColor: C.cream, borderRadius: 14, paddingHorizontal: 14, paddingVertical: 10, marginBottom: 8, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
+  jobCard: { backgroundColor: C.white, borderRadius: 14, paddingHorizontal: 14, paddingVertical: 10, marginBottom: 8, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
   revenueCard: { backgroundColor: '#1D6FD8', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginTop: 4 },
   scheduleCard: { backgroundColor: '#0F766E', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
   eventCard: { backgroundColor: C.white, borderRadius: 12, padding: 14, marginBottom: 8, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 4, elevation: 1 },
