@@ -262,6 +262,7 @@ const HomeScreen = ({ navigate, params }) => {
 
         {/* ── GREEN HEADER ── */}
         <View style={styles.homeHeader}>
+          <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: '700', letterSpacing: 1, textAlign: 'center', marginBottom: 14 }}>JobTap</Text>
           <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: 14, fontWeight: '500', marginBottom: 2 }}>Good morning</Text>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
             <Text style={{ color: C.white, fontSize: 34, fontWeight: '900', letterSpacing: -1 }}>Hey Greg</Text>
