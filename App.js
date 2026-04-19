@@ -130,7 +130,7 @@ const BottomNav = ({ active, navigate, onCreate }) => {
   const tabs = [
     { key: 'Home',      icon: '🏠', label: 'Home'     },
     { key: 'Customers', icon: '👥', label: 'Clients'  },
-    { key: 'NewJob',    icon: '＋', label: 'New Job',  fab: true  },
+    { key: 'NewJob',    icon: '＋', label: 'New',     fab: true  },
     { key: 'Schedule',  icon: '📅', label: 'Schedule' },
     { key: 'More',      icon: '⋯',  label: 'More',    more: true },
   ];
@@ -314,14 +314,14 @@ const HomeScreen = ({ navigate, params }) => {
           {todayJobs.map(job => {
             const client = MOCK_CUSTOMERS.find(c => c.id === job.customerId);
             return (
-              <View key={job.id} style={{ backgroundColor: '#111', borderRadius: 16, padding: 16, marginBottom: 10 }}>
+              <View key={job.id} style={{ backgroundColor: C.white, borderRadius: 16, padding: 16, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
-                  <Text style={{ fontSize: 17, fontWeight: '800', color: '#fff', flex: 1 }}>{job.customerName}</Text>
-                  <View style={{ backgroundColor: '#2a2a2a', paddingHorizontal: 10, paddingVertical: 3, borderRadius: 20, marginLeft: 8 }}>
-                    <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>9am</Text>
+                  <Text style={{ fontSize: 17, fontWeight: '800', color: C.grey, flex: 1 }}>{job.customerName}</Text>
+                  <View style={{ backgroundColor: C.green + '18', paddingHorizontal: 10, paddingVertical: 3, borderRadius: 20, marginLeft: 8, borderWidth: 1, borderColor: C.green }}>
+                    <Text style={{ color: C.green, fontSize: 12, fontWeight: '700' }}>9am</Text>
                   </View>
                 </View>
-                <Text style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginBottom: 14 }}>
+                <Text style={{ fontSize: 13, color: C.greyMid, marginBottom: 14 }}>
                   {client?.street} · {job.service}
                 </Text>
                 <TouchableOpacity
