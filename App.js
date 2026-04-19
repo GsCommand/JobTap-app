@@ -436,7 +436,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.greyLight }}>
       <View style={{ backgroundColor: C.green, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingHorizontal: 16, paddingBottom: 16 }}>
         <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: '700', letterSpacing: 1, textAlign: 'center', marginBottom: 10 }}>JobTap</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
@@ -459,7 +459,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
         </View>
       </View>
 
-      <View style={{ backgroundColor: '#1a1a1a', paddingVertical: 10 }}>
+      <View style={{ backgroundColor: C.white, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: C.border }}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 14, gap: 8 }}>
           {FILTERS.map(f => {
             const active = filter === f.key;
@@ -467,9 +467,9 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
               <TouchableOpacity
                 key={f.key}
                 onPress={() => setFilter(f.key)}
-                style={{ paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20, backgroundColor: active ? f.color : 'transparent', borderWidth: 1, borderColor: active ? f.color : 'rgba(255,255,255,0.2)' }}
+                style={{ paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20, backgroundColor: active ? f.color : 'transparent', borderWidth: 1, borderColor: active ? f.color : C.border }}
               >
-                <Text style={{ fontSize: 12, fontWeight: '700', color: active ? '#fff' : 'rgba(255,255,255,0.55)' }}>{f.label}</Text>
+                <Text style={{ fontSize: 12, fontWeight: '700', color: active ? '#fff' : C.grey }}>{f.label}</Text>
               </TouchableOpacity>
             );
           })}
@@ -480,21 +480,21 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
         data={visible}
         keyExtractor={i => i.id}
         contentContainerStyle={{ padding: 14, gap: 8 }}
-        style={{ backgroundColor: '#222' }}
+        style={{ backgroundColor: C.greyLight }}
         renderItem={({ item }) => {
           const pill = pillStyle(item.status);
           const initials = item.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
           return (
             <TouchableOpacity
               onPress={() => navigate('CustomerDetail', { customer: item })}
-              style={{ backgroundColor: '#2a2a2a', borderRadius: 14, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 12 }}
+              style={{ backgroundColor: C.white, borderRadius: 14, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 12, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 4, elevation: 1 }}
             >
               <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: statusColor(item.status) + '22', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ fontSize: 16, fontWeight: '700', color: statusColor(item.status) }}>{initials}</Text>
               </View>
               <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 15, fontWeight: '700', color: '#fff' }}>{item.name}</Text>
-                <Text style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>{lastAction(item)}</Text>
+                <Text style={{ fontSize: 15, fontWeight: '700', color: '#000' }}>{item.name}</Text>
+                <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 2 }}>{lastAction(item)}</Text>
               </View>
               <View style={{ paddingHorizontal: 10, paddingVertical: 5, borderRadius: 20, backgroundColor: statusColor(item.status) + '18', borderWidth: 1, borderColor: statusColor(item.status) }}>
                 <Text style={{ color: statusColor(item.status), fontSize: 11, fontWeight: '700' }}>{pillLabel(item.status)}</Text>
