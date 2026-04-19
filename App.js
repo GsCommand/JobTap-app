@@ -257,8 +257,8 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: C.greyLight }]}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: C.greyLight }}>
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: '#222' }]}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#222' }}>
 
         {/* ── GREEN HEADER ── */}
         <View style={styles.homeHeader}>
@@ -291,7 +291,7 @@ const HomeScreen = ({ navigate, params }) => {
         <View style={{ paddingHorizontal: 14, paddingTop: 18 }}>
 
           {/* ── NEEDS ATTENTION ── */}
-          <Text style={[styles.sectionTitle, { color: '#000', fontSize: 13 }]}>NEEDS ATTENTION</Text>
+          <Text style={[styles.sectionTitle, { color: 'rgba(255,255,255,0.5)', fontSize: 13 }]}>NEEDS ATTENTION</Text>
           {ATTENTION.map(item => (
             <View key={item.id} style={[styles.attentionCard, { borderLeftColor: item.actionColor }]}>
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
@@ -310,7 +310,7 @@ const HomeScreen = ({ navigate, params }) => {
           ))}
 
           {/* ── TODAY'S JOBS ── */}
-          <Text style={[styles.sectionTitle, { color: '#000', fontSize: 13, marginTop: 8 }]}>TODAY'S JOBS</Text>
+          <Text style={[styles.sectionTitle, { color: 'rgba(255,255,255,0.5)', fontSize: 13, marginTop: 8 }]}>TODAY'S JOBS</Text>
           {todayJobs.map(job => {
             const client = MOCK_CUSTOMERS.find(c => c.id === job.customerId);
             return (
@@ -334,13 +334,7 @@ const HomeScreen = ({ navigate, params }) => {
             );
           })}
 
-          {/* ── NEW QUOTE SHORTCUT ── */}
-          <TouchableOpacity
-            onPress={() => navigate('QuoteBuilder')}
-            style={{ backgroundColor: C.greenLight, borderRadius: 16, paddingVertical: 18, alignItems: 'center', borderWidth: 1.5, borderColor: C.green, marginTop: 4, marginBottom: 24 }}
-          >
-            <Text style={{ color: C.green, fontSize: 16, fontWeight: '700' }}>+ New quote</Text>
-          </TouchableOpacity>
+          <View style={{ height: 24 }} />
         </View>
       </ScrollView>
 
