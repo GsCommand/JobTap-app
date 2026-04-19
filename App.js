@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import {
   View, Text, ScrollView, TouchableOpacity, TextInput,
   StyleSheet, SafeAreaView, StatusBar, Alert, FlatList,
-  Modal, ActivityIndicator, Platform, Dimensions, Keyboard, Image, Linking
+  Modal, ActivityIndicator, Platform, Dimensions, Keyboard, Image, Linking, Pressable
 } from 'react-native';
 
 // ─── MOCK USER (auth bypassed) ───────────────────────────────────────────────
@@ -557,22 +557,24 @@ const CustomerDetailScreen = ({ navigate, params }) => {
 
         {/* ── ACTIONS ── */}
         <View style={{ padding: 14, gap: 10 }}>
-          <View style={{ flexDirection: 'row', gap: 10 }}>
-            <TouchableOpacity style={{ flex: 1, backgroundColor: C.green, borderRadius: 12, paddingVertical: 14, alignItems: 'center' }}>
-              <Text style={{ color: '#fff', fontSize: 15, fontWeight: '700' }}>Call</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ flex: 1, borderRadius: 12, paddingVertical: 14, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' }}>
-              <Text style={{ color: '#fff', fontSize: 15, fontWeight: '700' }}>Text</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: 'row', gap: 10 }}>
-            <TouchableOpacity onPress={() => navigate('QuoteBuilder', { customer })} style={{ flex: 1, borderRadius: 12, paddingVertical: 14, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' }}>
-              <Text style={{ color: '#fff', fontSize: 15, fontWeight: '700' }}>New quote</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigate('ReviewRequest', { customer })} style={{ flex: 1, borderRadius: 12, paddingVertical: 14, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' }}>
-              <Text style={{ color: '#fff', fontSize: 15, fontWeight: '700' }}>Review ask</Text>
-            </TouchableOpacity>
-          </View>
+          {[
+            [{ label: 'Call',       onPress: () => {} },                                    { label: 'Text',       onPress: () => {} }],
+            [{ label: 'New quote',  onPress: () => navigate('QuoteBuilder', { customer }) }, { label: 'Review ask', onPress: () => navigate('ReviewRequest', { customer }) }],
+          ].map((row, ri) => (
+            <View key={ri} style={{ flexDirection: 'row', gap: 10 }}>
+              {row.map(btn => (
+                <Pressable
+                  key={btn.label}
+                  onPress={btn.onPress}
+                  style={({ pressed }) => ({ flex: 1, backgroundColor: pressed ? C.green : C.greenLight, borderRadius: 12, paddingVertical: 14, alignItems: 'center' })}
+                >
+                  {({ pressed }) => (
+                    <Text style={{ color: pressed ? '#fff' : C.green, fontSize: 15, fontWeight: '700' }}>{btn.label}</Text>
+                  )}
+                </Pressable>
+              ))}
+            </View>
+          ))}
         </View>
 
         {/* ── SERVICE HISTORY ── */}
