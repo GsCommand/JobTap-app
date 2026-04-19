@@ -3546,7 +3546,7 @@ const styles = StyleSheet.create({
   tab: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 3 },
   tabIcon: { fontSize: 24, opacity: 1 },
   tabLabel: { fontSize: 11, color: C.greyMid },
-  fabBtn: { width: 53, height: 53, borderRadius: 27, backgroundColor: '#34C759', justifyContent: 'center', alignItems: 'center', marginTop: -20, shadowColor: '#34C759', shadowOpacity: 0.4, shadowRadius: 8, elevation: 4 },
+  fabBtn: { width: 53, height: 53, borderRadius: 27, backgroundColor: C.green, justifyContent: 'center', alignItems: 'center', marginTop: -20, shadowColor: C.green, shadowOpacity: 0.4, shadowRadius: 8, elevation: 4 },
   filterChip: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20, backgroundColor: C.white, marginRight: 8, borderWidth: 1, borderColor: C.border },
   filterChipActive: { backgroundColor: C.green, borderColor: C.green },
   filterChipText: { fontSize: 13, color: C.grey, fontWeight: '500' },
