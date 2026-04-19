@@ -640,6 +640,7 @@ const CustomerDetailScreen = ({ navigate, params }) => {
 const NewCustomerScreen = ({ navigate, addCustomer }) => {
   const [form, setForm] = useState({ name: '', street: '', city: '', state: 'FL', zip: '', phone: '', email: '' });
   const [source, setSource] = useState('');
+  const [showSourcePicker, setShowSourcePicker] = useState(false);
   const [saving, setSaving] = useState(false);
   const upd = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
@@ -751,14 +752,34 @@ const NewCustomerScreen = ({ navigate, addCustomer }) => {
         </Card>
 
         <Text style={styles.sectionTitle}>HOW DID THEY FIND YOU?</Text>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
-          {SOURCES.map(s => (
-            <TouchableOpacity key={s.key} onPress={() => setSource(s.key)} style={[styles.sourceChip, source === s.key && { backgroundColor: C.green, borderColor: C.green }]}>
-              <Text style={{ fontSize: 16 }}>{s.icon}</Text>
-              <Text style={[styles.sourceChipText, source === s.key && { color: C.white }]}>{s.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        <Card style={{ padding: 0, overflow: 'hidden', marginBottom: 16 }}>
+          <TouchableOpacity style={styles.qbRow} onPress={() => setShowSourcePicker(true)}>
+            <View style={styles.qbRowIcon}><Text style={{ fontSize: 15 }}>{source ? SOURCES.find(s => s.key === source)?.icon : '📣'}</Text></View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.qbRowLabel}>Lead Source</Text>
+              <Text style={[styles.qbRowValue, { color: source ? C.dark : C.greyMid }]}>{source ? SOURCES.find(s => s.key === source)?.label : 'Select source…'}</Text>
+            </View>
+            <Text style={{ fontSize: 18, color: C.greyMid, marginRight: 4 }}>›</Text>
+          </TouchableOpacity>
+        </Card>
+
+        <Modal visible={showSourcePicker} animationType="slide" transparent onRequestClose={() => setShowSourcePicker(false)}>
+          <TouchableOpacity style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)' }} activeOpacity={1} onPress={() => setShowSourcePicker(false)} />
+          <View style={{ backgroundColor: C.white, borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingBottom: 32 }}>
+            <View style={{ alignItems: 'center', paddingVertical: 14 }}>
+              <View style={{ width: 36, height: 4, borderRadius: 2, backgroundColor: C.border }} />
+            </View>
+            <Text style={[styles.sectionTitle, { marginHorizontal: 16 }]}>HOW DID THEY FIND YOU?</Text>
+            {SOURCES.map((s, i) => (
+              <TouchableOpacity key={s.key} onPress={() => { setSource(s.key); setShowSourcePicker(false); }}
+                style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 14, borderTopWidth: i === 0 ? 0 : 1, borderTopColor: C.border }}>
+                <Text style={{ fontSize: 20, marginRight: 14 }}>{s.icon}</Text>
+                <Text style={{ fontSize: 16, color: C.dark, flex: 1 }}>{s.label}</Text>
+                {source === s.key && <Text style={{ fontSize: 18, color: C.green }}>✓</Text>}
+              </TouchableOpacity>
+            ))}
+          </View>
+        </Modal>
 
         <TouchableOpacity style={[styles.greenBtn, saving && { opacity: 0.6 }]} onPress={handleSave} disabled={saving}>
           {saving ? <ActivityIndicator color={C.white} /> : <Text style={styles.greenBtnText}>Add Client →</Text>}
