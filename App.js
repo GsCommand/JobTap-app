@@ -186,6 +186,7 @@ const CreateSheet = ({ visible, onClose, navigate }) => {
     { key: 'NewLead',      icon: '🎯', label: 'New Lead',        highlight: true  },
     { key: 'NewCustomer',  icon: '👤', label: 'Add Client',      highlight: false },
     { key: 'QuoteBuilder', icon: '🧾', label: 'New Quote',       highlight: false },
+    { key: 'Invoice',      icon: '📄', label: 'New Invoice',     highlight: false },
     { key: 'BlockTime',    icon: '🚫', label: 'Block Off Time',  highlight: false },
   ];
 
