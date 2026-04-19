@@ -440,7 +440,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
       <View style={{ backgroundColor: C.green, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingHorizontal: 16, paddingBottom: 16 }}>
         <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: '700', letterSpacing: 1, textAlign: 'center', marginBottom: 10 }}>JobTap</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-          <Text style={{ color: C.white, fontSize: 30, fontWeight: '900', letterSpacing: -0.5 }}>Customers</Text>
+          <Text style={{ color: C.white, fontSize: 30, fontWeight: '900', letterSpacing: -0.5 }}>Clients</Text>
           <TouchableOpacity
             onPress={() => navigate('NewCustomer')}
             style={{ borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.5)', borderRadius: 20, paddingHorizontal: 14, paddingVertical: 6 }}
@@ -451,7 +451,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
         <View style={{ backgroundColor: 'rgba(255,255,255,0.13)', borderRadius: 10, paddingHorizontal: 12, paddingVertical: 10 }}>
           <TextInput
             style={{ fontSize: 14, color: C.white }}
-            placeholder="Search customers..."
+            placeholder="Search clients..."
             placeholderTextColor="rgba(255,255,255,0.45)"
             value={search}
             onChangeText={setSearch}
@@ -487,17 +487,17 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
           return (
             <TouchableOpacity
               onPress={() => navigate('CustomerDetail', { customer: item })}
-              style={{ backgroundColor: '#2a2a2a', borderRadius: 14, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 12 }}
+              style={{ backgroundColor: C.white, borderRadius: 14, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 12, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 }}
             >
-              <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: statusColor(item.status) + '33', justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: statusColor(item.status) + '22', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ fontSize: 16, fontWeight: '700', color: statusColor(item.status) }}>{initials}</Text>
               </View>
               <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 15, fontWeight: '700', color: '#fff' }}>{item.name}</Text>
-                <Text style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>{lastAction(item)}</Text>
+                <Text style={{ fontSize: 15, fontWeight: '700', color: '#000' }}>{item.name}</Text>
+                <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 2 }}>{lastAction(item)}</Text>
               </View>
-              <View style={{ paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20, backgroundColor: pill.bg, borderWidth: pill.outline ? 1 : 0, borderColor: pill.border }}>
-                <Text style={{ color: pill.text, fontSize: 11, fontWeight: '700' }}>{pillLabel(item.status)}</Text>
+              <View style={{ paddingHorizontal: 10, paddingVertical: 5, borderRadius: 20, backgroundColor: statusColor(item.status) + '18', borderWidth: 1, borderColor: statusColor(item.status) }}>
+                <Text style={{ color: statusColor(item.status), fontSize: 11, fontWeight: '700' }}>{pillLabel(item.status)}</Text>
               </View>
             </TouchableOpacity>
           );
