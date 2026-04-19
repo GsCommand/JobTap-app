@@ -303,8 +303,14 @@ const HomeScreen = ({ navigate, params }) => {
                       <Text style={{ fontSize: 16 }}>📋</Text>
                     </View>
                     <View style={{ flex: 1 }}>
-                      <Text style={{ fontSize: 13, fontWeight: '700', color: C.grey }}>{lead.name} — needs a call</Text>
-                      <Text style={{ fontSize: 12, color: C.greyMid }}>{lead.time} · {lead.source} · {lead.phone}</Text>
+                      <Text style={{ fontSize: 15, fontWeight: '800', color: C.grey }}>{lead.name}</Text>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 3 }}>
+                        <View style={{ backgroundColor: '#FEE2E2', paddingHorizontal: 7, paddingVertical: 2, borderRadius: 6 }}>
+                          <Text style={{ fontSize: 11, fontWeight: '700', color: C.red }}>Needs a call</Text>
+                        </View>
+                        <Text style={{ fontSize: 12, color: C.greyMid }}>{lead.time} · {lead.source}</Text>
+                      </View>
+                      <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 1 }}>{lead.phone}</Text>
                     </View>
                     <TouchableOpacity style={styles.callBackBtn}>
                       <Text style={{ color: C.white, fontSize: 15, fontWeight: '700' }}>Call</Text>
