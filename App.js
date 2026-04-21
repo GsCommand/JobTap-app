@@ -517,7 +517,7 @@ const CustomerDetailScreen = ({ navigate, params }) => {
   const initials = customer.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.greyLight }}>
       {/* ── GREEN HERO ── */}
       <View style={{ backgroundColor: C.green, paddingBottom: 20 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 16 }}>
@@ -525,11 +525,19 @@ const CustomerDetailScreen = ({ navigate, params }) => {
             <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18 }}>‹</Text>
             <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: 13, fontWeight: '600' }}>Clients</Text>
           </TouchableOpacity>
-          {customer.status === 'vip' && (
-            <View style={{ backgroundColor: '#8B5CF6', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 20 }}>
-              <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>VIP</Text>
-            </View>
-          )}
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+            {customer.status === 'vip' && (
+              <View style={{ backgroundColor: '#8B5CF6', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 20 }}>
+                <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>VIP</Text>
+              </View>
+            )}
+            <TouchableOpacity
+              onPress={() => navigate('NewCustomer')}
+              style={{ borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.5)', borderRadius: 20, paddingHorizontal: 14, paddingVertical: 6 }}
+            >
+              <Text style={{ color: C.white, fontSize: 13, fontWeight: '700' }}>+ Add</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={{ alignItems: 'center' }}>
           <View style={{ width: 68, height: 68, borderRadius: 34, backgroundColor: 'rgba(255,255,255,0.2)', justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
@@ -544,14 +552,14 @@ const CustomerDetailScreen = ({ navigate, params }) => {
 
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         {/* ── STATS ── */}
-        <View style={{ flexDirection: 'row', backgroundColor: '#222', borderBottomWidth: 1, borderBottomColor: '#333' }}>
-          <View style={{ flex: 1, alignItems: 'center', paddingVertical: 18, borderRightWidth: 1, borderRightColor: '#333' }}>
-            <Text style={{ color: '#fff', fontSize: 22, fontWeight: '900' }}>{fmtCurrency(totalRevenue)}</Text>
-            <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 11, fontWeight: '600', marginTop: 2 }}>Lifetime value</Text>
+        <View style={{ flexDirection: 'row', backgroundColor: C.white, borderBottomWidth: 1, borderBottomColor: C.border }}>
+          <View style={{ flex: 1, alignItems: 'center', paddingVertical: 18, borderRightWidth: 1, borderRightColor: C.border }}>
+            <Text style={{ color: '#000', fontSize: 22, fontWeight: '900' }}>{fmtCurrency(totalRevenue)}</Text>
+            <Text style={{ color: C.greyMid, fontSize: 11, fontWeight: '600', marginTop: 2 }}>Lifetime value</Text>
           </View>
           <View style={{ flex: 1, alignItems: 'center', paddingVertical: 18 }}>
-            <Text style={{ color: '#fff', fontSize: 22, fontWeight: '900' }}>{custJobs.length}</Text>
-            <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 11, fontWeight: '600', marginTop: 2 }}>Jobs done</Text>
+            <Text style={{ color: '#000', fontSize: 22, fontWeight: '900' }}>{custJobs.length}</Text>
+            <Text style={{ color: C.greyMid, fontSize: 11, fontWeight: '600', marginTop: 2 }}>Jobs done</Text>
           </View>
         </View>
 
@@ -579,16 +587,16 @@ const CustomerDetailScreen = ({ navigate, params }) => {
 
         {/* ── SERVICE HISTORY ── */}
         <View style={{ paddingHorizontal: 14 }}>
-          <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, fontWeight: '700', letterSpacing: 0.8, marginBottom: 10 }}>SERVICE HISTORY</Text>
+          <Text style={{ color: C.greyMid, fontSize: 11, fontWeight: '700', letterSpacing: 0.8, marginBottom: 10 }}>SERVICE HISTORY</Text>
           {[...custJobs].sort((a, b) => new Date(b.date) - new Date(a.date)).map(job => (
             <TouchableOpacity
               key={job.id}
               onPress={() => navigate('ActiveJob', { job })}
-              style={{ backgroundColor: '#2a2a2a', borderRadius: 12, padding: 14, marginBottom: 8, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
+              style={{ backgroundColor: C.white, borderRadius: 12, padding: 14, marginBottom: 8, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 4, elevation: 1 }}
             >
               <View style={{ flex: 1, marginRight: 10 }}>
-                <Text style={{ color: '#fff', fontSize: 14, fontWeight: '700' }}>{job.service}</Text>
-                <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12, marginTop: 2 }}>
+                <Text style={{ color: '#000', fontSize: 14, fontWeight: '700' }}>{job.service}</Text>
+                <Text style={{ color: C.greyMid, fontSize: 12, marginTop: 2 }}>
                   {fmtDateShort(job.date)} · {fmtCurrency(job.amount)} · {job.status === 'paid' ? 'Paid' : 'Pending'}
                 </Text>
               </View>
@@ -603,7 +611,7 @@ const CustomerDetailScreen = ({ navigate, params }) => {
 
         {/* ── FOLLOW-UP ── */}
         <View style={{ paddingHorizontal: 14, marginTop: 8 }}>
-          <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, fontWeight: '700', letterSpacing: 0.8, marginBottom: 10 }}>FOLLOW-UP</Text>
+          <Text style={{ color: C.greyMid, fontSize: 11, fontWeight: '700', letterSpacing: 0.8, marginBottom: 10 }}>FOLLOW-UP</Text>
           <View style={{ backgroundColor: C.greenLight, borderRadius: 12, padding: 14 }}>
             <Text style={{ color: C.green, fontSize: 13, fontWeight: '600' }}>Next: Day 90 rebook · Jul 10</Text>
           </View>
@@ -611,20 +619,20 @@ const CustomerDetailScreen = ({ navigate, params }) => {
 
         {/* ── REFERRAL ── */}
         <View style={{ paddingHorizontal: 14, marginTop: 16 }}>
-          <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, fontWeight: '700', letterSpacing: 0.8, marginBottom: 10 }}>REFERRAL</Text>
-          <View style={{ backgroundColor: '#2a2a2a', borderRadius: 12, overflow: 'hidden' }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 14, borderBottomWidth: 1, borderBottomColor: '#333' }}>
-              <Text style={{ color: 'rgba(255,255,255,0.55)', fontSize: 13 }}>Referred by</Text>
-              <Text style={{ color: '#fff', fontSize: 13, fontWeight: '600' }}>Google search</Text>
+          <Text style={{ color: C.greyMid, fontSize: 11, fontWeight: '700', letterSpacing: 0.8, marginBottom: 10 }}>REFERRAL</Text>
+          <View style={{ backgroundColor: C.white, borderRadius: 12, overflow: 'hidden', shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 4, elevation: 1 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 14, borderBottomWidth: 1, borderBottomColor: C.border }}>
+              <Text style={{ color: C.greyMid, fontSize: 13 }}>Referred by</Text>
+              <Text style={{ color: '#000', fontSize: 13, fontWeight: '600' }}>Google search</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 14 }}>
-              <Text style={{ color: 'rgba(255,255,255,0.55)', fontSize: 13 }}>Referred anyone</Text>
+              <Text style={{ color: C.greyMid, fontSize: 13 }}>Referred anyone</Text>
               {customer.jobs > 2 ? (
                 <View style={{ backgroundColor: C.green + '22', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20, borderWidth: 1, borderColor: C.green }}>
                   <Text style={{ color: C.green, fontSize: 12, fontWeight: '700' }}>2 referrals</Text>
                 </View>
               ) : (
-                <Text style={{ color: 'rgba(255,255,255,0.3)', fontSize: 13 }}>None yet</Text>
+                <Text style={{ color: C.greyMid, fontSize: 13 }}>None yet</Text>
               )}
             </View>
           </View>
