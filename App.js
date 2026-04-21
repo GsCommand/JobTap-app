@@ -640,6 +640,7 @@ const CustomerDetailScreen = ({ navigate, params }) => {
 
         <View style={{ height: 40 }} />
       </ScrollView>
+      <BottomNav active="Customers" navigate={navigate} />
     </SafeAreaView>
   );
 };
