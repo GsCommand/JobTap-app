@@ -9,28 +9,94 @@ import {
 // ─── MOCK USER (auth bypassed) ───────────────────────────────────────────────
 const MOCK_USER = { id: 'test-user-123', email: 'demo@jobtap.app' };
 
-// ─── COLORS ──────────────────────────────────────────────────────────────────
-const C = {
-  bg: '#0F1F0F',
-  card: '#fff',
-  primary: '#1E5C15',
-  darkCard: '#162E10',
-  moneyGreen: '#5aad5a',
-  subtext: '#888',
-  green: '#2D6A22',
-  greenDark: '#1E4A17',
-  greenLight: '#E8F5E3',
-  cream: '#F5F1E6',
-  grey: '#555555',
-  greyMid: '#6B6B6B',
-  greyLight: '#F5F5F5',
-  border: '#E0E0E0',
-  white: '#FFFFFF',
-  red: '#D32F2F',
-  orange: '#E65100',
-  blue: '#1565C0',
-  gold: '#F9A825',
+// ─── COLORS / THEMES ────────────────────────────────────────────────────────
+const THEMES = {
+  rugged: {
+    bg: '#0F1F0F',
+    card: '#fff',
+    primary: '#1E5C15',
+    darkCard: '#162E10',
+    moneyGreen: '#5aad5a',
+    subtext: '#888',
+    green: '#2D6A22',
+    greenDark: '#1E4A17',
+    greenLight: '#E8F5E3',
+    cream: '#F5F1E6',
+    grey: '#555555',
+    greyMid: '#6B6B6B',
+    greyLight: '#F5F5F5',
+    border: '#E0E0E0',
+    white: '#FFFFFF',
+    red: '#D32F2F',
+    orange: '#E65100',
+    blue: '#1565C0',
+    gold: '#F9A825',
+  },
+  pro: {
+    bg: '#0E1A2B',
+    card: '#FFFFFF',
+    primary: '#1C4D9E',
+    darkCard: '#14386F',
+    moneyGreen: '#2F9E78',
+    subtext: '#7D8AA5',
+    green: '#2F66C8',
+    greenDark: '#1F4E9B',
+    greenLight: '#EAF1FF',
+    cream: '#EEF3FF',
+    grey: '#2D3A56',
+    greyMid: '#66728A',
+    greyLight: '#F5F8FF',
+    border: '#D8E2F2',
+    white: '#FFFFFF',
+    red: '#D32F2F',
+    orange: '#E67E22',
+    blue: '#1565C0',
+    gold: '#F9A825',
+  },
+  field: {
+    bg: '#0E1116',
+    card: '#1A1F28',
+    primary: '#2C7DFF',
+    darkCard: '#11151C',
+    moneyGreen: '#3BCB7A',
+    subtext: '#8D97A8',
+    green: '#2C7DFF',
+    greenDark: '#1D5CC2',
+    greenLight: '#1D2D45',
+    cream: '#141922',
+    grey: '#E7ECF5',
+    greyMid: '#AAB4C6',
+    greyLight: '#0F141C',
+    border: '#2A3445',
+    white: '#FFFFFF',
+    red: '#FF6B6B',
+    orange: '#FFA94D',
+    blue: '#4DABF7',
+    gold: '#FFD43B',
+  },
+  clean: {
+    bg: '#F8FAFC',
+    card: '#FFFFFF',
+    primary: '#2D3748',
+    darkCard: '#E2E8F0',
+    moneyGreen: '#2F855A',
+    subtext: '#718096',
+    green: '#2B6CB0',
+    greenDark: '#2C5282',
+    greenLight: '#EDF2F7',
+    cream: '#FFFFFF',
+    grey: '#2D3748',
+    greyMid: '#718096',
+    greyLight: '#F7FAFC',
+    border: '#E2E8F0',
+    white: '#FFFFFF',
+    red: '#C53030',
+    orange: '#DD6B20',
+    blue: '#2B6CB0',
+    gold: '#D69E2E',
+  },
 };
+let C = THEMES.rugged;
 
 // ─── MOCK DATA ────────────────────────────────────────────────────────────────
 let MOCK_CUSTOMERS = [
@@ -2616,9 +2682,15 @@ const LeadsScreen = ({ navigate }) => {
 
 
 // ─── BUSINESS SETUP ───────────────────────────────────────────────────────────
-const BusinessSetupScreen = ({ navigate }) => {
+const BusinessSetupScreen = ({ navigate, appearanceMode, setAppearanceMode }) => {
   const [biz, setBiz] = useState({ ...BIZ_CONFIG });
   const [saved, setSaved] = useState(false);
+  const appearanceOptions = [
+    { key: 'rugged', name: 'Rugged', subtitle: 'Classic JobTap look', dots: ['#2D6A22', '#E8F5E3', '#F5F1E6'] },
+    { key: 'pro', name: 'Pro', subtitle: 'Built for tracking and growth', dots: ['#2F66C8', '#EAF1FF', '#14386F'] },
+    { key: 'field', name: 'Field', subtitle: 'Best for working outside or on the go', dots: ['#0F141C', '#2C7DFF', '#AAB4C6'] },
+    { key: 'clean', name: 'Clean', subtitle: 'Clear and easy to read', dots: ['#FFFFFF', '#2B6CB0', '#EDF2F7'] },
+  ];
   const upd = (k, v) => setBiz(b => ({ ...b, [k]: v }));
   const handleLogoUpload = async () => {
     try {
@@ -2658,6 +2730,36 @@ const BusinessSetupScreen = ({ navigate }) => {
           </View>
           <Text style={{ color: C.green, fontSize: 13, fontWeight: '600' }}>{biz.logo ? 'Change' : 'Upload'}</Text>
         </TouchableOpacity>
+        <Text style={styles.sectionTitle}>APPEARANCE</Text>
+        <Card style={{ padding: 0, overflow: 'hidden' }}>
+          <View style={{ paddingHorizontal: 14, paddingTop: 14, paddingBottom: 8 }}>
+            <Text style={{ fontSize: 16, fontWeight: '800', color: C.grey }}>Appearance</Text>
+            <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 2 }}>Choose how JobTap looks in the field.</Text>
+          </View>
+          {appearanceOptions.map((theme, i) => {
+            const active = appearanceMode === theme.key;
+            return (
+              <View key={theme.key}>
+                {i > 0 && <View style={styles.qbDivider} />}
+                <TouchableOpacity
+                  onPress={() => setAppearanceMode(theme.key)}
+                  style={[styles.qbRow, { justifyContent: 'space-between', alignItems: 'center' }]}
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ fontSize: 14, fontWeight: '700', color: C.grey }}>{theme.name}</Text>
+                    <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 2 }}>{theme.subtitle}</Text>
+                    <View style={{ flexDirection: 'row', gap: 6, marginTop: 8 }}>
+                      {theme.dots.map((dot, idx) => (
+                        <View key={`${theme.key}-${idx}`} style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: dot, borderWidth: 1, borderColor: C.border }} />
+                      ))}
+                    </View>
+                  </View>
+                  <Text style={{ fontSize: 18, color: active ? C.green : C.greyMid, fontWeight: '700' }}>{active ? '✓' : '○'}</Text>
+                </TouchableOpacity>
+              </View>
+            );
+          })}
+        </Card>
         <Text style={styles.sectionTitle}>BUSINESS INFO</Text>
         <Card style={{ padding: 0, overflow: 'hidden' }}>
           {[
@@ -3464,6 +3566,9 @@ export default function App() {
   const [screen, setScreen] = useState('Home');
   const [params, setParams] = useState({});
   const [customers, setCustomers] = useState(MOCK_CUSTOMERS);
+  const [appearanceMode, setAppearanceMode] = useState('rugged');
+  C = THEMES[appearanceMode] || THEMES.rugged;
+  styles = useMemo(() => createStyles(C), [appearanceMode]);
 
   const navigate = (s, p = {}) => { setScreen(s); setParams(p); };
 
@@ -3508,7 +3613,7 @@ export default function App() {
     NewJob: <NewCustomerScreen navigate={navigate} addCustomer={addCustomer} />,
     Schedule: <ScheduleScreen navigate={navigate} />,
     Leads: <LeadsScreen navigate={navigate} />,
-    BusinessSetup: <BusinessSetupScreen navigate={navigate} />,
+    BusinessSetup: <BusinessSetupScreen navigate={navigate} appearanceMode={appearanceMode} setAppearanceMode={setAppearanceMode} />,
     SocialSetup: <SocialSetupScreen navigate={navigate} />,
     HolidayCampaigns: <HolidayCampaignsScreen navigate={navigate} />,
     NotificationSettings: <NotificationSettingsScreen navigate={navigate} />,
@@ -3528,7 +3633,7 @@ export default function App() {
 }
 
 // ─── STYLES ───────────────────────────────────────────────────────────────────
-const styles = StyleSheet.create({
+const createStyles = (C) => StyleSheet.create({
   screen: { flex: 1, backgroundColor: C.greyLight },
   screenGreen: { flex: 1, backgroundColor: C.green },
   header: { backgroundColor: C.green, paddingTop: Platform.OS === 'android' ? 12 : 0, paddingBottom: 14, paddingHorizontal: 16 },
@@ -3729,3 +3834,5 @@ const styles = StyleSheet.create({
   nudgeBtn: { width: 46, height: 46, borderRadius: 12, backgroundColor: C.greenLight, borderWidth: 1, borderColor: C.green, alignItems: 'center', justifyContent: 'center' },
   nudgeBtnText: { color: C.green, fontSize: 22, fontWeight: '800' },
 });
+
+let styles = createStyles(C);
