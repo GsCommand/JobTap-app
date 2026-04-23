@@ -556,7 +556,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: C.greyLight }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <View style={{ backgroundColor: C.green, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingHorizontal: 16, paddingBottom: 16 }}>
         <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: '700', letterSpacing: 1, textAlign: 'center', marginBottom: 10 }}>JobTap</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
@@ -600,7 +600,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
         data={visible}
         keyExtractor={i => i.id}
         contentContainerStyle={{ padding: 14, gap: 8 }}
-        style={{ backgroundColor: C.greyLight }}
+        style={{ backgroundColor: C.pageBg }}
         renderItem={({ item }) => {
           const pill = pillStyle(item.status);
           const initials = item.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
@@ -637,7 +637,7 @@ const CustomerDetailScreen = ({ navigate, params }) => {
   const initials = customer.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: C.greyLight }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       {/* ── GREEN HERO ── */}
       <View style={{ backgroundColor: C.green, paddingBottom: 20 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 16 }}>
@@ -819,7 +819,7 @@ const NewCustomerScreen = ({ navigate, addCustomer }) => {
       </View>
 
       <ScrollView
-        style={{ flex: 1, backgroundColor: C.greyLight }}
+        style={{ flex: 1, backgroundColor: C.pageBg }}
         contentContainerStyle={{ padding: 14 }}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
@@ -1224,7 +1224,7 @@ const QuoteBuilderScreen = ({ navigate, params, customers = MOCK_CUSTOMERS }) =>
       </Modal>
 
       <Modal visible={showQuotePreview} animationType="slide">
-        <SafeAreaView style={{ flex: 1, backgroundColor: C.greyLight }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
           <View style={[styles.header, { flexDirection: 'row', alignItems: 'center', paddingBottom: 14 }]}>
             <TouchableOpacity onPress={() => setShowQuotePreview(false)} style={styles.backBtn}>
               <Text style={styles.backArrow}>‹</Text>
@@ -1427,7 +1427,7 @@ const ActiveJobScreen = ({ navigate, params }) => {
           </View>
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} showsVerticalScrollIndicator={false}>
         <View style={{ backgroundColor: C.green, paddingHorizontal: 18, paddingBottom: 20, paddingTop: 6 }}>
           <Text style={{ color: C.white, fontSize: 26, fontWeight: '900', letterSpacing: -0.5 }}>{job.customerName}</Text>
           <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, marginTop: 2 }}>{jobClient?.street} · {job.service}</Text>
@@ -1558,7 +1558,7 @@ const JobsScreen = ({ navigate }) => {
           <TextInput style={{ flex: 1, fontSize: 14, color: C.white }} placeholder="Search jobs..." placeholderTextColor="rgba(255,255,255,0.55)" value={search} onChangeText={setSearch} />
         </View>
       </View>
-      <ScrollView style={{ backgroundColor: C.greyLight }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ backgroundColor: C.pageBg }} showsVerticalScrollIndicator={false}>
         {activeJobs.length > 0 && (
           <View style={{ padding: 14 }}>
             <Text style={styles.sectionTitle}>SCHEDULED</Text>
@@ -1747,7 +1747,7 @@ const JobCompleteScreen = ({ navigate, params }) => {
         <Text style={{ color: C.white, fontSize: 20, fontWeight: '900', marginTop: 6 }}>{customer.name}</Text>
         <Text style={{ color: 'rgba(255,255,255,0.65)', fontSize: 12, marginTop: 2 }}>{job.service} · {fmtDate(job.date)}</Text>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} showsVerticalScrollIndicator={false}>
         <View style={{ padding: 14, gap: 12 }}>
           <Text style={styles.sectionTitle}>AFTER PHOTOS</Text>
           <View style={[styles.card, { backgroundColor: C.greenDark, borderWidth: 0 }]}>
@@ -1957,7 +1957,7 @@ const ReviewRequestScreen = ({ navigate, params }) => {
           </View>
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         <View style={{ padding: 14 }}>
           <Text style={styles.sectionTitle}>SEND TO</Text>
           <View style={{ flexDirection: 'row', gap: 10, marginBottom: 14 }}>
@@ -2030,7 +2030,7 @@ const FollowUpSchedulerScreen = ({ navigate, params }) => {
           {nextStep && <View style={{ backgroundColor: 'rgba(249,115,22,0.3)', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 10 }}><Text style={{ color: '#FED7AA', fontSize: 12, fontWeight: '600' }}>Next {fmtDate(nextStep.date)}</Text></View>}
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} showsVerticalScrollIndicator={false}>
         <View style={{ padding: 14 }}>
           <Text style={styles.sectionTitle}>FULL TIMELINE</Text>
           {steps.map((step, i) => (
@@ -2120,7 +2120,7 @@ const CustomersDueScreen = ({ navigate }) => {
           ))}
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} showsVerticalScrollIndicator={false}>
         <View style={{ padding: 14 }}>
           {overdue.length > 0 && <>{<Text style={[styles.sectionTitle, { color: C.red }]}>OVERDUE · {overdue.length}</Text>}{overdue.map(c => <CC key={c.id} c={c} badgeColor={C.red} badgeText={`${c.days}d over`} />)}</>}
           {dueNow.length > 0 && <>{<Text style={[styles.sectionTitle, { color: C.orange }]}>DUE NOW · {dueNow.length}</Text>}{dueNow.map(c => <CC key={c.id} c={c} badgeColor={C.orange} badgeText="Due today" />)}</>}
@@ -2168,7 +2168,7 @@ const RevenueDashboardScreen = ({ navigate }) => {
           ))}
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} showsVerticalScrollIndicator={false}>
         <View style={{ padding: 14 }}>
           <Text style={styles.sectionTitle}>THIS MONTH — WEEK BY WEEK</Text>
           <Card>
@@ -2348,7 +2348,7 @@ const ReferralTrackingScreen = ({ navigate }) => {
           ))}
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} showsVerticalScrollIndicator={false}>
         <View style={{ padding: 14 }}>
           <Text style={styles.sectionTitle}>RECENT REFERRALS</Text>
           {CHAINS.map(c => (
@@ -2424,7 +2424,7 @@ const MissedCallAutoTextScreen = ({ navigate }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} showsVerticalScrollIndicator={false}>
         <View style={{ padding: 14 }}>
           <Text style={styles.sectionTitle}>AUTO-TEXT RULES</Text>
           <Card style={{ padding: 0, overflow: 'hidden' }}>
@@ -2607,9 +2607,9 @@ const ScheduleScreen = ({ navigate }) => {
           ))}
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.white }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} showsVerticalScrollIndicator={false}>
         {viewMode === 'month' ? (
-          <View style={{ backgroundColor: C.white }}>
+          <View style={{ backgroundColor: C.pageBg }}>
             {renderMonthGrid()}
             <View style={{ padding: 14, backgroundColor: C.greyLight }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
@@ -2704,7 +2704,7 @@ const LeadsScreen = ({ navigate }) => {
       <FlatList
         data={LEADS}
         keyExtractor={i => i.id}
-        style={{ backgroundColor: C.greyLight }}
+        style={{ backgroundColor: C.pageBg }}
         contentContainerStyle={{ padding: 14 }}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
@@ -2772,7 +2772,7 @@ const BusinessSetupScreen = ({ navigate, appearanceMode, setAppearanceMode }) =>
           </View>
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} contentContainerStyle={{ padding: 14 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} contentContainerStyle={{ padding: 14 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         <Text style={styles.sectionTitle}>LOGO</Text>
         <TouchableOpacity onPress={handleLogoUpload} style={[styles.card, { flexDirection: 'row', alignItems: 'center', gap: 14 }]}>
           <View style={{ width: 64, height: 64, borderRadius: 12, backgroundColor: C.greenLight, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
@@ -2889,7 +2889,7 @@ const SocialSetupScreen = ({ navigate }) => {
           </View>
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} contentContainerStyle={{ padding: 14 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} contentContainerStyle={{ padding: 14 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         <Text style={styles.sectionTitle}>PROFILE LINKS</Text>
         <Card style={{ padding: 0, overflow: 'hidden' }}>
           {[
@@ -2968,7 +2968,7 @@ const HolidayCampaignsScreen = ({ navigate }) => {
           </View>
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} contentContainerStyle={{ padding: 14 }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} contentContainerStyle={{ padding: 14 }} showsVerticalScrollIndicator={false}>
         <Card style={{ backgroundColor: C.greenLight, marginBottom: 14 }}>
           <Text style={{ fontSize: 13, color: C.green, fontWeight: '600', lineHeight: 18 }}>📅 Enabled campaigns auto-send to all active clients on the 1st of that month. Toggle on/off anytime.</Text>
         </Card>
@@ -3018,7 +3018,7 @@ const NotificationSettingsScreen = ({ navigate }) => {
           </View>
         </View>
       </View>
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} contentContainerStyle={{ padding: 14 }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} contentContainerStyle={{ padding: 14 }} showsVerticalScrollIndicator={false}>
         <Card style={{ padding: 0, overflow: 'hidden' }}>
           {NOTIF_ITEMS.map((item, i) => (
             <View key={item.key}>
@@ -3062,7 +3062,7 @@ const MeasureEntryScreen = ({ navigate, params }) => {
         </View>
       </View>
 
-      <ScrollView style={{ flex: 1, backgroundColor: C.greyLight }} contentContainerStyle={{ padding: 16 }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1, backgroundColor: C.pageBg }} contentContainerStyle={{ padding: 16 }} showsVerticalScrollIndicator={false}>
         {customer && (
           <View style={[styles.card, { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 20 }]}>
             <Text style={{ fontSize: 24 }}>📍</Text>
