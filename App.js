@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import {
   View, Text, ScrollView, TouchableOpacity, TextInput,
@@ -377,7 +377,7 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: C.pageBg }]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: C.pageBg }}>
 
         {/* ── GREEN HEADER ── */}
@@ -805,7 +805,7 @@ const NewCustomerScreen = ({ navigate, addCustomer }) => {
   };
 
   return (
-    <SafeAreaView style={styles.screenGreen}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <View style={[styles.header, { paddingBottom: 18 }]}>
         <View style={styles.headerRow}>
           <TouchableOpacity onPress={() => navigate('Home')} style={styles.backBtn}>
@@ -1021,7 +1021,7 @@ const QuoteBuilderScreen = ({ navigate, params, customers = MOCK_CUSTOMERS }) =>
         )}
       </View>
 
-      <ScrollView style={styles.body} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <ScrollView style={[styles.body, { backgroundColor: C.pageBg }]} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         {!selectedCustomer ? (
           <TouchableOpacity style={[styles.greenBtn, { backgroundColor: C.white, borderWidth: 1.5, borderColor: C.green, marginBottom: 16 }]} onPress={() => setShowCustomerPicker(true)}>
             <Text style={[styles.greenBtnText, { color: C.green }]}>+ Select Client</Text>
@@ -1542,7 +1542,7 @@ const JobsScreen = ({ navigate }) => {
   const anySelected = Object.values(selected).some(Boolean);
 
   return (
-    <SafeAreaView style={styles.screenGreen}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <View style={[styles.header, { paddingBottom: 18 }]}>
         <View style={styles.headerRow}>
           <View style={{ flex: 1 }}>
@@ -2102,7 +2102,7 @@ const CustomersDueScreen = ({ navigate }) => {
     </View>
   );
   return (
-    <SafeAreaView style={styles.screenGreen}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <View style={[styles.header, { paddingBottom: 18 }]}>
         <View style={styles.headerRow}>
           <TouchableOpacity onPress={() => navigate('Home', { openMenu: true })} style={styles.backBtn}><Text style={styles.backArrow}>‹</Text></TouchableOpacity>
@@ -2232,7 +2232,7 @@ const NewLeadScreen = ({ navigate }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title="New Lead" subtitle="Capture & auto-reply" onBack={() => navigate('Home')} />
-      <ScrollView style={styles.body} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <ScrollView style={[styles.body, { backgroundColor: C.pageBg }]} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         <TouchableOpacity onPress={() => setAutoReply(v => !v)} style={[styles.alertBanner, { borderLeftColor: autoReply ? C.green : C.border, backgroundColor: autoReply ? C.greenLight : C.greyLight }]}>
           <Text style={{ flex: 1, fontSize: 13, color: autoReply ? C.green : C.greyMid, fontWeight: '600' }}>{autoReply ? '✅ Auto-reply ON — text sends on save' : '○ Auto-reply OFF'}</Text>
           <Text style={{ fontSize: 12, color: C.greyMid }}>Tap to toggle</Text>
@@ -2690,7 +2690,7 @@ const LeadsScreen = ({ navigate }) => {
   const statusCol = (s) => ({ hot: C.red, warm: C.orange, cold: C.blue }[s] || C.greyMid);
   const statusLbl = (s) => ({ hot: '🔥 Hot', warm: '🌤 Warm', cold: '❄️ Cold' }[s] || s);
   return (
-    <SafeAreaView style={styles.screenGreen}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <View style={[styles.header, { paddingBottom: 18 }]}>
         <View style={styles.headerRow}>
           <TouchableOpacity onPress={() => navigate('Home', { openMenu: true })} style={styles.backBtn}><Text style={styles.backArrow}>‹</Text></TouchableOpacity>
@@ -3621,8 +3621,13 @@ export default function App() {
   const [params, setParams] = useState({});
   const [customers, setCustomers] = useState(MOCK_CUSTOMERS);
   const [appearanceMode, setAppearanceMode] = useState('rugged');
-  C = THEMES[appearanceMode];
-  styles = useMemo(() => createStyles(C), [appearanceMode]);
+  const [themeVersion, setThemeVersion] = useState(0);
+
+  useEffect(() => {
+    C = THEMES[appearanceMode];
+    styles = createStyles(C);
+    setThemeVersion((v) => v + 1);
+  }, [appearanceMode]);
 
   const navigate = (s, p = {}) => { setScreen(s); setParams(p); };
 
@@ -3681,7 +3686,7 @@ export default function App() {
   return (
     <>
       <StatusBar barStyle={barStyle} translucent={false} backgroundColor={barBg} />
-      {screenMap[screen] || screenMap['Home']}
+      <View key={`theme-${themeVersion}`} style={{ flex: 1 }}>{screenMap[screen] || screenMap['Home']}</View>
     </>
   );
 }
@@ -3689,7 +3694,7 @@ export default function App() {
 // ─── STYLES ───────────────────────────────────────────────────────────────────
 const createStyles = (C) => StyleSheet.create({
   screen: { flex: 1, backgroundColor: C.pageBg },
-  screenGreen: { flex: 1, backgroundColor: C.primaryBg },
+  screenGreen: { flex: 1 },
   header: { backgroundColor: C.primaryBg, paddingTop: Platform.OS === 'android' ? 12 : 0, paddingBottom: 14, paddingHorizontal: 16 },
   headerRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   headerTitle: { fontSize: 20, fontWeight: '800', color: C.headerText, letterSpacing: -0.3 },
