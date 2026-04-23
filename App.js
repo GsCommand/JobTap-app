@@ -10,92 +10,104 @@ import {
 const MOCK_USER = { id: 'test-user-123', email: 'demo@jobtap.app' };
 
 // ─── COLORS / THEMES ────────────────────────────────────────────────────────
+const BASE_THEME_KEYS = [
+  'bg', 'card', 'primary', 'darkCard', 'moneyGreen', 'subtext',
+  'green', 'greenDark', 'greenLight', 'cream', 'grey', 'greyMid',
+  'greyLight', 'border', 'white', 'red', 'orange', 'blue', 'gold',
+];
+
 const THEMES = {
   rugged: {
-    bg: '#0F1F0F',
-    card: '#fff',
-    primary: '#1E5C15',
-    darkCard: '#162E10',
-    moneyGreen: '#5aad5a',
-    subtext: '#888',
-    green: '#2D6A22',
-    greenDark: '#1E4A17',
-    greenLight: '#E8F5E3',
-    cream: '#F5F1E6',
-    grey: '#555555',
-    greyMid: '#6B6B6B',
-    greyLight: '#F5F5F5',
-    border: '#E0E0E0',
+    bg: '#1F3D2B',
+    card: '#FFFFFF',
+    primary: '#84CC16',
+    darkCard: '#2E5A3D',
+    moneyGreen: '#22C55E',
+    subtext: '#D1D5DB',
+    green: '#84CC16',
+    greenDark: '#1F3D2B',
+    greenLight: '#EEF6E8',
+    cream: '#D6D0C4',
+    grey: '#111827',
+    greyMid: '#6B7280',
+    greyLight: '#D6D0C4',
+    border: '#D8D2C6',
     white: '#FFFFFF',
-    red: '#D32F2F',
-    orange: '#E65100',
-    blue: '#1565C0',
+    red: '#DC2626',
+    orange: '#F59E0B',
+    blue: '#60A5FA',
     gold: '#F9A825',
   },
   pro: {
-    bg: '#0E1A2B',
+    bg: '#1E3A8A',
     card: '#FFFFFF',
-    primary: '#1C4D9E',
-    darkCard: '#14386F',
-    moneyGreen: '#2F9E78',
-    subtext: '#7D8AA5',
-    green: '#2F66C8',
-    greenDark: '#1F4E9B',
-    greenLight: '#EAF1FF',
-    cream: '#EEF3FF',
-    grey: '#2D3A56',
-    greyMid: '#66728A',
-    greyLight: '#F5F8FF',
-    border: '#D8E2F2',
+    primary: '#2563EB',
+    darkCard: '#2B4C7E',
+    moneyGreen: '#22C55E',
+    subtext: '#6B7280',
+    green: '#2563EB',
+    greenDark: '#1E3A8A',
+    greenLight: '#DBEAFE',
+    cream: '#E5E7EB',
+    grey: '#111827',
+    greyMid: '#6B7280',
+    greyLight: '#E5E7EB',
+    border: '#D1D5DB',
     white: '#FFFFFF',
-    red: '#D32F2F',
-    orange: '#E67E22',
-    blue: '#1565C0',
+    red: '#EF4444',
+    orange: '#F59E0B',
+    blue: '#60A5FA',
     gold: '#F9A825',
   },
   field: {
-    bg: '#0E1116',
-    card: '#1A1F28',
-    primary: '#2C7DFF',
-    darkCard: '#11151C',
-    moneyGreen: '#3BCB7A',
-    subtext: '#8D97A8',
-    green: '#2C7DFF',
-    greenDark: '#1D5CC2',
-    greenLight: '#1D2D45',
-    cream: '#141922',
-    grey: '#E7ECF5',
-    greyMid: '#AAB4C6',
-    greyLight: '#0F141C',
-    border: '#2A3445',
+    bg: '#111827',
+    card: '#1F2937',
+    primary: '#F97316',
+    darkCard: '#111827',
+    moneyGreen: '#22C55E',
+    subtext: '#9CA3AF',
+    green: '#F97316',
+    greenDark: '#111827',
+    greenLight: '#372A1F',
+    cream: '#C2B8A3',
+    grey: '#F9FAFB',
+    greyMid: '#9CA3AF',
+    greyLight: '#111827',
+    border: '#374151',
     white: '#FFFFFF',
-    red: '#FF6B6B',
-    orange: '#FFA94D',
-    blue: '#4DABF7',
-    gold: '#FFD43B',
+    red: '#DC2626',
+    orange: '#F97316',
+    blue: '#60A5FA',
+    gold: '#F59E0B',
   },
   clean: {
-    bg: '#F8FAFC',
+    bg: '#F4F4F5',
     card: '#FFFFFF',
-    primary: '#2D3748',
-    darkCard: '#E2E8F0',
-    moneyGreen: '#2F855A',
-    subtext: '#718096',
-    green: '#2B6CB0',
-    greenDark: '#2C5282',
-    greenLight: '#EDF2F7',
-    cream: '#FFFFFF',
-    grey: '#2D3748',
-    greyMid: '#718096',
-    greyLight: '#F7FAFC',
-    border: '#E2E8F0',
+    primary: '#16A34A',
+    darkCard: '#3F3F46',
+    moneyGreen: '#22C55E',
+    subtext: '#A1A1AA',
+    green: '#16A34A',
+    greenDark: '#2F2F2F',
+    greenLight: '#DCFCE7',
+    cream: '#F4F4F5',
+    grey: '#111827',
+    greyMid: '#6B7280',
+    greyLight: '#F4F4F5',
+    border: '#D4D4D8',
     white: '#FFFFFF',
-    red: '#C53030',
-    orange: '#DD6B20',
-    blue: '#2B6CB0',
-    gold: '#D69E2E',
+    red: '#DC2626',
+    orange: '#F59E0B',
+    blue: '#0EA5E9',
+    gold: '#F9A825',
   },
 };
+
+Object.values(THEMES).forEach((theme) => {
+  BASE_THEME_KEYS.forEach((key) => {
+    if (theme[key] === undefined) throw new Error(`Theme key missing: ${key}`);
+  });
+});
 let C = THEMES.rugged;
 
 // ─── MOCK DATA ────────────────────────────────────────────────────────────────
@@ -2686,10 +2698,10 @@ const BusinessSetupScreen = ({ navigate, appearanceMode, setAppearanceMode }) =>
   const [biz, setBiz] = useState({ ...BIZ_CONFIG });
   const [saved, setSaved] = useState(false);
   const appearanceOptions = [
-    { key: 'rugged', name: 'Rugged', subtitle: 'Classic JobTap look', dots: ['#2D6A22', '#E8F5E3', '#F5F1E6'] },
-    { key: 'pro', name: 'Pro', subtitle: 'Built for tracking and growth', dots: ['#2F66C8', '#EAF1FF', '#14386F'] },
-    { key: 'field', name: 'Field', subtitle: 'Best for working outside or on the go', dots: ['#0F141C', '#2C7DFF', '#AAB4C6'] },
-    { key: 'clean', name: 'Clean', subtitle: 'Clear and easy to read', dots: ['#FFFFFF', '#2B6CB0', '#EDF2F7'] },
+    { key: 'rugged', name: 'Rugged', subtitle: 'Classic JobTap look' },
+    { key: 'pro', name: 'Pro', subtitle: 'Built for tracking and growth' },
+    { key: 'field', name: 'Field', subtitle: 'Best for working outside' },
+    { key: 'clean', name: 'Clean', subtitle: 'Clear and easy to read' },
   ];
   const upd = (k, v) => setBiz(b => ({ ...b, [k]: v }));
   const handleLogoUpload = async () => {
@@ -2749,7 +2761,7 @@ const BusinessSetupScreen = ({ navigate, appearanceMode, setAppearanceMode }) =>
                     <Text style={{ fontSize: 14, fontWeight: '700', color: C.grey }}>{theme.name}</Text>
                     <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 2 }}>{theme.subtitle}</Text>
                     <View style={{ flexDirection: 'row', gap: 6, marginTop: 8 }}>
-                      {theme.dots.map((dot, idx) => (
+                      {[THEMES[theme.key].greenDark, THEMES[theme.key].green, THEMES[theme.key].greyLight].map((dot, idx) => (
                         <View key={`${theme.key}-${idx}`} style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: dot, borderWidth: 1, borderColor: C.border }} />
                       ))}
                     </View>
@@ -3196,15 +3208,15 @@ const MeasureSatelliteScreen = ({ navigate, params }) => {
             {flags.length >= 3 && (
               <Polygon
                 coordinates={flags}
-                fillColor="rgba(45,106,34,0.25)"
-                strokeColor="#2D6A22"
+                fillColor={`${C.green}40`}
+                strokeColor={C.green}
                 strokeWidth={2}
               />
             )}
           </MapView>
         ) : (
           /* Fallback when react-native-maps not available (web Snack) */
-          <View style={{ flex: 1, backgroundColor: '#1a2a1a', justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+          <View style={{ flex: 1, backgroundColor: C.greenDark, justifyContent: 'center', alignItems: 'center', padding: 24 }}>
             <Text style={{ fontSize: 48, marginBottom: 16 }}>🛰</Text>
             <Text style={{ color: C.white, fontSize: 18, fontWeight: '800', textAlign: 'center', marginBottom: 8 }}>Satellite Map</Text>
             <Text style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13, textAlign: 'center', lineHeight: 20, marginBottom: 24 }}>
@@ -3420,11 +3432,11 @@ const MeasureCameraScreen = ({ navigate, params }) => {
       </View>
 
       {/* Camera + SVG overlay */}
-      <View style={{ flex: 1, position: 'relative', backgroundColor: '#111' }}>
+      <View style={{ flex: 1, position: 'relative', backgroundColor: C.greenDark }}>
         {cameraAvail && permission && CameraViewComp ? (
           <CameraViewComp style={{ flex: 1 }} facing="back" />
         ) : (
-          <View style={{ flex: 1, backgroundColor: '#1a2a1a', justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ flex: 1, backgroundColor: C.greenDark, justifyContent: 'center', alignItems: 'center' }}>
             <Text style={{ fontSize: 48, marginBottom: 12 }}>📷</Text>
             <Text style={{ color: C.white, fontSize: 16, fontWeight: '700', textAlign: 'center', marginBottom: 8 }}>Camera View</Text>
             <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, textAlign: 'center', paddingHorizontal: 32, lineHeight: 18 }}>
@@ -3443,16 +3455,16 @@ const MeasureCameraScreen = ({ navigate, params }) => {
             <SvgComp style={{ ...StyleSheet.absoluteFillObject }}>
               {/* Polygon fill */}
               {points.length >= 3 && PolygonSvg && (
-                <PolygonSvg points={polyPoints} fill="rgba(45,106,34,0.25)" stroke="#2D6A22" strokeWidth="2" />
+                <PolygonSvg points={polyPoints} fill={`${C.green}40`} stroke={C.green} strokeWidth="2" />
               )}
               {/* Lines */}
               {LineSvg && lineSegs.slice(0, points.length - 1).map((seg, i) => (
-                <LineSvg key={i} x1={seg.x1} y1={seg.y1} x2={seg.x2} y2={seg.y2} stroke={i === 0 ? '#FCD34D' : '#2D6A22'} strokeWidth="2" strokeDasharray={i === 0 ? '6,4' : undefined} />
+                <LineSvg key={i} x1={seg.x1} y1={seg.y1} x2={seg.x2} y2={seg.y2} stroke={i === 0 ? '#FCD34D' : C.green} strokeWidth="2" strokeDasharray={i === 0 ? '6,4' : undefined} />
               ))}
               {/* Points */}
               {CircleSvg && points.map((p, i) => (
                 <CircleSvg key={i} cx={p.x} cy={p.y} r={i === selectedPoint ? 12 : 8}
-                  fill={i === 0 ? '#FCD34D' : i === 1 ? '#FFA726' : '#2D6A22'}
+                  fill={i === 0 ? '#FCD34D' : i === 1 ? '#FFA726' : C.green}
                   stroke="white" strokeWidth="2"
                   onPress={() => setSelectedPoint(i)}
                 />
@@ -3567,7 +3579,7 @@ export default function App() {
   const [params, setParams] = useState({});
   const [customers, setCustomers] = useState(MOCK_CUSTOMERS);
   const [appearanceMode, setAppearanceMode] = useState('rugged');
-  C = THEMES[appearanceMode] || THEMES.rugged;
+  C = THEMES[appearanceMode];
   styles = useMemo(() => createStyles(C), [appearanceMode]);
 
   const navigate = (s, p = {}) => { setScreen(s); setParams(p); };
@@ -3644,22 +3656,22 @@ const createStyles = (C) => StyleSheet.create({
   backArrow: { color: C.white, fontSize: 26, lineHeight: 30, marginLeft: -2 },
   headerActionBtn: { width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.2)', justifyContent: 'center', alignItems: 'center' },
   body: { flex: 1, paddingHorizontal: 14, paddingTop: 10 },
-  card: { backgroundColor: C.white, borderRadius: 14, padding: 14, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, shadowOffset: { width: 0, height: 2 }, elevation: 2 },
+  card: { backgroundColor: C.card, borderRadius: 14, padding: 14, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, shadowOffset: { width: 0, height: 2 }, elevation: 2 },
   kpiRow: { flexDirection: 'row', gap: 8, marginBottom: 10 },
   kpiCard: { flex: 1, alignItems: 'center', paddingVertical: 14 },
   kpiVal: { fontSize: 20, fontWeight: '800', color: C.green, letterSpacing: -0.5 },
   kpiLabel: { fontSize: 10, color: C.greyMid, marginTop: 2, textAlign: 'center' },
   alertBanner: { backgroundColor: '#FFF8E1', borderRadius: 12, padding: 12, marginBottom: 14, flexDirection: 'row', alignItems: 'center', borderLeftWidth: 3, borderLeftColor: C.gold },
   sectionTitle: { fontSize: 12, fontWeight: '700', color: C.greyMid, letterSpacing: 0.5, marginBottom: 8, marginTop: 4 },
-  tabBar: { flexDirection: 'row', backgroundColor: C.white, borderTopWidth: 1, borderTopColor: C.border, paddingBottom: Platform.OS === 'ios' ? 14 : 4, paddingTop: 4 },
+  tabBar: { flexDirection: 'row', backgroundColor: C.card, borderTopWidth: 1, borderTopColor: C.border, paddingBottom: Platform.OS === 'ios' ? 14 : 4, paddingTop: 4 },
   tab: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 3 },
   tabIcon: { fontSize: 24, opacity: 1 },
   tabLabel: { fontSize: 11, color: C.greyMid },
   fabBtn: { width: 53, height: 53, borderRadius: 27, backgroundColor: C.green, justifyContent: 'center', alignItems: 'center', marginTop: -20, shadowColor: C.green, shadowOpacity: 0.4, shadowRadius: 8, elevation: 4 },
-  filterChip: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20, backgroundColor: C.white, marginRight: 8, borderWidth: 1, borderColor: C.border },
+  filterChip: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20, backgroundColor: C.card, marginRight: 8, borderWidth: 1, borderColor: C.border },
   filterChipActive: { backgroundColor: C.green, borderColor: C.green },
   filterChipText: { fontSize: 13, color: C.grey, fontWeight: '500' },
-  clientRow: { backgroundColor: C.white, borderRadius: 12, padding: 12, marginBottom: 8, flexDirection: 'row', alignItems: 'center', gap: 12, shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 4, elevation: 1 },
+  clientRow: { backgroundColor: C.card, borderRadius: 12, padding: 12, marginBottom: 8, flexDirection: 'row', alignItems: 'center', gap: 12, shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 4, elevation: 1 },
   avatar: { width: 42, height: 42, borderRadius: 21, justifyContent: 'center', alignItems: 'center' },
   avatarText: { fontSize: 18, fontWeight: '700' },
   clientName: { fontSize: 14, fontWeight: '700', color: '#000' },
@@ -3670,13 +3682,13 @@ const createStyles = (C) => StyleSheet.create({
   greenBtn: { backgroundColor: C.green, borderRadius: 14, padding: 16, alignItems: 'center', marginBottom: 10 },
   greenBtnText: { color: C.white, fontSize: 16, fontWeight: '700' },
   fieldLabel: { fontSize: 12, fontWeight: '600', color: C.greyMid, marginBottom: 4 },
-  input: { backgroundColor: C.white, borderRadius: 10, padding: 12, fontSize: 15, color: C.grey, borderWidth: 1, borderColor: C.border, marginBottom: 0 },
+  input: { backgroundColor: C.card, borderRadius: 10, padding: 12, fontSize: 15, color: C.grey, borderWidth: 1, borderColor: C.border, marginBottom: 0 },
   qbRow: { flexDirection: 'row', alignItems: 'center', padding: 14, gap: 12 },
   qbRowIcon: { width: 32, height: 32, borderRadius: 8, backgroundColor: C.greenLight, justifyContent: 'center', alignItems: 'center' },
   qbRowLabel: { fontSize: 11, color: C.greyMid, fontWeight: '600', marginBottom: 2 },
   qbRowValue: { fontSize: 15, color: C.grey, fontWeight: '600' },
   qbDivider: { height: 1, backgroundColor: C.border, marginHorizontal: 14 },
-  deliveryBtn: { flex: 1, paddingVertical: 10, borderRadius: 12, backgroundColor: C.white, borderWidth: 1.5, borderColor: C.border, alignItems: 'center' },
+  deliveryBtn: { flex: 1, paddingVertical: 10, borderRadius: 12, backgroundColor: C.card, borderWidth: 1.5, borderColor: C.border, alignItems: 'center' },
   deliveryBtnActive: { borderColor: C.green, backgroundColor: C.greenLight },
   deliveryBtnText: { fontSize: 13, color: C.greyMid, fontWeight: '500' },
   checkbox: { width: 20, height: 20, borderRadius: 5, borderWidth: 2, borderColor: C.border, justifyContent: 'center', alignItems: 'center' },
@@ -3684,11 +3696,11 @@ const createStyles = (C) => StyleSheet.create({
   accordionBody: { backgroundColor: '#F0F7EE', paddingHorizontal: 16, paddingTop: 12, paddingBottom: 14, borderBottomWidth: 1, borderBottomColor: C.green + '33' },
   accordionRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
   accordionLabel: { fontSize: 13, color: C.greyMid, fontWeight: '500' },
-  accordionInput: { flexDirection: 'row', alignItems: 'center', backgroundColor: C.white, borderWidth: 1.5, borderColor: C.green, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 6, gap: 4, minWidth: 110 },
+  accordionInput: { flexDirection: 'row', alignItems: 'center', backgroundColor: C.card, borderWidth: 1.5, borderColor: C.green, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 6, gap: 4, minWidth: 110 },
   accordionInputField: { fontSize: 16, fontWeight: '700', color: C.green, minWidth: 60, textAlign: 'right' },
   flatToggleRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 8, marginBottom: 4 },
   flatToggleBox: { width: 20, height: 20, borderRadius: 5, borderWidth: 2, borderColor: C.border, justifyContent: 'center', alignItems: 'center' },
-  quoteDoc: { backgroundColor: C.white, borderRadius: 16, overflow: 'hidden', shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 12, elevation: 4 },
+  quoteDoc: { backgroundColor: C.card, borderRadius: 16, overflow: 'hidden', shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 12, elevation: 4 },
   quoteDocHeader: { backgroundColor: C.green, padding: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   quoteLogoText: { color: C.white, fontSize: 22, fontWeight: '900', letterSpacing: 2 },
   quoteFromTo: { flexDirection: 'row', padding: 16, borderBottomWidth: 1, borderBottomColor: C.border },
@@ -3700,13 +3712,13 @@ const createStyles = (C) => StyleSheet.create({
   quoteLineRow: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: C.border },
   quoteTotalRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16, borderTopWidth: 2, borderTopColor: C.green, marginTop: 4 },
   quoteFooter: { padding: 16, borderTopWidth: 1, borderTopColor: C.border, marginTop: 8 },
-  sourceChip: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20, backgroundColor: C.white, borderWidth: 1.5, borderColor: C.border },
+  sourceChip: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20, backgroundColor: C.card, borderWidth: 1.5, borderColor: C.border },
   sourceChipText: { fontSize: 13, color: C.grey, fontWeight: '500' },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
-  modalSheet: { backgroundColor: C.white, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 20, maxHeight: '75%' },
+  modalSheet: { backgroundColor: C.card, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 20, maxHeight: '75%' },
   modalHandle: { width: 36, height: 4, borderRadius: 2, backgroundColor: C.border, alignSelf: 'center', marginBottom: 16 },
   quickSheet: {
-    backgroundColor: C.cream,
+    backgroundColor: C.greyLight,
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
     paddingHorizontal: 20,
@@ -3736,11 +3748,11 @@ const createStyles = (C) => StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(0,0,0,0.15)',
-    backgroundColor: C.cream,
+    backgroundColor: C.card,
   },
   quickRowHighlight: {
-    backgroundColor: '#E8F0D8',
-    borderColor: 'rgba(45,106,34,0.3)',
+    backgroundColor: C.greenLight,
+    borderColor: `${C.green}4D`,
   },
   quickRowIcon: {
     fontSize: 20,
@@ -3792,18 +3804,18 @@ const createStyles = (C) => StyleSheet.create({
     textTransform: 'lowercase',
     letterSpacing: 0.2,
   },
-  attentionCard: { backgroundColor: C.white, borderRadius: 14, padding: 14, marginBottom: 10, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
+  attentionCard: { backgroundColor: C.card, borderRadius: 14, padding: 14, marginBottom: 10, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
   attentionDot: { width: 40, height: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center' },
   callBackBtn: { backgroundColor: C.green, paddingHorizontal: 10, paddingVertical: 9, borderRadius: 14 },
-  jobCard: { backgroundColor: C.white, borderRadius: 14, paddingHorizontal: 14, paddingVertical: 10, marginBottom: 8, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
+  jobCard: { backgroundColor: C.card, borderRadius: 14, paddingHorizontal: 14, paddingVertical: 10, marginBottom: 8, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
   revenueCard: { backgroundColor: '#1D6FD8', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginTop: 4 },
   scheduleCard: { backgroundColor: '#0F766E', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
-  eventCard: { backgroundColor: C.white, borderRadius: 12, padding: 14, marginBottom: 8, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 4, elevation: 1 },
+  eventCard: { backgroundColor: C.card, borderRadius: 12, padding: 14, marginBottom: 8, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 4, elevation: 1 },
   jobStatChip: { flex: 1, backgroundColor: 'rgba(255,255,255,0.12)', borderRadius: 10, padding: 10, alignItems: 'center' },
   jobStatLabel: { fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: '700', letterSpacing: 0.5, marginBottom: 3 },
   jobStatVal: { fontSize: 14, fontWeight: '800', color: C.white },
-  templateCard: { flex: 1, height: 90, borderRadius: 12, borderWidth: 1.5, borderColor: C.border, backgroundColor: C.white, padding: 8, overflow: 'hidden' },
-  channelCard: { flex: 1, backgroundColor: C.white, borderRadius: 14, padding: 14, alignItems: 'center', borderWidth: 1.5, borderColor: C.border },
+  templateCard: { flex: 1, height: 90, borderRadius: 12, borderWidth: 1.5, borderColor: C.border, backgroundColor: C.card, padding: 8, overflow: 'hidden' },
+  channelCard: { flex: 1, backgroundColor: C.card, borderRadius: 14, padding: 14, alignItems: 'center', borderWidth: 1.5, borderColor: C.border },
   channelCheck: { width: 18, height: 18, borderRadius: 9, borderWidth: 2, borderColor: C.border, justifyContent: 'center', alignItems: 'center', marginTop: 8 },
   menuRow: { flexDirection: 'row', alignItems: 'center', gap: 14, paddingVertical: 12 },
   menuIcon: { width: 40, height: 40, borderRadius: 10, backgroundColor: C.greenLight, justifyContent: 'center', alignItems: 'center' },
@@ -3815,14 +3827,14 @@ const createStyles = (C) => StyleSheet.create({
   detailAvatarText: { fontSize: 26, fontWeight: '800', color: C.white },
   detailName: { fontSize: 22, fontWeight: '900', color: C.white, letterSpacing: -0.3 },
   detailAddr: { fontSize: 12, color: 'rgba(255,255,255,0.65)', marginTop: 3 },
-  detailActions: { backgroundColor: C.white, flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: C.border },
+  detailActions: { backgroundColor: C.card, flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: C.border },
   detailActionBtn: { flex: 1, alignItems: 'center', paddingVertical: 12, gap: 4 },
   detailActionLabel: { fontSize: 10, color: C.greyMid, fontWeight: '600' },
   timelineRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: C.border },
   timelineDot: { width: 12, height: 12, borderRadius: 6, borderWidth: 2 },
   detailFab: { position: 'absolute', bottom: 24, right: 20, width: 56, height: 56, borderRadius: 28, backgroundColor: C.green, justifyContent: 'center', alignItems: 'center', shadowColor: C.green, shadowOpacity: 0.4, shadowRadius: 10, elevation: 6, padding: 0 },
-  payMethodBtn: { flex: 1, backgroundColor: C.white, borderRadius: 12, padding: 10, alignItems: 'center', borderWidth: 1.5, borderColor: C.border, gap: 2 },
-  followUpCard: { backgroundColor: C.white, borderRadius: 14, padding: 14, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 5, elevation: 2 },
+  payMethodBtn: { flex: 1, backgroundColor: C.card, borderRadius: 12, padding: 10, alignItems: 'center', borderWidth: 1.5, borderColor: C.border, gap: 2 },
+  followUpCard: { backgroundColor: C.card, borderRadius: 14, padding: 14, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 5, elevation: 2 },
   followUpIconLg: { width: 44, height: 44, borderRadius: 22, justifyContent: 'center', alignItems: 'center' },
   // Settings styles
   settingsIcon: { width: 36, height: 36, borderRadius: 8, backgroundColor: C.greenLight, justifyContent: 'center', alignItems: 'center' },
