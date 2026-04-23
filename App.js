@@ -14,6 +14,8 @@ const BASE_THEME_KEYS = [
   'bg', 'card', 'primary', 'darkCard', 'moneyGreen', 'subtext',
   'green', 'greenDark', 'greenLight', 'cream', 'grey', 'greyMid',
   'greyLight', 'border', 'white', 'red', 'orange', 'blue', 'gold',
+  'primaryBg', 'surface', 'pageBg', 'cardBg', 'headerText', 'bodyText',
+  'mutedText', 'action', 'revenueCard', 'scheduleCard',
 ];
 
 const THEMES = {
@@ -37,6 +39,16 @@ const THEMES = {
     orange: '#F59E0B',
     blue: '#60A5FA',
     gold: '#F9A825',
+    primaryBg: '#1F3D2B',
+    surface: '#2E5A3D',
+    pageBg: '#D6D0C4',
+    cardBg: '#FFFFFF',
+    headerText: '#FFFFFF',
+    bodyText: '#111827',
+    mutedText: '#6B7280',
+    action: '#84CC16',
+    revenueCard: '#2E5A3D',
+    scheduleCard: '#2E5A3D',
   },
   pro: {
     bg: '#1E3A8A',
@@ -58,6 +70,16 @@ const THEMES = {
     orange: '#F59E0B',
     blue: '#60A5FA',
     gold: '#F9A825',
+    primaryBg: '#1E3A8A',
+    surface: '#2B4C7E',
+    pageBg: '#E5E7EB',
+    cardBg: '#FFFFFF',
+    headerText: '#FFFFFF',
+    bodyText: '#111827',
+    mutedText: '#6B7280',
+    action: '#2563EB',
+    revenueCard: '#2563EB',
+    scheduleCard: '#2B4C7E',
   },
   field: {
     bg: '#111827',
@@ -79,6 +101,16 @@ const THEMES = {
     orange: '#F97316',
     blue: '#60A5FA',
     gold: '#F59E0B',
+    primaryBg: '#111827',
+    surface: '#111827',
+    pageBg: '#111827',
+    cardBg: '#1F2937',
+    headerText: '#FFFFFF',
+    bodyText: '#F9FAFB',
+    mutedText: '#9CA3AF',
+    action: '#F97316',
+    revenueCard: '#111827',
+    scheduleCard: '#C2B8A3',
   },
   clean: {
     bg: '#F4F4F5',
@@ -100,6 +132,16 @@ const THEMES = {
     orange: '#F59E0B',
     blue: '#0EA5E9',
     gold: '#F9A825',
+    primaryBg: '#2F2F2F',
+    surface: '#3F3F46',
+    pageBg: '#F4F4F5',
+    cardBg: '#FFFFFF',
+    headerText: '#FFFFFF',
+    bodyText: '#111827',
+    mutedText: '#6B7280',
+    action: '#16A34A',
+    revenueCard: '#3F3F46',
+    scheduleCard: '#3F3F46',
   },
 };
 
@@ -335,15 +377,15 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={[styles.screenGreen, { backgroundColor: C.greyLight }]}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: C.greyLight }}>
+    <SafeAreaView style={[styles.screenGreen, { backgroundColor: C.pageBg }]}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: C.pageBg }}>
 
         {/* ── GREEN HEADER ── */}
         <View style={styles.homeHeader}>
-          <Text style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: '700', letterSpacing: 1, textAlign: 'center', marginBottom: 14 }}>JobTap</Text>
-          <Text style={{ color: 'rgba(255,255,255,0.72)', fontSize: 14, fontWeight: '500', marginBottom: 2 }}>Good morning</Text>
+          <Text style={{ color: `${C.headerText}80`, fontSize: 12, fontWeight: '700', letterSpacing: 1, textAlign: 'center', marginBottom: 14 }}>JobTap</Text>
+          <Text style={{ color: `${C.headerText}C0`, fontSize: 14, fontWeight: '500', marginBottom: 2 }}>Good morning</Text>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
-            <Text style={{ color: C.white, fontSize: 34, fontWeight: '900', letterSpacing: -1 }}>Hey Greg</Text>
+            <Text style={{ color: C.headerText, fontSize: 34, fontWeight: '900', letterSpacing: -1 }}>Hey Greg</Text>
             <TouchableOpacity onPress={() => setShowMenu(true)} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
               <Text style={{ fontSize: 34, lineHeight: 38 }}>⚙️</Text>
             </TouchableOpacity>
@@ -358,10 +400,10 @@ const HomeScreen = ({ navigate, params }) => {
               <TouchableOpacity
                 key={i}
                 onPress={() => navigate(k.nav)}
-                style={{ flex: 1, backgroundColor: 'rgba(255,255,255,0.18)', borderRadius: 12, paddingVertical: 12, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' }}
+                style={{ flex: 1, backgroundColor: C.surface, borderRadius: 12, paddingVertical: 12, alignItems: 'center', borderWidth: 1, borderColor: `${C.headerText}33` }}
               >
-                <Text style={{ color: C.white, fontSize: 20, fontWeight: '900', letterSpacing: -0.5 }}>{k.val}</Text>
-                <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 10, fontWeight: '600', marginTop: 2 }}>{k.label}</Text>
+                <Text style={{ color: C.headerText, fontSize: 20, fontWeight: '900', letterSpacing: -0.5 }}>{k.val}</Text>
+                <Text style={{ color: `${C.headerText}B3`, fontSize: 10, fontWeight: '600', marginTop: 2 }}>{k.label}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -370,7 +412,7 @@ const HomeScreen = ({ navigate, params }) => {
         <View style={{ paddingHorizontal: 14, paddingTop: 18 }}>
 
           {/* ── NEEDS ATTENTION ── */}
-          <Text style={[styles.sectionTitle, { color: 'rgba(255,255,255,0.5)', fontSize: 13 }]}>NEEDS ATTENTION</Text>
+          <Text style={[styles.sectionTitle, { color: C.mutedText, fontSize: 13 }]}>NEEDS ATTENTION</Text>
           {ATTENTION.map(item => (
             <View key={item.id} style={[styles.attentionCard, { borderLeftColor: item.actionColor }]}>
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
@@ -378,8 +420,8 @@ const HomeScreen = ({ navigate, params }) => {
                   <Text style={{ fontSize: 16 }}>{item.icon}</Text>
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '700', color: C.grey }}>{item.title}</Text>
-                  <Text style={{ fontSize: 12, color: C.greyMid, marginTop: 1 }}>{item.sub}</Text>
+                  <Text style={{ fontSize: 14, fontWeight: '700', color: C.bodyText }}>{item.title}</Text>
+                  <Text style={{ fontSize: 12, color: C.mutedText, marginTop: 1 }}>{item.sub}</Text>
                 </View>
                 <TouchableOpacity style={{ backgroundColor: item.actionColor + '18', paddingHorizontal: 12, paddingVertical: 7, borderRadius: 20, borderWidth: 1, borderColor: item.actionColor }}>
                   <Text style={{ color: item.actionColor, fontSize: 12, fontWeight: '700' }}>{item.action}</Text>
@@ -389,25 +431,25 @@ const HomeScreen = ({ navigate, params }) => {
           ))}
 
           {/* ── TODAY'S JOBS ── */}
-          <Text style={[styles.sectionTitle, { color: 'rgba(255,255,255,0.5)', fontSize: 13, marginTop: 8 }]}>TODAY'S JOBS</Text>
+          <Text style={[styles.sectionTitle, { color: C.mutedText, fontSize: 13, marginTop: 8 }]}>TODAY'S JOBS</Text>
           {todayJobs.map(job => {
             const client = MOCK_CUSTOMERS.find(c => c.id === job.customerId);
             return (
-              <View key={job.id} style={{ backgroundColor: C.white, borderRadius: 16, padding: 16, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 }}>
+              <View key={job.id} style={{ backgroundColor: C.cardBg, borderRadius: 16, padding: 16, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
-                  <Text style={{ fontSize: 17, fontWeight: '800', color: C.grey, flex: 1 }}>{job.customerName}</Text>
-                  <View style={{ backgroundColor: C.green + '18', paddingHorizontal: 10, paddingVertical: 3, borderRadius: 20, marginLeft: 8, borderWidth: 1, borderColor: C.green }}>
-                    <Text style={{ color: C.green, fontSize: 12, fontWeight: '700' }}>9am</Text>
+                  <Text style={{ fontSize: 17, fontWeight: '800', color: C.bodyText, flex: 1 }}>{job.customerName}</Text>
+                  <View style={{ backgroundColor: C.action + '18', paddingHorizontal: 10, paddingVertical: 3, borderRadius: 20, marginLeft: 8, borderWidth: 1, borderColor: C.action }}>
+                    <Text style={{ color: C.action, fontSize: 12, fontWeight: '700' }}>9am</Text>
                   </View>
                 </View>
-                <Text style={{ fontSize: 13, color: C.greyMid, marginBottom: 14 }}>
+                <Text style={{ fontSize: 13, color: C.mutedText, marginBottom: 14 }}>
                   {client?.street} · {job.service}
                 </Text>
                 <TouchableOpacity
                   onPress={() => Linking.openURL(`https://maps.google.com/maps?q=${encodeURIComponent(client?.address || job.customerName)}`)}
-                  style={{ backgroundColor: C.green, borderRadius: 12, paddingVertical: 14, alignItems: 'center' }}
+                  style={{ backgroundColor: C.action, borderRadius: 12, paddingVertical: 14, alignItems: 'center' }}
                 >
-                  <Text style={{ color: '#fff', fontSize: 15, fontWeight: '800' }}>Navigate + start job</Text>
+                  <Text style={{ color: C.headerText, fontSize: 15, fontWeight: '800' }}>Navigate + start job</Text>
                 </TouchableOpacity>
               </View>
             );
@@ -3602,7 +3644,7 @@ export default function App() {
     'NotificationSettings','MeasureEntry','MeasureSatellite','MeasureCamera',
   ];
   const barStyle = greenHeaderScreens.includes(screen) ? 'light-content' : 'dark-content';
-  const barBg = greenHeaderScreens.includes(screen) ? C.green : C.white;
+  const barBg = greenHeaderScreens.includes(screen) ? C.primaryBg : C.cardBg;
 
   const screenMap = {
     Home: <HomeScreen navigate={navigate} params={params} />,
@@ -3646,17 +3688,17 @@ export default function App() {
 
 // ─── STYLES ───────────────────────────────────────────────────────────────────
 const createStyles = (C) => StyleSheet.create({
-  screen: { flex: 1, backgroundColor: C.greyLight },
-  screenGreen: { flex: 1, backgroundColor: C.green },
-  header: { backgroundColor: C.green, paddingTop: Platform.OS === 'android' ? 12 : 0, paddingBottom: 14, paddingHorizontal: 16 },
+  screen: { flex: 1, backgroundColor: C.pageBg },
+  screenGreen: { flex: 1, backgroundColor: C.primaryBg },
+  header: { backgroundColor: C.primaryBg, paddingTop: Platform.OS === 'android' ? 12 : 0, paddingBottom: 14, paddingHorizontal: 16 },
   headerRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  headerTitle: { fontSize: 20, fontWeight: '800', color: C.white, letterSpacing: -0.3 },
-  headerSub: { fontSize: 12, color: 'rgba(255,255,255,0.7)', marginTop: 1 },
+  headerTitle: { fontSize: 20, fontWeight: '800', color: C.headerText, letterSpacing: -0.3 },
+  headerSub: { fontSize: 12, color: `${C.headerText}B3`, marginTop: 1 },
   backBtn: { width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.15)', justifyContent: 'center', alignItems: 'center' },
-  backArrow: { color: C.white, fontSize: 26, lineHeight: 30, marginLeft: -2 },
+  backArrow: { color: C.headerText, fontSize: 26, lineHeight: 30, marginLeft: -2 },
   headerActionBtn: { width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.2)', justifyContent: 'center', alignItems: 'center' },
   body: { flex: 1, paddingHorizontal: 14, paddingTop: 10 },
-  card: { backgroundColor: C.card, borderRadius: 14, padding: 14, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, shadowOffset: { width: 0, height: 2 }, elevation: 2 },
+  card: { backgroundColor: C.cardBg, borderRadius: 14, padding: 14, marginBottom: 10, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, shadowOffset: { width: 0, height: 2 }, elevation: 2 },
   kpiRow: { flexDirection: 'row', gap: 8, marginBottom: 10 },
   kpiCard: { flex: 1, alignItems: 'center', paddingVertical: 14 },
   kpiVal: { fontSize: 20, fontWeight: '800', color: C.green, letterSpacing: -0.5 },
@@ -3679,8 +3721,8 @@ const createStyles = (C) => StyleSheet.create({
   clientJobs: { fontSize: 11, color: C.greyMid, marginTop: 2 },
   statusPill: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20 },
   cardLabel: { fontSize: 10, fontWeight: '700', color: C.greyMid, letterSpacing: 0.5, marginBottom: 6 },
-  greenBtn: { backgroundColor: C.green, borderRadius: 14, padding: 16, alignItems: 'center', marginBottom: 10 },
-  greenBtnText: { color: C.white, fontSize: 16, fontWeight: '700' },
+  greenBtn: { backgroundColor: C.action, borderRadius: 14, padding: 16, alignItems: 'center', marginBottom: 10 },
+  greenBtnText: { color: C.headerText, fontSize: 16, fontWeight: '700' },
   fieldLabel: { fontSize: 12, fontWeight: '600', color: C.greyMid, marginBottom: 4 },
   input: { backgroundColor: C.card, borderRadius: 10, padding: 12, fontSize: 15, color: C.grey, borderWidth: 1, borderColor: C.border, marginBottom: 0 },
   qbRow: { flexDirection: 'row', alignItems: 'center', padding: 14, gap: 12 },
@@ -3774,16 +3816,16 @@ const createStyles = (C) => StyleSheet.create({
     color: C.grey,
   },
   modalTitle: { fontSize: 18, fontWeight: '700', color: C.grey, marginBottom: 12 },
-  homeHeader: { backgroundColor: C.green, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 20, paddingHorizontal: 18 },
-  homeDate: { fontSize: 12, color: 'rgba(255,255,255,0.65)', fontWeight: '500', marginBottom: 2 },
-  homeGreeting: { fontSize: 26, fontWeight: '900', color: C.white, letterSpacing: -0.5, marginBottom: 16 },
+  homeHeader: { backgroundColor: C.primaryBg, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 20, paddingHorizontal: 18 },
+  homeDate: { fontSize: 12, color: `${C.headerText}A6`, fontWeight: '500', marginBottom: 2 },
+  homeGreeting: { fontSize: 26, fontWeight: '900', color: C.headerText, letterSpacing: -0.5, marginBottom: 16 },
   homeKpiRow: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(255,255,255,0.18)',
+    backgroundColor: C.surface,
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
+    borderColor: `${C.headerText}33`,
   },
   homeKpi: {
     flex: 1,
@@ -3793,12 +3835,12 @@ const createStyles = (C) => StyleSheet.create({
   homeKpiVal: {
     fontSize: 22,
     fontWeight: '900',
-    color: C.white,
+    color: C.headerText,
     letterSpacing: -0.5,
   },
   homeKpiLabel: {
     fontSize: 10,
-    color: 'rgba(255,255,255,0.7)',
+    color: `${C.headerText}B3`,
     marginTop: 3,
     fontWeight: '600',
     textTransform: 'lowercase',
@@ -3806,10 +3848,10 @@ const createStyles = (C) => StyleSheet.create({
   },
   attentionCard: { backgroundColor: C.card, borderRadius: 14, padding: 14, marginBottom: 10, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
   attentionDot: { width: 40, height: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center' },
-  callBackBtn: { backgroundColor: C.green, paddingHorizontal: 10, paddingVertical: 9, borderRadius: 14 },
+  callBackBtn: { backgroundColor: C.action, paddingHorizontal: 10, paddingVertical: 9, borderRadius: 14 },
   jobCard: { backgroundColor: C.card, borderRadius: 14, paddingHorizontal: 14, paddingVertical: 10, marginBottom: 8, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 },
-  revenueCard: { backgroundColor: '#1D6FD8', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginTop: 4 },
-  scheduleCard: { backgroundColor: '#0F766E', borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
+  revenueCard: { backgroundColor: C.revenueCard, borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginTop: 4 },
+  scheduleCard: { backgroundColor: C.scheduleCard, borderRadius: 16, padding: 18, flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
   eventCard: { backgroundColor: C.card, borderRadius: 12, padding: 14, marginBottom: 8, borderLeftWidth: 4, shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 4, elevation: 1 },
   jobStatChip: { flex: 1, backgroundColor: 'rgba(255,255,255,0.12)', borderRadius: 10, padding: 10, alignItems: 'center' },
   jobStatLabel: { fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: '700', letterSpacing: 0.5, marginBottom: 3 },
