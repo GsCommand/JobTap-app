@@ -56,11 +56,11 @@ const THEMES = {
     pageBg: "#111827",
     surface: "#1F2937",
     cardBg: "#1F2937",
-    scheduleCard: "#C2B8A3",
+    scheduleCard: "#3A3028",
     revenueCard: "#111827",
     textPrimary: "#F9FAFB",
-    textSecondary: "#9CA3AF",
-    action: "#F97316",
+    textSecondary: "#A1A1AA",
+    action: "#FF6A00",
     success: "#22C55E",
     warning: "#F59E0B",
     urgent: "#DC2626",
@@ -73,11 +73,11 @@ const THEMES = {
     pageBg: "#F4F4F5",
     surface: "#FFFFFF",
     cardBg: "#FFFFFF",
-    scheduleCard: "#E7EFE9",
-    revenueCard: "#166534",
+    scheduleCard: "#DDEEE5",
+    revenueCard: "#0F5B2A",
     textPrimary: "#111827",
     textSecondary: "#6B7280",
-    action: "#16A34A",
+    action: "#0F6B34",
     success: "#22C55E",
     warning: "#F59E0B",
     urgent: "#DC2626",
@@ -86,15 +86,15 @@ const THEMES = {
   },
   pro: {
     // BLUE
-    primaryBg: "#1E3A8A",
+    primaryBg: "#124A9C",
     pageBg: "#E5E7EB",
-    surface: "#2B4C7E",
+    surface: "#2D61AA",
     cardBg: "#FFFFFF",
-    scheduleCard: "#CBD5E1",
-    revenueCard: "#1E3A8A",
+    scheduleCard: "#DCE4EF",
+    revenueCard: "#124A9C",
     textPrimary: "#111827",
     textSecondary: "#6B7280",
-    action: "#2563EB",
+    action: "#124A9C",
     success: "#22C55E",
     warning: "#F59E0B",
     urgent: "#EF4444",
@@ -105,13 +105,13 @@ const THEMES = {
     // ARMY / SAND
     primaryBg: "#1F3D2B",
     pageBg: "#D6D0C4",
-    surface: "#2E5A3D",
-    cardBg: "#FFFFFF",
-    scheduleCard: "#2E5A3D",
-    revenueCard: "#2E5A3D",
+    surface: "#3B5C3B",
+    cardBg: "#FFFDF8",
+    scheduleCard: "#244621",
+    revenueCard: "#244621",
     textPrimary: "#111827",
     textSecondary: "#6B7280",
-    action: "#84CC16",
+    action: "#2F5D31",
     success: "#22C55E",
     warning: "#F59E0B",
     urgent: "#DC2626",
@@ -8279,6 +8279,11 @@ const BusinessSetupScreen = ({ navigate }) => {
               style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
             >
               Choose how JobTap looks in the field.
+            </Text>
+            <Text
+              style={{ fontSize: 11, color: C.textSecondary, marginTop: 6 }}
+            >
+              Debug: {appearanceMode} · {C.primaryBg} · {C.pageBg}
             </Text>
           </View>
           {appearanceOptions.map((theme, i) => {
