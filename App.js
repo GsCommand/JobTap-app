@@ -45,6 +45,8 @@ const BASE_THEME_KEYS = [
   "success",
   "warning",
   "urgent",
+  "headerText",
+  "actionLight",
 ];
 
 const THEMES = {
@@ -62,6 +64,8 @@ const THEMES = {
     success: "#22C55E",
     warning: "#F59E0B",
     urgent: "#DC2626",
+    headerText: "#F9FAFB",
+    actionLight: "#372A1F",
   },
   clean: {
     // LIGHT CLEAN
@@ -77,6 +81,8 @@ const THEMES = {
     success: "#22C55E",
     warning: "#F59E0B",
     urgent: "#DC2626",
+    headerText: "#111827",
+    actionLight: "#E7EFE9",
   },
   pro: {
     // BLUE
@@ -92,6 +98,8 @@ const THEMES = {
     success: "#22C55E",
     warning: "#F59E0B",
     urgent: "#EF4444",
+    headerText: "#F9FAFB",
+    actionLight: "#DBEAFE",
   },
   rugged: {
     // ARMY / SAND
@@ -107,6 +115,8 @@ const THEMES = {
     success: "#22C55E",
     warning: "#F59E0B",
     urgent: "#DC2626",
+    headerText: "#F3F4F6",
+    actionLight: "#EEF6E8",
   },
 };
 
@@ -120,8 +130,8 @@ const enrichTheme = (theme) => ({
   subtext: theme.textSecondary,
   green: theme.action,
   greenDark: theme.primaryBg,
-  greenLight: theme.surface,
-  cream: theme.scheduleCard,
+  greenLight: theme.actionLight || theme.scheduleCard,
+  cream: theme.pageBg,
   grey: theme.textPrimary,
   greyMid: theme.textSecondary,
   greyLight: theme.pageBg,
@@ -131,10 +141,10 @@ const enrichTheme = (theme) => ({
   orange: theme.warning,
   blue: theme.action,
   gold: theme.warning,
-  headerText: theme.textPrimary,
+  headerText: theme.headerText || theme.textPrimary,
   bodyText: theme.textPrimary,
   mutedText: theme.textSecondary,
-  actionLight: theme.scheduleCard,
+  actionLight: theme.actionLight || theme.scheduleCard,
 });
 
 Object.keys(THEMES).forEach((key) => {
@@ -479,7 +489,9 @@ const BottomNav = ({ active, navigate, onCreate }) => {
         >
           {t.fab ? (
             <View style={styles.fabBtn}>
-              <Text style={{ color: C.white, fontSize: 28, lineHeight: 32 }}>
+              <Text
+                style={{ color: C.headerText, fontSize: 28, lineHeight: 32 }}
+              >
                 +
               </Text>
             </View>
@@ -706,7 +718,7 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.primaryBg }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: C.pageBg }}
@@ -808,7 +820,10 @@ const HomeScreen = ({ navigate, params }) => {
         <View style={{ paddingHorizontal: 14, paddingTop: 18 }}>
           {/* ── NEEDS ATTENTION ── */}
           <Text
-            style={[styles.sectionTitle, { color: C.textSecondary, fontSize: 13 }]}
+            style={[
+              styles.sectionTitle,
+              { color: C.textSecondary, fontSize: 13 },
+            ]}
           >
             NEEDS ATTENTION
           </Text>
@@ -842,7 +857,11 @@ const HomeScreen = ({ navigate, params }) => {
                     {item.title}
                   </Text>
                   <Text
-                    style={{ fontSize: 12, color: C.textSecondary, marginTop: 1 }}
+                    style={{
+                      fontSize: 12,
+                      color: C.textSecondary,
+                      marginTop: 1,
+                    }}
                   >
                     {item.sub}
                   </Text>
@@ -937,7 +956,11 @@ const HomeScreen = ({ navigate, params }) => {
                   </View>
                 </View>
                 <Text
-                  style={{ fontSize: 13, color: C.textSecondary, marginBottom: 14 }}
+                  style={{
+                    fontSize: 13,
+                    color: C.textSecondary,
+                    marginBottom: 14,
+                  }}
                 >
                   {client?.street} · {job.service}
                 </Text>
@@ -1019,7 +1042,11 @@ const HomeScreen = ({ navigate, params }) => {
                   />
                 ) : (
                   <Text
-                    style={{ color: C.white, fontSize: 20, fontWeight: "900" }}
+                    style={{
+                      color: C.headerText,
+                      fontSize: 20,
+                      fontWeight: "900",
+                    }}
                   >
                     {BIZ_CONFIG.name.charAt(0)}
                   </Text>
@@ -1027,7 +1054,11 @@ const HomeScreen = ({ navigate, params }) => {
               </View>
               <View style={{ flex: 1 }}>
                 <Text
-                  style={{ fontSize: 16, fontWeight: "800", color: C.textPrimary }}
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "800",
+                    color: C.textPrimary,
+                  }}
                 >
                   {BIZ_CONFIG.name}
                 </Text>
@@ -1085,12 +1116,18 @@ const HomeScreen = ({ navigate, params }) => {
                       {item.label}
                     </Text>
                     <Text
-                      style={{ fontSize: 12, color: C.textSecondary, marginTop: 1 }}
+                      style={{
+                        fontSize: 12,
+                        color: C.textSecondary,
+                        marginTop: 1,
+                      }}
                     >
                       {item.desc}
                     </Text>
                   </View>
-                  <Text style={{ color: C.textSecondary, fontSize: 18 }}>›</Text>
+                  <Text style={{ color: C.textSecondary, fontSize: 18 }}>
+                    ›
+                  </Text>
                 </TouchableOpacity>
               ))}
               <View style={{ height: 20 }} />
@@ -1148,8 +1185,18 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
 
   const pillStyle = (status) =>
     ({
-      vip: { bg: "#8B5CF6", text: "#fff", border: "#8B5CF6", outline: false },
-      due: { bg: "#EF4444", text: "#fff", border: "#EF4444", outline: false },
+      vip: {
+        bg: "#8B5CF6",
+        text: C.headerText,
+        border: "#8B5CF6",
+        outline: false,
+      },
+      due: {
+        bg: "#EF4444",
+        text: C.headerText,
+        border: "#EF4444",
+        outline: false,
+      },
       lead: {
         bg: "transparent",
         text: "#F97316",
@@ -1176,7 +1223,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
       },
     })[status] || {
       bg: C.greyMid,
-      text: "#fff",
+      text: C.headerText,
       border: C.greyMid,
       outline: false,
     };
@@ -1211,7 +1258,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
       >
         <Text
           style={{
-            color: "rgba(255,255,255,0.45)",
+            color: `${C.headerText}80`,
             fontSize: 12,
             fontWeight: "700",
             letterSpacing: 1,
@@ -1231,7 +1278,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
         >
           <Text
             style={{
-              color: C.white,
+              color: C.headerText,
               fontSize: 30,
               fontWeight: "900",
               letterSpacing: -0.5,
@@ -1249,23 +1296,25 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
               paddingVertical: 6,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 13, fontWeight: "700" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 13, fontWeight: "700" }}
+            >
               + Add
             </Text>
           </TouchableOpacity>
         </View>
         <View
           style={{
-            backgroundColor: "rgba(255,255,255,0.13)",
+            backgroundColor: C.surface,
             borderRadius: 10,
             paddingHorizontal: 12,
             paddingVertical: 10,
           }}
         >
           <TextInput
-            style={{ fontSize: 14, color: C.white }}
+            style={{ fontSize: 14, color: C.headerText }}
             placeholder="Search clients..."
-            placeholderTextColor="rgba(255,255,255,0.45)"
+            placeholderTextColor={`${C.headerText}80`}
             value={search}
             onChangeText={setSearch}
           />
@@ -1274,7 +1323,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
 
       <View
         style={{
-          backgroundColor: C.cardBg,
+          backgroundColor: C.surface,
           paddingVertical: 10,
           borderBottomWidth: 1,
           borderBottomColor: C.border,
@@ -1304,7 +1353,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
                   style={{
                     fontSize: 12,
                     fontWeight: "700",
-                    color: active ? "#fff" : C.grey,
+                    color: active ? C.headerText : C.grey,
                   }}
                 >
                   {f.label}
@@ -1366,11 +1415,17 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
               </View>
               <View style={{ flex: 1 }}>
                 <Text
-                  style={{ fontSize: 15, fontWeight: "700", color: "#000" }}
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "700",
+                    color: C.textPrimary,
+                  }}
                 >
                   {item.name}
                 </Text>
-                <Text style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}>
+                <Text
+                  style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+                >
                   {lastAction(item)}
                 </Text>
               </View>
@@ -1435,12 +1490,10 @@ const CustomerDetailScreen = ({ navigate, params }) => {
             onPress={() => navigate("Customers")}
             style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
           >
-            <Text style={{ color: "rgba(255,255,255,0.8)", fontSize: 18 }}>
-              ‹
-            </Text>
+            <Text style={{ color: `${C.headerText}CC`, fontSize: 18 }}>‹</Text>
             <Text
               style={{
-                color: "rgba(255,255,255,0.8)",
+                color: `${C.headerText}CC`,
                 fontSize: 13,
                 fontWeight: "600",
               }}
@@ -1459,7 +1512,11 @@ const CustomerDetailScreen = ({ navigate, params }) => {
                 }}
               >
                 <Text
-                  style={{ color: "#fff", fontSize: 12, fontWeight: "700" }}
+                  style={{
+                    color: C.headerText,
+                    fontSize: 12,
+                    fontWeight: "700",
+                  }}
                 >
                   VIP
                 </Text>
@@ -1475,7 +1532,9 @@ const CustomerDetailScreen = ({ navigate, params }) => {
                 paddingVertical: 6,
               }}
             >
-              <Text style={{ color: C.white, fontSize: 13, fontWeight: "700" }}>
+              <Text
+                style={{ color: C.headerText, fontSize: 13, fontWeight: "700" }}
+              >
                 + Add
               </Text>
             </TouchableOpacity>
@@ -1493,7 +1552,9 @@ const CustomerDetailScreen = ({ navigate, params }) => {
               marginBottom: 10,
             }}
           >
-            <Text style={{ fontSize: 26, fontWeight: "800", color: C.white }}>
+            <Text
+              style={{ fontSize: 26, fontWeight: "800", color: C.headerText }}
+            >
               {initials}
             </Text>
           </View>
@@ -1501,7 +1562,7 @@ const CustomerDetailScreen = ({ navigate, params }) => {
             style={{
               fontSize: 24,
               fontWeight: "900",
-              color: C.white,
+              color: C.headerText,
               letterSpacing: -0.3,
             }}
           >
@@ -1510,7 +1571,7 @@ const CustomerDetailScreen = ({ navigate, params }) => {
           <Text
             style={{
               fontSize: 12,
-              color: "rgba(255,255,255,0.6)",
+              color: `${C.headerText}99`,
               marginTop: 3,
             }}
           >
@@ -1538,7 +1599,9 @@ const CustomerDetailScreen = ({ navigate, params }) => {
               borderRightColor: C.border,
             }}
           >
-            <Text style={{ color: "#000", fontSize: 22, fontWeight: "900" }}>
+            <Text
+              style={{ color: C.textPrimary, fontSize: 22, fontWeight: "900" }}
+            >
               {fmtCurrency(totalRevenue)}
             </Text>
             <Text
@@ -1553,7 +1616,9 @@ const CustomerDetailScreen = ({ navigate, params }) => {
             </Text>
           </View>
           <View style={{ flex: 1, alignItems: "center", paddingVertical: 18 }}>
-            <Text style={{ color: "#000", fontSize: 22, fontWeight: "900" }}>
+            <Text
+              style={{ color: C.textPrimary, fontSize: 22, fontWeight: "900" }}
+            >
               {custJobs.length}
             </Text>
             <Text
@@ -1603,7 +1668,7 @@ const CustomerDetailScreen = ({ navigate, params }) => {
                   {({ pressed }) => (
                     <Text
                       style={{
-                        color: pressed ? "#fff" : C.green,
+                        color: pressed ? C.headerText : C.green,
                         fontSize: 15,
                         fontWeight: "700",
                       }}
@@ -1652,12 +1717,20 @@ const CustomerDetailScreen = ({ navigate, params }) => {
               >
                 <View style={{ flex: 1, marginRight: 10 }}>
                   <Text
-                    style={{ color: "#000", fontSize: 14, fontWeight: "700" }}
+                    style={{
+                      color: C.textPrimary,
+                      fontSize: 14,
+                      fontWeight: "700",
+                    }}
                   >
                     {job.service}
                   </Text>
                   <Text
-                    style={{ color: C.textSecondary, fontSize: 12, marginTop: 2 }}
+                    style={{
+                      color: C.textSecondary,
+                      fontSize: 12,
+                      marginTop: 2,
+                    }}
                   >
                     {fmtDateShort(job.date)} · {fmtCurrency(job.amount)} ·{" "}
                     {job.status === "paid" ? "Paid" : "Pending"}
@@ -1749,7 +1822,13 @@ const CustomerDetailScreen = ({ navigate, params }) => {
               <Text style={{ color: C.textSecondary, fontSize: 13 }}>
                 Referred by
               </Text>
-              <Text style={{ color: "#000", fontSize: 13, fontWeight: "600" }}>
+              <Text
+                style={{
+                  color: C.textPrimary,
+                  fontSize: 13,
+                  fontWeight: "600",
+                }}
+              >
                 Google search
               </Text>
             </View>
@@ -1782,7 +1861,9 @@ const CustomerDetailScreen = ({ navigate, params }) => {
                   </Text>
                 </View>
               ) : (
-                <Text style={{ color: C.textSecondary, fontSize: 13 }}>None yet</Text>
+                <Text style={{ color: C.textSecondary, fontSize: 13 }}>
+                  None yet
+                </Text>
               )}
             </View>
           </View>
@@ -2008,7 +2089,9 @@ const NewCustomerScreen = ({ navigate, addCustomer }) => {
                   : "Select source…"}
               </Text>
             </View>
-            <Text style={{ fontSize: 18, color: C.textSecondary, marginRight: 4 }}>
+            <Text
+              style={{ fontSize: 18, color: C.textSecondary, marginRight: 4 }}
+            >
               ›
             </Text>
           </TouchableOpacity>
@@ -2267,7 +2350,7 @@ const QuoteBuilderScreen = ({
         </View>
         <Text
           style={{
-            color: C.white,
+            color: C.headerText,
             fontSize: 22,
             fontWeight: "900",
             letterSpacing: -0.5,
@@ -2279,7 +2362,7 @@ const QuoteBuilderScreen = ({
         {selectedCustomer && (
           <Text
             style={{
-              color: "rgba(255,255,255,0.65)",
+              color: `${C.headerText}A6`,
               fontSize: 12,
               marginTop: 2,
             }}
@@ -2299,7 +2382,7 @@ const QuoteBuilderScreen = ({
             style={[
               styles.greenBtn,
               {
-                backgroundColor: C.white,
+                backgroundColor: C.cardBg,
                 borderWidth: 1.5,
                 borderColor: C.action,
                 marginBottom: 16,
@@ -2376,7 +2459,7 @@ const QuoteBuilderScreen = ({
                       {s.selected && (
                         <Text
                           style={{
-                            color: C.white,
+                            color: C.headerText,
                             fontSize: 10,
                             fontWeight: "900",
                           }}
@@ -2475,7 +2558,7 @@ const QuoteBuilderScreen = ({
                           {s.unit === "flat" && (
                             <Text
                               style={{
-                                color: C.white,
+                                color: C.headerText,
                                 fontSize: 10,
                                 fontWeight: "900",
                               }}
@@ -2511,7 +2594,9 @@ const QuoteBuilderScreen = ({
                           {s.unit === "flat" ? "Total price" : "Price / sq ft"}
                         </Text>
                         <View style={styles.accordionInput}>
-                          <Text style={{ color: C.textSecondary, fontSize: 13 }}>
+                          <Text
+                            style={{ color: C.textSecondary, fontSize: 13 }}
+                          >
                             $
                           </Text>
                           <TextInput
@@ -2545,7 +2630,9 @@ const QuoteBuilderScreen = ({
                               placeholderTextColor={C.greyMid}
                               returnKeyType="done"
                             />
-                            <Text style={{ color: C.textSecondary, fontSize: 12 }}>
+                            <Text
+                              style={{ color: C.textSecondary, fontSize: 12 }}
+                            >
                               sq ft
                             </Text>
                           </View>
@@ -2564,7 +2651,9 @@ const QuoteBuilderScreen = ({
                             borderTopColor: C.border,
                           }}
                         >
-                          <Text style={{ fontSize: 12, color: C.textSecondary }}>
+                          <Text
+                            style={{ fontSize: 12, color: C.textSecondary }}
+                          >
                             {s.unit === "flat"
                               ? "Flat rate"
                               : `${s.sqft} sq ft × $${s.price}`}
@@ -2642,7 +2731,13 @@ const QuoteBuilderScreen = ({
           }}
         >
           <View>
-            <Text style={{ fontSize: 11, color: C.textSecondary, fontWeight: "600" }}>
+            <Text
+              style={{
+                fontSize: 11,
+                color: C.textSecondary,
+                fontWeight: "600",
+              }}
+            >
               {selected.length} service{selected.length !== 1 ? "s" : ""}{" "}
               selected
             </Text>
@@ -2686,12 +2781,14 @@ const QuoteBuilderScreen = ({
         >
           <Text style={{ fontSize: 28 }}>📏</Text>
           <View style={{ flex: 1 }}>
-            <Text style={{ color: C.white, fontSize: 14, fontWeight: "800" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 14, fontWeight: "800" }}
+            >
               Tap to Measure This Job
             </Text>
             <Text
               style={{
-                color: "rgba(255,255,255,0.65)",
+                color: `${C.headerText}A6`,
                 fontSize: 11,
                 marginTop: 2,
               }}
@@ -2699,7 +2796,7 @@ const QuoteBuilderScreen = ({
               Satellite trace or camera tap · sq ft auto-fills
             </Text>
           </View>
-          <Text style={{ color: C.white, fontSize: 18 }}>→</Text>
+          <Text style={{ color: C.headerText, fontSize: 18 }}>→</Text>
         </TouchableOpacity>
 
         <Text style={styles.sectionTitle}>SEND METHOD</Text>
@@ -2850,7 +2947,7 @@ const QuoteBuilderScreen = ({
                   <Text style={styles.quoteLogoText}>JOBTAP</Text>
                   <Text
                     style={{
-                      color: "rgba(255,255,255,0.65)",
+                      color: `${C.headerText}A6`,
                       fontSize: 10,
                       letterSpacing: 0.5,
                     }}
@@ -2860,7 +2957,11 @@ const QuoteBuilderScreen = ({
                 </View>
                 <View style={{ alignItems: "flex-end" }}>
                   <Text
-                    style={{ color: C.white, fontSize: 18, fontWeight: "900" }}
+                    style={{
+                      color: C.headerText,
+                      fontSize: 18,
+                      fontWeight: "900",
+                    }}
                   >
                     QUOTE
                   </Text>
@@ -2991,7 +3092,9 @@ const QuoteBuilderScreen = ({
                             {s.label}
                           </Text>
                           {s.unit !== "flat" && area > 0 && (
-                            <Text style={{ fontSize: 10, color: C.textSecondary }}>
+                            <Text
+                              style={{ fontSize: 10, color: C.textSecondary }}
+                            >
                               {area} sq ft
                             </Text>
                           )}
@@ -3025,7 +3128,11 @@ const QuoteBuilderScreen = ({
               </View>
               <View style={styles.quoteTotalRow}>
                 <Text
-                  style={{ fontSize: 15, color: C.textPrimary, fontWeight: "600" }}
+                  style={{
+                    fontSize: 15,
+                    color: C.textPrimary,
+                    fontWeight: "600",
+                  }}
                 >
                   Total
                 </Text>
@@ -3265,7 +3372,9 @@ const ActiveJobScreen = ({ navigate, params }) => {
               borderRadius: 12,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 11, fontWeight: "700" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 11, fontWeight: "700" }}
+            >
               ● In Progress
             </Text>
           </View>
@@ -3285,7 +3394,7 @@ const ActiveJobScreen = ({ navigate, params }) => {
         >
           <Text
             style={{
-              color: C.white,
+              color: C.headerText,
               fontSize: 26,
               fontWeight: "900",
               letterSpacing: -0.5,
@@ -3345,13 +3454,17 @@ const ActiveJobScreen = ({ navigate, params }) => {
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text
-                    style={{ color: C.white, fontSize: 14, fontWeight: "800" }}
+                    style={{
+                      color: C.headerText,
+                      fontSize: 14,
+                      fontWeight: "800",
+                    }}
                   >
                     You've arrived — take before photos
                   </Text>
                   <Text
                     style={{
-                      color: "rgba(255,255,255,0.6)",
+                      color: `${C.headerText}99`,
                       fontSize: 11,
                       marginTop: 1,
                     }}
@@ -3397,7 +3510,7 @@ const ActiveJobScreen = ({ navigate, params }) => {
                   onPress={() => pickPhoto(true, addBefore)}
                   style={{
                     flex: 1,
-                    backgroundColor: C.white,
+                    backgroundColor: C.cardBg,
                     paddingVertical: 10,
                     borderRadius: 10,
                     alignItems: "center",
@@ -3424,7 +3537,11 @@ const ActiveJobScreen = ({ navigate, params }) => {
                   }}
                 >
                   <Text
-                    style={{ color: C.white, fontSize: 13, fontWeight: "700" }}
+                    style={{
+                      color: C.headerText,
+                      fontSize: 13,
+                      fontWeight: "700",
+                    }}
                   >
                     🖼 Photos
                   </Text>
@@ -3442,7 +3559,7 @@ const ActiveJobScreen = ({ navigate, params }) => {
                   >
                     <Text
                       style={{
-                        color: C.white,
+                        color: C.headerText,
                         fontSize: 13,
                         fontWeight: "800",
                       }}
@@ -3467,13 +3584,15 @@ const ActiveJobScreen = ({ navigate, params }) => {
                 <Text style={{ fontSize: 20 }}>📷</Text>
                 <View style={{ flex: 1 }}>
                   <Text
-                    style={{ color: C.white, fontSize: 14, fontWeight: "700" }}
+                    style={{
+                      color: C.headerText,
+                      fontSize: 14,
+                      fontWeight: "700",
+                    }}
                   >
                     Before photos · {beforePhotos.length} saved
                   </Text>
-                  <Text
-                    style={{ color: "rgba(255,255,255,0.65)", fontSize: 12 }}
-                  >
+                  <Text style={{ color: `${C.headerText}A6`, fontSize: 12 }}>
                     Job clock started · {fmtTime(elapsed)}
                   </Text>
                 </View>
@@ -3487,7 +3606,11 @@ const ActiveJobScreen = ({ navigate, params }) => {
                   }}
                 >
                   <Text
-                    style={{ color: C.white, fontSize: 12, fontWeight: "700" }}
+                    style={{
+                      color: C.headerText,
+                      fontSize: 12,
+                      fontWeight: "700",
+                    }}
                   >
                     Retake
                   </Text>
@@ -3514,7 +3637,11 @@ const ActiveJobScreen = ({ navigate, params }) => {
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text
-                    style={{ fontSize: 14, fontWeight: "700", color: C.textPrimary }}
+                    style={{
+                      fontSize: 14,
+                      fontWeight: "700",
+                      color: C.textPrimary,
+                    }}
                   >
                     After photo reminder
                   </Text>
@@ -3624,7 +3751,7 @@ const JobsScreen = ({ navigate }) => {
             onPress={() => navigate("QuoteBuilder")}
             style={styles.headerActionBtn}
           >
-            <Text style={{ color: C.white, fontSize: 22 }}>+</Text>
+            <Text style={{ color: C.headerText, fontSize: 22 }}>+</Text>
           </TouchableOpacity>
         </View>
         <View
@@ -3643,7 +3770,7 @@ const JobsScreen = ({ navigate }) => {
             🔍
           </Text>
           <TextInput
-            style={{ flex: 1, fontSize: 14, color: C.white }}
+            style={{ flex: 1, fontSize: 14, color: C.headerText }}
             placeholder="Search jobs..."
             placeholderTextColor="rgba(255,255,255,0.55)"
             value={search}
@@ -3710,7 +3837,7 @@ const JobsScreen = ({ navigate }) => {
                     >
                       <Text
                         style={{
-                          color: C.white,
+                          color: C.headerText,
                           fontSize: 10,
                           fontWeight: "700",
                         }}
@@ -3744,7 +3871,7 @@ const JobsScreen = ({ navigate }) => {
             <View>
               <Text
                 style={{
-                  color: "rgba(255,255,255,0.65)",
+                  color: `${C.headerText}A6`,
                   fontSize: 11,
                   fontWeight: "700",
                   letterSpacing: 0.5,
@@ -3790,7 +3917,7 @@ const JobsScreen = ({ navigate }) => {
                 borderTopColor: "rgba(255,255,255,0.08)",
               }}
             >
-              <Text style={{ fontSize: 13, color: "rgba(255,255,255,0.8)" }}>
+              <Text style={{ fontSize: 13, color: `${C.headerText}CC` }}>
                 {j.customerName}
               </Text>
               <Text
@@ -3854,7 +3981,11 @@ const JobsScreen = ({ navigate }) => {
                 }}
               >
                 <Text
-                  style={{ color: C.white, fontSize: 12, fontWeight: "700" }}
+                  style={{
+                    color: C.headerText,
+                    fontSize: 12,
+                    fontWeight: "700",
+                  }}
                 >
                   📤 Resend ({Object.values(selected).filter(Boolean).length})
                 </Text>
@@ -3864,7 +3995,7 @@ const JobsScreen = ({ navigate }) => {
           {outstandingQuotes.length === 0 ? (
             <View
               style={{
-                backgroundColor: C.white,
+                backgroundColor: C.cardBg,
                 borderRadius: 14,
                 padding: 20,
                 alignItems: "center",
@@ -3913,7 +4044,7 @@ const JobsScreen = ({ navigate }) => {
                       {isChecked && (
                         <Text
                           style={{
-                            color: C.white,
+                            color: C.headerText,
                             fontSize: 10,
                             fontWeight: "900",
                           }}
@@ -3933,7 +4064,11 @@ const JobsScreen = ({ navigate }) => {
                         {item.customerName}
                       </Text>
                       <Text
-                        style={{ fontSize: 12, color: C.textSecondary, marginTop: 1 }}
+                        style={{
+                          fontSize: 12,
+                          color: C.textSecondary,
+                          marginTop: 1,
+                        }}
                       >
                         {item.service}
                       </Text>
@@ -3992,7 +4127,7 @@ const JobsScreen = ({ navigate }) => {
                           flex: 1,
                           marginBottom: 0,
                           paddingVertical: 8,
-                          backgroundColor: C.white,
+                          backgroundColor: C.cardBg,
                           borderWidth: 1.5,
                           borderColor: C.action,
                         },
@@ -4061,7 +4196,7 @@ const JobCompleteScreen = ({ navigate, params }) => {
       style={{
         borderRadius: 14,
         overflow: "hidden",
-        backgroundColor: C.white,
+        backgroundColor: C.cardBg,
         borderWidth: 1,
         borderColor: C.border,
       }}
@@ -4102,7 +4237,9 @@ const JobCompleteScreen = ({ navigate, params }) => {
               alignSelf: "flex-start",
             }}
           >
-            <Text style={{ color: C.white, fontSize: 10, fontWeight: "800" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 10, fontWeight: "800" }}
+            >
               BEFORE
             </Text>
           </View>
@@ -4142,7 +4279,9 @@ const JobCompleteScreen = ({ navigate, params }) => {
               alignSelf: "flex-start",
             }}
           >
-            <Text style={{ color: C.white, fontSize: 10, fontWeight: "800" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 10, fontWeight: "800" }}
+            >
               AFTER
             </Text>
           </View>
@@ -4157,7 +4296,9 @@ const JobCompleteScreen = ({ navigate, params }) => {
         }}
       >
         <View>
-          <Text style={{ fontSize: 13, fontWeight: "800", color: C.textPrimary }}>
+          <Text
+            style={{ fontSize: 13, fontWeight: "800", color: C.textPrimary }}
+          >
             {customer.name}
           </Text>
           <Text style={{ fontSize: 11, color: C.textSecondary }}>
@@ -4184,7 +4325,7 @@ const JobCompleteScreen = ({ navigate, params }) => {
       style={{
         borderRadius: 14,
         overflow: "hidden",
-        backgroundColor: C.white,
+        backgroundColor: C.cardBg,
         borderWidth: 1,
         borderColor: C.border,
       }}
@@ -4224,7 +4365,9 @@ const JobCompleteScreen = ({ navigate, params }) => {
               alignSelf: "flex-start",
             }}
           >
-            <Text style={{ color: C.white, fontSize: 9, fontWeight: "800" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 9, fontWeight: "800" }}
+            >
               BEFORE
             </Text>
           </View>
@@ -4269,7 +4412,11 @@ const JobCompleteScreen = ({ navigate, params }) => {
                   }}
                 >
                   <Text
-                    style={{ color: C.white, fontSize: 8, fontWeight: "800" }}
+                    style={{
+                      color: C.headerText,
+                      fontSize: 8,
+                      fontWeight: "800",
+                    }}
                   >
                     AFTER
                   </Text>
@@ -4324,12 +4471,14 @@ const JobCompleteScreen = ({ navigate, params }) => {
             borderRadius: 4,
           }}
         >
-          <Text style={{ color: C.white, fontSize: 10, fontWeight: "800" }}>
+          <Text
+            style={{ color: C.headerText, fontSize: 10, fontWeight: "800" }}
+          >
             BEFORE
           </Text>
         </View>
       </View>
-      <View style={{ height: 2, backgroundColor: C.white }} />
+      <View style={{ height: 2, backgroundColor: C.cardBg }} />
       <View style={{ height: 100, backgroundColor: C.action }}>
         {afterUri && !afterUri.startsWith("mock") ? (
           <Image
@@ -4355,7 +4504,9 @@ const JobCompleteScreen = ({ navigate, params }) => {
             borderRadius: 4,
           }}
         >
-          <Text style={{ color: C.white, fontSize: 10, fontWeight: "800" }}>
+          <Text
+            style={{ color: C.headerText, fontSize: 10, fontWeight: "800" }}
+          >
             AFTER
           </Text>
         </View>
@@ -4368,10 +4519,10 @@ const JobCompleteScreen = ({ navigate, params }) => {
           alignItems: "center",
         }}
       >
-        <Text style={{ fontSize: 13, fontWeight: "800", color: C.white }}>
+        <Text style={{ fontSize: 13, fontWeight: "800", color: C.headerText }}>
           {customer.name}
         </Text>
-        <Text style={{ fontSize: 11, color: "rgba(255,255,255,0.65)" }}>
+        <Text style={{ fontSize: 11, color: `${C.headerText}A6` }}>
           HydroSeal Pavers
         </Text>
       </View>
@@ -4398,7 +4549,7 @@ const JobCompleteScreen = ({ navigate, params }) => {
         </View>
         <Text
           style={{
-            color: C.white,
+            color: C.headerText,
             fontSize: 20,
             fontWeight: "900",
             marginTop: 6,
@@ -4408,7 +4559,7 @@ const JobCompleteScreen = ({ navigate, params }) => {
         </Text>
         <Text
           style={{
-            color: "rgba(255,255,255,0.65)",
+            color: `${C.headerText}A6`,
             fontSize: 12,
             marginTop: 2,
           }}
@@ -4446,7 +4597,7 @@ const JobCompleteScreen = ({ navigate, params }) => {
                 onPress={() => pickPhoto(true, addAfter)}
                 style={{
                   flex: 1,
-                  backgroundColor: C.white,
+                  backgroundColor: C.cardBg,
                   paddingVertical: 10,
                   borderRadius: 10,
                   alignItems: "center",
@@ -4473,7 +4624,11 @@ const JobCompleteScreen = ({ navigate, params }) => {
                 }}
               >
                 <Text
-                  style={{ color: C.white, fontSize: 13, fontWeight: "700" }}
+                  style={{
+                    color: C.headerText,
+                    fontSize: 13,
+                    fontWeight: "700",
+                  }}
                 >
                   🖼 Photos
                 </Text>
@@ -4490,7 +4645,11 @@ const JobCompleteScreen = ({ navigate, params }) => {
                   }}
                 >
                   <Text
-                    style={{ color: C.white, fontSize: 12, fontWeight: "700" }}
+                    style={{
+                      color: C.headerText,
+                      fontSize: 12,
+                      fontWeight: "700",
+                    }}
                   >
                     Retake
                   </Text>
@@ -4629,10 +4788,18 @@ const InvoiceScreen = ({ navigate, params }) => {
           >
             <View>
               <Text style={styles.cardLabel}>BILL TO</Text>
-              <Text style={{ fontSize: 15, fontWeight: "700", color: C.textPrimary }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "700",
+                  color: C.textPrimary,
+                }}
+              >
                 {customer.name}
               </Text>
-              <Text style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}>
+              <Text
+                style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+              >
                 {customer.address}
               </Text>
               <Text style={{ fontSize: 12, color: C.textSecondary }}>
@@ -4641,7 +4808,13 @@ const InvoiceScreen = ({ navigate, params }) => {
             </View>
             <View style={{ alignItems: "flex-end" }}>
               <Text style={styles.cardLabel}>DATE</Text>
-              <Text style={{ fontSize: 13, color: C.textPrimary, fontWeight: "600" }}>
+              <Text
+                style={{
+                  fontSize: 13,
+                  color: C.textPrimary,
+                  fontWeight: "600",
+                }}
+              >
                 {fmtDate(new Date().toISOString())}
               </Text>
               <Text style={[styles.cardLabel, { marginTop: 8 }]}>DUE</Text>
@@ -4723,7 +4896,9 @@ const InvoiceScreen = ({ navigate, params }) => {
               justifyContent: "space-between",
             }}
           >
-            <Text style={{ fontSize: 16, fontWeight: "800", color: C.textPrimary }}>
+            <Text
+              style={{ fontSize: 16, fontWeight: "800", color: C.textPrimary }}
+            >
               Total Due
             </Text>
             <Text style={{ fontSize: 22, fontWeight: "800", color: C.action }}>
@@ -4763,7 +4938,9 @@ const InvoiceScreen = ({ navigate, params }) => {
               >
                 {m.label.split(" ")[1]}
               </Text>
-              <Text style={{ fontSize: 10, color: C.textSecondary }}>{m.sub}</Text>
+              <Text style={{ fontSize: 10, color: C.textSecondary }}>
+                {m.sub}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -4791,7 +4968,7 @@ const InvoiceScreen = ({ navigate, params }) => {
           style={[
             styles.greenBtn,
             {
-              backgroundColor: C.white,
+              backgroundColor: C.cardBg,
               borderWidth: 1.5,
               borderColor: C.border,
             },
@@ -4864,7 +5041,7 @@ const YouGotPaidScreen = ({ navigate, params }) => {
             style={{
               fontSize: 18,
               fontWeight: "700",
-              color: "rgba(255,255,255,0.8)",
+              color: `${C.headerText}CC`,
               letterSpacing: 1,
             }}
           >
@@ -4874,7 +5051,7 @@ const YouGotPaidScreen = ({ navigate, params }) => {
             style={{
               fontSize: 52,
               fontWeight: "900",
-              color: C.white,
+              color: C.headerText,
               letterSpacing: -2,
               marginTop: 6,
             }}
@@ -4911,7 +5088,9 @@ const YouGotPaidScreen = ({ navigate, params }) => {
                 backgroundColor: "#4ADE80",
               }}
             />
-            <Text style={{ color: C.white, fontSize: 13, fontWeight: "600" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 13, fontWeight: "600" }}
+            >
               Follow-up schedule set · running in background
             </Text>
           </View>
@@ -5046,14 +5225,16 @@ const ReviewRequestScreen = ({ navigate, params }) => {
               borderRadius: 12,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 11, fontWeight: "700" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 11, fontWeight: "700" }}
+            >
               ● Auto Day 3
             </Text>
           </View>
         </View>
         <Text
           style={{
-            color: C.white,
+            color: C.headerText,
             fontSize: 20,
             fontWeight: "900",
             marginTop: 8,
@@ -5063,7 +5244,7 @@ const ReviewRequestScreen = ({ navigate, params }) => {
         </Text>
         <Text
           style={{
-            color: "rgba(255,255,255,0.65)",
+            color: `${C.headerText}A6`,
             fontSize: 12,
             marginTop: 2,
           }}
@@ -5079,7 +5260,9 @@ const ReviewRequestScreen = ({ navigate, params }) => {
               borderRadius: 10,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 11, fontWeight: "600" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 11, fontWeight: "600" }}
+            >
               Sends {autoDate}
             </Text>
           </View>
@@ -5091,7 +5274,9 @@ const ReviewRequestScreen = ({ navigate, params }) => {
               borderRadius: 10,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 11, fontWeight: "600" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 11, fontWeight: "600" }}
+            >
               Via {channelSummary}
             </Text>
           </View>
@@ -5138,7 +5323,11 @@ const ReviewRequestScreen = ({ navigate, params }) => {
                 >
                   {channels[ch.key] && (
                     <Text
-                      style={{ color: C.white, fontSize: 9, fontWeight: "900" }}
+                      style={{
+                        color: C.headerText,
+                        fontSize: 9,
+                        fontWeight: "900",
+                      }}
                     >
                       ✓
                     </Text>
@@ -5322,14 +5511,16 @@ const FollowUpSchedulerScreen = ({ navigate, params }) => {
               borderRadius: 12,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 12, fontWeight: "700" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 12, fontWeight: "700" }}
+            >
               {autoSet ? "Auto-set" : "Manual"}
             </Text>
           </TouchableOpacity>
         </View>
         <Text
           style={{
-            color: C.white,
+            color: C.headerText,
             fontSize: 22,
             fontWeight: "900",
             marginTop: 8,
@@ -5339,7 +5530,7 @@ const FollowUpSchedulerScreen = ({ navigate, params }) => {
         </Text>
         <Text
           style={{
-            color: "rgba(255,255,255,0.65)",
+            color: `${C.headerText}A6`,
             fontSize: 12,
             marginTop: 2,
           }}
@@ -5355,7 +5546,9 @@ const FollowUpSchedulerScreen = ({ navigate, params }) => {
               borderRadius: 10,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 12, fontWeight: "600" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 12, fontWeight: "600" }}
+            >
               {steps.length} touchpoints
             </Text>
           </View>
@@ -5367,7 +5560,9 @@ const FollowUpSchedulerScreen = ({ navigate, params }) => {
               borderRadius: 10,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 12, fontWeight: "600" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 12, fontWeight: "600" }}
+            >
               {sent} sent
             </Text>
           </View>
@@ -5455,7 +5650,11 @@ const FollowUpSchedulerScreen = ({ navigate, params }) => {
                       {step.label}
                     </Text>
                     <Text
-                      style={{ fontSize: 11, color: C.textSecondary, marginTop: 2 }}
+                      style={{
+                        fontSize: 11,
+                        color: C.textSecondary,
+                        marginTop: 2,
+                      }}
                     >
                       {fmtDate(step.date)} ·{" "}
                       {step.status === "done"
@@ -5511,7 +5710,7 @@ const FollowUpSchedulerScreen = ({ navigate, params }) => {
                               width: 20,
                               height: 20,
                               borderRadius: 10,
-                              backgroundColor: C.white,
+                              backgroundColor: C.cardBg,
                             },
                             step.enabled
                               ? { alignSelf: "flex-end" }
@@ -5617,7 +5816,9 @@ const CustomersDueScreen = ({ navigate }) => {
           alignItems: "center",
         }}
       >
-        <Text style={{ fontSize: 12, fontWeight: "700", color: C.textSecondary }}>
+        <Text
+          style={{ fontSize: 12, fontWeight: "700", color: C.textSecondary }}
+        >
           Done
         </Text>
       </TouchableOpacity>
@@ -5641,7 +5842,9 @@ const CustomersDueScreen = ({ navigate }) => {
           </Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 14, fontWeight: "800", color: C.textPrimary }}>
+          <Text
+            style={{ fontSize: 14, fontWeight: "800", color: C.textPrimary }}
+          >
             {c.name}
           </Text>
           <Text style={{ fontSize: 12, color: C.textSecondary }}>
@@ -5699,12 +5902,14 @@ const CustomersDueScreen = ({ navigate }) => {
                 alignItems: "center",
               }}
             >
-              <Text style={{ color: C.white, fontSize: 22, fontWeight: "900" }}>
+              <Text
+                style={{ color: C.headerText, fontSize: 22, fontWeight: "900" }}
+              >
                 {pill.count}
               </Text>
               <Text
                 style={{
-                  color: "rgba(255,255,255,0.8)",
+                  color: `${C.headerText}CC`,
                   fontSize: 11,
                   fontWeight: "600",
                   marginTop: 2,
@@ -5821,7 +6026,7 @@ const RevenueDashboardScreen = ({ navigate }) => {
                     paddingVertical: 4,
                     borderRadius: 8,
                   },
-                  period === p && { backgroundColor: C.white },
+                  period === p && { backgroundColor: C.cardBg },
                 ]}
               >
                 <Text
@@ -5840,7 +6045,7 @@ const RevenueDashboardScreen = ({ navigate }) => {
         <View style={{ alignItems: "center", paddingVertical: 16 }}>
           <Text
             style={{
-              color: "rgba(255,255,255,0.6)",
+              color: `${C.headerText}99`,
               fontSize: 12,
               fontWeight: "600",
             }}
@@ -5849,7 +6054,7 @@ const RevenueDashboardScreen = ({ navigate }) => {
           </Text>
           <Text
             style={{
-              color: C.white,
+              color: C.headerText,
               fontSize: 48,
               fontWeight: "900",
               letterSpacing: -2,
@@ -5859,7 +6064,7 @@ const RevenueDashboardScreen = ({ navigate }) => {
           </Text>
           <Text
             style={{
-              color: "rgba(255,255,255,0.6)",
+              color: `${C.headerText}99`,
               fontSize: 12,
               marginTop: 4,
             }}
@@ -6109,7 +6314,9 @@ const NewLeadScreen = ({ navigate }) => {
               ? "✅ Auto-reply ON — text sends on save"
               : "○ Auto-reply OFF"}
           </Text>
-          <Text style={{ fontSize: 12, color: C.textSecondary }}>Tap to toggle</Text>
+          <Text style={{ fontSize: 12, color: C.textSecondary }}>
+            Tap to toggle
+          </Text>
         </TouchableOpacity>
         {autoReply && (
           <Card
@@ -6121,7 +6328,9 @@ const NewLeadScreen = ({ navigate }) => {
             }}
           >
             <Text style={styles.cardLabel}>AUTO-REPLY TEXT</Text>
-            <Text style={{ fontSize: 13, color: C.textPrimary, lineHeight: 18 }}>
+            <Text
+              style={{ fontSize: 13, color: C.textPrimary, lineHeight: 18 }}
+            >
               "Hi {form.name ? form.name.split(" ")[0] : "[Name]"}! Thanks for
               reaching out to HydroSeal. We'll get back to you within the hour
               with pricing. 🙏"
@@ -6179,7 +6388,7 @@ const NewLeadScreen = ({ navigate }) => {
               <Text
                 style={[
                   styles.filterChipText,
-                  source === s && { color: C.white },
+                  source === s && { color: C.headerText },
                 ]}
               >
                 {s}
@@ -6216,7 +6425,7 @@ const NewLeadScreen = ({ navigate }) => {
           style={[
             styles.greenBtn,
             {
-              backgroundColor: C.white,
+              backgroundColor: C.cardBg,
               borderWidth: 1.5,
               borderColor: C.action,
             },
@@ -6318,7 +6527,7 @@ const SpecialsScreen = ({ navigate }) => {
             </Text>
             <Text
               style={{
-                color: C.white,
+                color: C.headerText,
                 fontSize: 30,
                 fontWeight: "900",
                 letterSpacing: -1,
@@ -6363,7 +6572,11 @@ const SpecialsScreen = ({ navigate }) => {
                     }}
                   >
                     <Text
-                      style={{ fontSize: 14, fontWeight: "800", color: C.textPrimary }}
+                      style={{
+                        fontSize: 14,
+                        fontWeight: "800",
+                        color: C.textPrimary,
+                      }}
                     >
                       {camp.title}
                     </Text>
@@ -6387,7 +6600,11 @@ const SpecialsScreen = ({ navigate }) => {
                     </View>
                   </View>
                   <Text
-                    style={{ fontSize: 12, color: C.textSecondary, lineHeight: 16 }}
+                    style={{
+                      fontSize: 12,
+                      color: C.textSecondary,
+                      lineHeight: 16,
+                    }}
                   >
                     {camp.desc}
                   </Text>
@@ -6410,7 +6627,9 @@ const SpecialsScreen = ({ navigate }) => {
                   padding: 10,
                 }}
               >
-                <Text style={{ fontSize: 12, color: C.textPrimary, lineHeight: 17 }}>
+                <Text
+                  style={{ fontSize: 12, color: C.textPrimary, lineHeight: 17 }}
+                >
                   {camp.msg}
                 </Text>
               </Card>
@@ -6546,12 +6765,14 @@ const ReferralTrackingScreen = ({ navigate }) => {
                 alignItems: "center",
               }}
             >
-              <Text style={{ color: C.white, fontSize: 16, fontWeight: "900" }}>
+              <Text
+                style={{ color: C.headerText, fontSize: 16, fontWeight: "900" }}
+              >
                 {k.val}
               </Text>
               <Text
                 style={{
-                  color: "rgba(255,255,255,0.6)",
+                  color: `${C.headerText}99`,
                   fontSize: 9,
                   marginTop: 2,
                   textAlign: "center",
@@ -6612,7 +6833,11 @@ const ReferralTrackingScreen = ({ navigate }) => {
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text
-                    style={{ fontSize: 14, fontWeight: "800", color: C.textPrimary }}
+                    style={{
+                      fontSize: 14,
+                      fontWeight: "800",
+                      color: C.textPrimary,
+                    }}
                   >
                     {c.referrer} → {c.referred}
                   </Text>
@@ -6660,13 +6885,17 @@ const ReferralTrackingScreen = ({ navigate }) => {
               />
               <View style={{ flex: 1 }}>
                 <Text
-                  style={{ color: C.white, fontSize: 14, fontWeight: "700" }}
+                  style={{
+                    color: C.headerText,
+                    fontSize: 14,
+                    fontWeight: "700",
+                  }}
                 >
                   Neighbor campaign
                 </Text>
                 <Text
                   style={{
-                    color: "rgba(255,255,255,0.65)",
+                    color: `${C.headerText}A6`,
                     fontSize: 12,
                     marginTop: 2,
                   }}
@@ -6695,7 +6924,7 @@ const ReferralTrackingScreen = ({ navigate }) => {
                         width: 22,
                         height: 22,
                         borderRadius: 11,
-                        backgroundColor: C.white,
+                        backgroundColor: C.cardBg,
                       },
                       neighborCampaign
                         ? { alignSelf: "flex-end" }
@@ -6781,14 +7010,16 @@ const MissedCallAutoTextScreen = ({ navigate }) => {
               borderRadius: 12,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 11, fontWeight: "700" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 11, fontWeight: "700" }}
+            >
               {active ? "Add-on · On" : "Add-on · Off"}
             </Text>
           </View>
         </View>
         <Text
           style={{
-            color: C.white,
+            color: C.headerText,
             fontSize: 28,
             fontWeight: "900",
             marginTop: 10,
@@ -6796,7 +7027,7 @@ const MissedCallAutoTextScreen = ({ navigate }) => {
         >
           Missed Call
         </Text>
-        <Text style={{ color: "rgba(255,255,255,0.65)", fontSize: 13 }}>
+        <Text style={{ color: `${C.headerText}A6`, fontSize: 13 }}>
           Auto-text fires when you miss a call
         </Text>
         <View
@@ -6813,7 +7044,7 @@ const MissedCallAutoTextScreen = ({ navigate }) => {
           <View>
             <Text
               style={{
-                color: "rgba(255,255,255,0.65)",
+                color: `${C.headerText}A6`,
                 fontSize: 11,
                 fontWeight: "600",
               }}
@@ -6822,7 +7053,7 @@ const MissedCallAutoTextScreen = ({ navigate }) => {
             </Text>
             <Text
               style={{
-                color: C.white,
+                color: C.headerText,
                 fontSize: 28,
                 fontWeight: "900",
                 marginTop: 2,
@@ -6876,12 +7107,20 @@ const MissedCallAutoTextScreen = ({ navigate }) => {
                   </View>
                   <View style={{ flex: 1, marginLeft: 10 }}>
                     <Text
-                      style={{ fontSize: 14, fontWeight: "600", color: C.textPrimary }}
+                      style={{
+                        fontSize: 14,
+                        fontWeight: "600",
+                        color: C.textPrimary,
+                      }}
                     >
                       {r.label}
                     </Text>
                     <Text
-                      style={{ fontSize: 12, color: C.textSecondary, marginTop: 1 }}
+                      style={{
+                        fontSize: 12,
+                        color: C.textSecondary,
+                        marginTop: 1,
+                      }}
                     >
                       {r.desc}
                     </Text>
@@ -6906,7 +7145,7 @@ const MissedCallAutoTextScreen = ({ navigate }) => {
                           width: 22,
                           height: 22,
                           borderRadius: 11,
-                          backgroundColor: C.white,
+                          backgroundColor: C.cardBg,
                         },
                         toggles[r.key]
                           ? { alignSelf: "flex-end" }
@@ -7426,7 +7665,7 @@ const ScheduleScreen = ({ navigate }) => {
             }}
             style={styles.headerActionBtn}
           >
-            <Text style={{ color: C.white, fontSize: 22 }}>+</Text>
+            <Text style={{ color: C.headerText, fontSize: 22 }}>+</Text>
           </TouchableOpacity>
         </View>
         <View
@@ -7454,7 +7693,7 @@ const ScheduleScreen = ({ navigate }) => {
                   borderRadius: 8,
                   alignItems: "center",
                 },
-                viewMode === key && { backgroundColor: C.white },
+                viewMode === key && { backgroundColor: C.cardBg },
               ]}
             >
               <Text
@@ -7509,7 +7748,7 @@ const ScheduleScreen = ({ navigate }) => {
                 <TouchableOpacity
                   onPress={() => setShowEventModal(true)}
                   style={{
-                    backgroundColor: C.white,
+                    backgroundColor: C.cardBg,
                     borderRadius: 14,
                     padding: 20,
                     alignItems: "center",
@@ -7534,12 +7773,20 @@ const ScheduleScreen = ({ navigate }) => {
                     style={[styles.eventCard, { borderLeftColor: event.color }]}
                   >
                     <Text
-                      style={{ fontSize: 14, fontWeight: "700", color: C.textPrimary }}
+                      style={{
+                        fontSize: 14,
+                        fontWeight: "700",
+                        color: C.textPrimary,
+                      }}
                     >
                       {event.title}
                     </Text>
                     <Text
-                      style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+                      style={{
+                        fontSize: 12,
+                        color: C.textSecondary,
+                        marginTop: 2,
+                      }}
                     >
                       {event.time}
                     </Text>
@@ -7586,7 +7833,7 @@ const ScheduleScreen = ({ navigate }) => {
                       borderRadius: 20,
                       borderWidth: 1.5,
                       borderColor: C.border,
-                      backgroundColor: C.white,
+                      backgroundColor: C.cardBg,
                     },
                     eventType === key && {
                       borderColor: C.action,
@@ -7677,7 +7924,11 @@ const ScheduleScreen = ({ navigate }) => {
             </View>
             {dayEventsFor(selectedDate).length === 0 ? (
               <Text
-                style={{ color: C.textSecondary, textAlign: "center", padding: 20 }}
+                style={{
+                  color: C.textSecondary,
+                  textAlign: "center",
+                  padding: 20,
+                }}
               >
                 Nothing scheduled
               </Text>
@@ -7688,12 +7939,20 @@ const ScheduleScreen = ({ navigate }) => {
                   style={[styles.eventCard, { borderLeftColor: event.color }]}
                 >
                   <Text
-                    style={{ fontSize: 14, fontWeight: "700", color: C.textPrimary }}
+                    style={{
+                      fontSize: 14,
+                      fontWeight: "700",
+                      color: C.textPrimary,
+                    }}
                   >
                     {event.title}
                   </Text>
                   <Text
-                    style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+                    style={{
+                      fontSize: 12,
+                      color: C.textSecondary,
+                      marginTop: 2,
+                    }}
                   >
                     {event.time}
                   </Text>
@@ -7773,7 +8032,7 @@ const LeadsScreen = ({ navigate }) => {
             onPress={() => navigate("NewCustomer")}
             style={styles.headerActionBtn}
           >
-            <Text style={{ color: C.white, fontSize: 22 }}>+</Text>
+            <Text style={{ color: C.headerText, fontSize: 22 }}>+</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -7798,7 +8057,13 @@ const LeadsScreen = ({ navigate }) => {
                 marginBottom: 6,
               }}
             >
-              <Text style={{ fontSize: 15, fontWeight: "800", color: C.textPrimary }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "800",
+                  color: C.textPrimary,
+                }}
+              >
                 {item.name}
               </Text>
               <View
@@ -7820,10 +8085,14 @@ const LeadsScreen = ({ navigate }) => {
                 </Text>
               </View>
             </View>
-            <Text style={{ fontSize: 12, color: C.textSecondary, marginBottom: 2 }}>
+            <Text
+              style={{ fontSize: 12, color: C.textSecondary, marginBottom: 2 }}
+            >
               {item.address}
             </Text>
-            <Text style={{ fontSize: 12, color: C.textSecondary, marginBottom: 6 }}>
+            <Text
+              style={{ fontSize: 12, color: C.textSecondary, marginBottom: 6 }}
+            >
               {item.time} · {item.source}
             </Text>
             {item.notes ? (
@@ -7863,7 +8132,7 @@ const LeadsScreen = ({ navigate }) => {
                     flex: 1,
                     marginBottom: 0,
                     paddingVertical: 10,
-                    backgroundColor: C.white,
+                    backgroundColor: C.cardBg,
                     borderWidth: 1.5,
                     borderColor: C.action,
                   },
@@ -7981,10 +8250,14 @@ const BusinessSetupScreen = ({ navigate }) => {
             )}
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 14, fontWeight: "700", color: C.textPrimary }}>
+            <Text
+              style={{ fontSize: 14, fontWeight: "700", color: C.textPrimary }}
+            >
               {biz.logo ? "Logo uploaded" : "Upload your logo"}
             </Text>
-            <Text style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}>
+            <Text
+              style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+            >
               Shows on quotes, invoices & cards
             </Text>
           </View>
@@ -7997,10 +8270,14 @@ const BusinessSetupScreen = ({ navigate }) => {
           <View
             style={{ paddingHorizontal: 14, paddingTop: 14, paddingBottom: 8 }}
           >
-            <Text style={{ fontSize: 16, fontWeight: "800", color: C.textPrimary }}>
+            <Text
+              style={{ fontSize: 16, fontWeight: "800", color: C.textPrimary }}
+            >
               Appearance
             </Text>
-            <Text style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}>
+            <Text
+              style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+            >
               Choose how JobTap looks in the field.
             </Text>
           </View>
@@ -8018,12 +8295,20 @@ const BusinessSetupScreen = ({ navigate }) => {
                 >
                   <View style={{ flex: 1 }}>
                     <Text
-                      style={{ fontSize: 14, fontWeight: "700", color: C.textPrimary }}
+                      style={{
+                        fontSize: 14,
+                        fontWeight: "700",
+                        color: C.textPrimary,
+                      }}
                     >
                       {theme.name}
                     </Text>
                     <Text
-                      style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+                      style={{
+                        fontSize: 12,
+                        color: C.textSecondary,
+                        marginTop: 2,
+                      }}
                     >
                       {theme.subtitle}
                     </Text>
@@ -8177,7 +8462,11 @@ const BusinessSetupScreen = ({ navigate }) => {
                     }}
                   >
                     <Text
-                      style={{ fontSize: 14, fontWeight: "600", color: C.textPrimary }}
+                      style={{
+                        fontSize: 14,
+                        fontWeight: "600",
+                        color: C.textPrimary,
+                      }}
                     >
                       {t.label}
                     </Text>
@@ -8203,13 +8492,19 @@ const BusinessSetupScreen = ({ navigate }) => {
                     </View>
                   </View>
                   <Text
-                    style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+                    style={{
+                      fontSize: 12,
+                      color: C.textSecondary,
+                      marginTop: 2,
+                    }}
                   >
                     {t.desc}
                   </Text>
                 </View>
                 {t.key === "missedCallAutoText" ? (
-                  <Text style={{ color: C.textSecondary, fontSize: 18 }}>›</Text>
+                  <Text style={{ color: C.textSecondary, fontSize: 18 }}>
+                    ›
+                  </Text>
                 ) : (
                   <View
                     style={[
@@ -8231,7 +8526,7 @@ const BusinessSetupScreen = ({ navigate }) => {
                           width: 22,
                           height: 22,
                           borderRadius: 11,
-                          backgroundColor: C.white,
+                          backgroundColor: C.cardBg,
                         },
                         biz[t.key]
                           ? { alignSelf: "flex-end" }
@@ -8367,12 +8662,20 @@ const SocialSetupScreen = ({ navigate }) => {
               >
                 <View style={{ flex: 1 }}>
                   <Text
-                    style={{ fontSize: 14, fontWeight: "600", color: C.textPrimary }}
+                    style={{
+                      fontSize: 14,
+                      fontWeight: "600",
+                      color: C.textPrimary,
+                    }}
                   >
                     {t.label}
                   </Text>
                   <Text
-                    style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+                    style={{
+                      fontSize: 12,
+                      color: C.textSecondary,
+                      marginTop: 2,
+                    }}
                   >
                     {t.desc}
                   </Text>
@@ -8397,7 +8700,7 @@ const SocialSetupScreen = ({ navigate }) => {
                         width: 22,
                         height: 22,
                         borderRadius: 11,
-                        backgroundColor: C.white,
+                        backgroundColor: C.cardBg,
                       },
                       social[t.key]
                         ? { alignSelf: "flex-end" }
@@ -8411,10 +8714,18 @@ const SocialSetupScreen = ({ navigate }) => {
           <View style={styles.qbDivider} />
           <View style={styles.qbRow}>
             <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 14, fontWeight: "600", color: C.textPrimary }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "600",
+                  color: C.textPrimary,
+                }}
+              >
                 Auto-fire review request
               </Text>
-              <Text style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}>
+              <Text
+                style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+              >
                 Days after payment to send automatically
               </Text>
             </View>
@@ -8540,7 +8851,11 @@ const HolidayCampaignsScreen = ({ navigate }) => {
             >
               <View>
                 <Text
-                  style={{ fontSize: 15, fontWeight: "800", color: C.textPrimary }}
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "800",
+                    color: C.textPrimary,
+                  }}
                 >
                   {c.name}
                 </Text>
@@ -8569,7 +8884,7 @@ const HolidayCampaignsScreen = ({ navigate }) => {
                         width: 22,
                         height: 22,
                         borderRadius: 11,
-                        backgroundColor: C.white,
+                        backgroundColor: C.cardBg,
                       },
                       c.enabled
                         ? { alignSelf: "flex-end" }
@@ -8680,12 +8995,20 @@ const NotificationSettingsScreen = ({ navigate }) => {
               >
                 <View style={{ flex: 1 }}>
                   <Text
-                    style={{ fontSize: 14, fontWeight: "600", color: C.textPrimary }}
+                    style={{
+                      fontSize: 14,
+                      fontWeight: "600",
+                      color: C.textPrimary,
+                    }}
                   >
                     {item.label}
                   </Text>
                   <Text
-                    style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+                    style={{
+                      fontSize: 12,
+                      color: C.textSecondary,
+                      marginTop: 2,
+                    }}
                   >
                     {item.desc}
                   </Text>
@@ -8710,7 +9033,7 @@ const NotificationSettingsScreen = ({ navigate }) => {
                         width: 22,
                         height: 22,
                         borderRadius: 11,
-                        backgroundColor: C.white,
+                        backgroundColor: C.cardBg,
                       },
                       notifs[item.key]
                         ? { alignSelf: "flex-end" }
@@ -8776,7 +9099,13 @@ const MeasureEntryScreen = ({ navigate, params }) => {
           >
             <Text style={{ fontSize: 24 }}>📍</Text>
             <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 13, fontWeight: "700", color: C.textPrimary }}>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: "700",
+                  color: C.textPrimary,
+                }}
+              >
                 {customer.name}
               </Text>
               <Text style={{ fontSize: 12, color: C.textSecondary }}>
@@ -8817,10 +9146,18 @@ const MeasureEntryScreen = ({ navigate, params }) => {
               <Text style={{ fontSize: 28 }}>🛰</Text>
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 16, fontWeight: "800", color: C.textPrimary }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: "800",
+                  color: C.textPrimary,
+                }}
+              >
                 Satellite Trace
               </Text>
-              <Text style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}>
+              <Text
+                style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+              >
                 Tap corners on satellite map · most accurate
               </Text>
             </View>
@@ -8832,7 +9169,9 @@ const MeasureEntryScreen = ({ navigate, params }) => {
                 borderRadius: 10,
               }}
             >
-              <Text style={{ color: C.white, fontSize: 12, fontWeight: "700" }}>
+              <Text
+                style={{ color: C.headerText, fontSize: 12, fontWeight: "700" }}
+              >
                 Best
               </Text>
             </View>
@@ -8864,7 +9203,9 @@ const MeasureEntryScreen = ({ navigate, params }) => {
                 >
                   ✓
                 </Text>
-                <Text style={{ fontSize: 12, color: C.textPrimary }}>{item}</Text>
+                <Text style={{ fontSize: 12, color: C.textPrimary }}>
+                  {item}
+                </Text>
               </View>
             ))}
           </View>
@@ -8880,7 +9221,9 @@ const MeasureEntryScreen = ({ navigate, params }) => {
               gap: 8,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 15, fontWeight: "800" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 15, fontWeight: "800" }}
+            >
               Open Satellite Map →
             </Text>
           </View>
@@ -8915,10 +9258,18 @@ const MeasureEntryScreen = ({ navigate, params }) => {
               <Text style={{ fontSize: 28 }}>📷</Text>
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 16, fontWeight: "800", color: C.textPrimary }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: "800",
+                  color: C.textPrimary,
+                }}
+              >
                 Camera Tap Mode
               </Text>
-              <Text style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}>
+              <Text
+                style={{ fontSize: 12, color: C.textSecondary, marginTop: 2 }}
+              >
                 Point camera at surface · tap corners
               </Text>
             </View>
@@ -8930,7 +9281,9 @@ const MeasureEntryScreen = ({ navigate, params }) => {
                 borderRadius: 10,
               }}
             >
-              <Text style={{ color: C.white, fontSize: 12, fontWeight: "700" }}>
+              <Text
+                style={{ color: C.headerText, fontSize: 12, fontWeight: "700" }}
+              >
                 On-site
               </Text>
             </View>
@@ -8962,7 +9315,9 @@ const MeasureEntryScreen = ({ navigate, params }) => {
                 >
                   ✓
                 </Text>
-                <Text style={{ fontSize: 12, color: C.textPrimary }}>{item}</Text>
+                <Text style={{ fontSize: 12, color: C.textPrimary }}>
+                  {item}
+                </Text>
               </View>
             ))}
           </View>
@@ -8978,7 +9333,9 @@ const MeasureEntryScreen = ({ navigate, params }) => {
               gap: 8,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 15, fontWeight: "800" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 15, fontWeight: "800" }}
+            >
               Open Camera →
             </Text>
           </View>
@@ -9092,7 +9449,9 @@ const MeasureSatelliteScreen = ({ navigate, params }) => {
                 borderRadius: 10,
               }}
             >
-              <Text style={{ color: C.white, fontSize: 12, fontWeight: "700" }}>
+              <Text
+                style={{ color: C.headerText, fontSize: 12, fontWeight: "700" }}
+              >
                 Clear
               </Text>
             </TouchableOpacity>
@@ -9125,7 +9484,7 @@ const MeasureSatelliteScreen = ({ navigate, params }) => {
             <Text
               style={[
                 styles.filterChipText,
-                areaType === t && { color: C.white },
+                areaType === t && { color: C.headerText },
               ]}
             >
               {t}
@@ -9182,7 +9541,7 @@ const MeasureSatelliteScreen = ({ navigate, params }) => {
             <Text style={{ fontSize: 48, marginBottom: 16 }}>🛰</Text>
             <Text
               style={{
-                color: C.white,
+                color: C.headerText,
                 fontSize: 18,
                 fontWeight: "800",
                 textAlign: "center",
@@ -9193,7 +9552,7 @@ const MeasureSatelliteScreen = ({ navigate, params }) => {
             </Text>
             <Text
               style={{
-                color: "rgba(255,255,255,0.65)",
+                color: `${C.headerText}A6`,
                 fontSize: 13,
                 textAlign: "center",
                 lineHeight: 20,
@@ -9221,7 +9580,9 @@ const MeasureSatelliteScreen = ({ navigate, params }) => {
                 setSqft(850);
               }}
             >
-              <Text style={{ color: C.white, fontSize: 14, fontWeight: "800" }}>
+              <Text
+                style={{ color: C.headerText, fontSize: 14, fontWeight: "800" }}
+              >
                 Simulate 850 sq ft Driveway
               </Text>
             </TouchableOpacity>
@@ -9257,7 +9618,7 @@ const MeasureSatelliteScreen = ({ navigate, params }) => {
             <Text style={{ fontSize: 20 }}>👆</Text>
             <Text
               style={{
-                color: C.white,
+                color: C.headerText,
                 fontSize: 13,
                 fontWeight: "600",
                 flex: 1,
@@ -9285,7 +9646,9 @@ const MeasureSatelliteScreen = ({ navigate, params }) => {
               borderRadius: 10,
             }}
           >
-            <Text style={{ color: C.white, fontSize: 13, fontWeight: "700" }}>
+            <Text
+              style={{ color: C.headerText, fontSize: 13, fontWeight: "700" }}
+            >
               ↩ Undo
             </Text>
           </TouchableOpacity>
@@ -9315,7 +9678,11 @@ const MeasureSatelliteScreen = ({ navigate, params }) => {
           >
             <View>
               <Text
-                style={{ fontSize: 11, color: C.textSecondary, fontWeight: "700" }}
+                style={{
+                  fontSize: 11,
+                  color: C.textSecondary,
+                  fontWeight: "700",
+                }}
               >
                 MEASURED AREA
               </Text>
@@ -9330,7 +9697,9 @@ const MeasureSatelliteScreen = ({ navigate, params }) => {
                 {fmtSqFt(sqft)}
               </Text>
             </View>
-            <Text style={{ fontSize: 13, color: C.textSecondary }}>{areaType}</Text>
+            <Text style={{ fontSize: 13, color: C.textSecondary }}>
+              {areaType}
+            </Text>
           </View>
         )}
         <TextInput
@@ -9509,7 +9878,7 @@ const MeasureCameraScreen = ({ navigate, params }) => {
         ]}
       >
         <ActivityIndicator color={C.white} size="large" />
-        <Text style={{ color: C.white, marginTop: 12 }}>
+        <Text style={{ color: C.headerText, marginTop: 12 }}>
           Checking camera access...
         </Text>
       </SafeAreaView>
@@ -9548,7 +9917,9 @@ const MeasureCameraScreen = ({ navigate, params }) => {
                 borderRadius: 10,
               }}
             >
-              <Text style={{ color: C.white, fontSize: 12, fontWeight: "700" }}>
+              <Text
+                style={{ color: C.headerText, fontSize: 12, fontWeight: "700" }}
+              >
                 Clear
               </Text>
             </TouchableOpacity>
@@ -9581,7 +9952,7 @@ const MeasureCameraScreen = ({ navigate, params }) => {
             <Text
               style={[
                 styles.filterChipText,
-                areaType === t && { color: C.white },
+                areaType === t && { color: C.headerText },
               ]}
             >
               {t}
@@ -9608,7 +9979,7 @@ const MeasureCameraScreen = ({ navigate, params }) => {
             <Text style={{ fontSize: 48, marginBottom: 12 }}>📷</Text>
             <Text
               style={{
-                color: C.white,
+                color: C.headerText,
                 fontSize: 16,
                 fontWeight: "700",
                 textAlign: "center",
@@ -9619,7 +9990,7 @@ const MeasureCameraScreen = ({ navigate, params }) => {
             </Text>
             <Text
               style={{
-                color: "rgba(255,255,255,0.6)",
+                color: `${C.headerText}99`,
                 fontSize: 12,
                 textAlign: "center",
                 paddingHorizontal: 32,
@@ -9699,7 +10070,7 @@ const MeasureCameraScreen = ({ navigate, params }) => {
           >
             <Text
               style={{
-                color: C.white,
+                color: C.headerText,
                 fontSize: 13,
                 fontWeight: "600",
                 textAlign: "center",
@@ -9759,7 +10130,9 @@ const MeasureCameraScreen = ({ navigate, params }) => {
                   style={[styles.nudgeBtn, { backgroundColor: C.border }]}
                   onPress={() => setSelectedPoint(null)}
                 >
-                  <Text style={{ fontSize: 12, color: C.textSecondary }}>✕</Text>
+                  <Text style={{ fontSize: 12, color: C.textSecondary }}>
+                    ✕
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.nudgeBtn}
@@ -9798,7 +10171,11 @@ const MeasureCameraScreen = ({ navigate, params }) => {
           >
             <View>
               <Text
-                style={{ fontSize: 11, color: C.textSecondary, fontWeight: "700" }}
+                style={{
+                  fontSize: 11,
+                  color: C.textSecondary,
+                  fontWeight: "700",
+                }}
               >
                 CALCULATED AREA
               </Text>
@@ -9813,7 +10190,9 @@ const MeasureCameraScreen = ({ navigate, params }) => {
                 {fmtSqFt(sqft)}
               </Text>
             </View>
-            <Text style={{ fontSize: 13, color: C.textSecondary }}>{areaType}</Text>
+            <Text style={{ fontSize: 13, color: C.textSecondary }}>
+              {areaType}
+            </Text>
           </View>
         )}
         <TextInput
@@ -10179,7 +10558,7 @@ const createStyles = (C) =>
       alignItems: "center",
     },
     avatarText: { fontSize: 18, fontWeight: "700" },
-    clientName: { fontSize: 14, fontWeight: "700", color: "#000" },
+    clientName: { fontSize: 14, fontWeight: "700", color: C.textPrimary },
     clientAddr: { fontSize: 12, color: C.textSecondary, marginTop: 1 },
     clientJobs: { fontSize: 11, color: C.textSecondary, marginTop: 2 },
     statusPill: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20 },
@@ -10240,8 +10619,15 @@ const createStyles = (C) =>
       borderColor: C.border,
       alignItems: "center",
     },
-    deliveryBtnActive: { borderColor: C.action, backgroundColor: C.actionLight },
-    deliveryBtnText: { fontSize: 13, color: C.textSecondary, fontWeight: "500" },
+    deliveryBtnActive: {
+      borderColor: C.action,
+      backgroundColor: C.actionLight,
+    },
+    deliveryBtnText: {
+      fontSize: 13,
+      color: C.textSecondary,
+      fontWeight: "500",
+    },
     checkbox: {
       width: 20,
       height: 20,
@@ -10326,7 +10712,7 @@ const createStyles = (C) =>
       alignItems: "flex-start",
     },
     quoteLogoText: {
-      color: C.white,
+      color: C.headerText,
       fontSize: 22,
       fontWeight: "900",
       letterSpacing: 2,
@@ -10351,7 +10737,12 @@ const createStyles = (C) =>
       marginBottom: 2,
     },
     quoteFromDetail: { fontSize: 11, color: C.textSecondary, lineHeight: 16 },
-    quoteMeta: { fontSize: 13, fontWeight: "700", color: C.textPrimary, marginTop: 2 },
+    quoteMeta: {
+      fontSize: 13,
+      fontWeight: "700",
+      color: C.textPrimary,
+      marginTop: 2,
+    },
     quoteLineHeader: {
       flexDirection: "row",
       paddingHorizontal: 16,
@@ -10593,12 +10984,12 @@ const createStyles = (C) =>
     },
     jobStatLabel: {
       fontSize: 9,
-      color: "rgba(255,255,255,0.6)",
+      color: `${C.headerText}99`,
       fontWeight: "700",
       letterSpacing: 0.5,
       marginBottom: 3,
     },
-    jobStatVal: { fontSize: 14, fontWeight: "800", color: C.white },
+    jobStatVal: { fontSize: 14, fontWeight: "800", color: C.headerText },
     templateCard: {
       flex: 1,
       height: 90,
@@ -10681,14 +11072,14 @@ const createStyles = (C) =>
       alignItems: "center",
       marginBottom: 10,
     },
-    detailAvatarText: { fontSize: 26, fontWeight: "800", color: C.white },
+    detailAvatarText: { fontSize: 26, fontWeight: "800", color: C.headerText },
     detailName: {
       fontSize: 22,
       fontWeight: "900",
-      color: C.white,
+      color: C.headerText,
       letterSpacing: -0.3,
     },
-    detailAddr: { fontSize: 12, color: "rgba(255,255,255,0.65)", marginTop: 3 },
+    detailAddr: { fontSize: 12, color: `${C.headerText}A6`, marginTop: 3 },
     detailActions: {
       backgroundColor: C.cardBg,
       flexDirection: "row",
@@ -10701,7 +11092,11 @@ const createStyles = (C) =>
       paddingVertical: 12,
       gap: 4,
     },
-    detailActionLabel: { fontSize: 10, color: C.textSecondary, fontWeight: "600" },
+    detailActionLabel: {
+      fontSize: 10,
+      color: C.textSecondary,
+      fontWeight: "600",
+    },
     timelineRow: {
       flexDirection: "row",
       alignItems: "center",
