@@ -56,7 +56,7 @@ const THEMES = {
     pageBg: "#111827",
     surface: "#1F2937",
     cardBg: "#1F2937",
-    scheduleCard: "#3A3028",
+    scheduleCard: "#C2B8A3",
     revenueCard: "#111827",
     textPrimary: "#F9FAFB",
     textSecondary: "#A1A1AA",
@@ -73,8 +73,8 @@ const THEMES = {
     pageBg: "#F4F4F5",
     surface: "#FFFFFF",
     cardBg: "#FFFFFF",
-    scheduleCard: "#DDEEE5",
-    revenueCard: "#0F5B2A",
+    scheduleCard: "#E7EFE9",
+    revenueCard: "#166534",
     textPrimary: "#111827",
     textSecondary: "#6B7280",
     action: "#0F6B34",
@@ -86,15 +86,15 @@ const THEMES = {
   },
   pro: {
     // BLUE
-    primaryBg: "#124A9C",
+    primaryBg: "#1E3A8A",
     pageBg: "#E5E7EB",
-    surface: "#2D61AA",
+    surface: "#2B4C7E",
     cardBg: "#FFFFFF",
     scheduleCard: "#DCE4EF",
-    revenueCard: "#124A9C",
+    revenueCard: "#1E3A8A",
     textPrimary: "#111827",
     textSecondary: "#6B7280",
-    action: "#124A9C",
+    action: "#1E3A8A",
     success: "#22C55E",
     warning: "#F59E0B",
     urgent: "#EF4444",
@@ -107,7 +107,7 @@ const THEMES = {
     pageBg: "#D6D0C4",
     surface: "#3B5C3B",
     cardBg: "#FFFDF8",
-    scheduleCard: "#244621",
+    scheduleCard: "#2E5A3D",
     revenueCard: "#244621",
     textPrimary: "#111827",
     textSecondary: "#6B7280",
@@ -3069,7 +3069,7 @@ const QuoteBuilderScreen = ({
                       key={s.id}
                       style={[
                         styles.quoteLineRow,
-                        i % 2 === 0 && { backgroundColor: "#FAFAFA" },
+                        i % 2 === 0 && { backgroundColor: C.cardBg },
                       ]}
                     >
                       <View
@@ -6622,7 +6622,7 @@ const SpecialsScreen = ({ navigate }) => {
               </View>
               <Card
                 style={{
-                  backgroundColor: "#F8F8F8",
+                  backgroundColor: C.cardBg,
                   marginBottom: 10,
                   padding: 10,
                 }}
@@ -7065,7 +7065,7 @@ const MissedCallAutoTextScreen = ({ navigate }) => {
           <TouchableOpacity
             onPress={() => setActive((v) => !v)}
             style={{
-              backgroundColor: active ? "rgba(255,255,255,0.2)" : C.white,
+              backgroundColor: active ? "rgba(255,255,255,0.2)" : C.cardBg,
               paddingHorizontal: 16,
               paddingVertical: 10,
               borderRadius: 10,
