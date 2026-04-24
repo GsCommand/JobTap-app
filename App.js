@@ -756,7 +756,7 @@ const HomeScreen = ({ navigate, params }) => {
   ];
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: C.primaryBg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: C.pageBg }}
@@ -1250,7 +1250,7 @@ const CustomersScreen = ({ navigate, customers = MOCK_CUSTOMERS }) => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: C.primaryBg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <View
         style={{
           backgroundColor: C.primaryBg,
@@ -1468,7 +1468,7 @@ const CustomerDetailScreen = ({ navigate, params }) => {
     .toUpperCase();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: C.primaryBg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       {/* ── GREEN HERO ── */}
       <View style={{ backgroundColor: C.primaryBg, paddingBottom: 20 }}>
         <View
@@ -1897,7 +1897,7 @@ const NewCustomerScreen = ({ navigate, addCustomer }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: C.primaryBg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <View style={[styles.header, { paddingBottom: 18 }]}>
         <View style={styles.headerRow}>
           <TouchableOpacity
@@ -2867,7 +2867,7 @@ const QuoteBuilderScreen = ({
       </Modal>
 
       <Modal visible={showQuotePreview} animationType="slide">
-        <SafeAreaView style={{ flex: 1, backgroundColor: C.primaryBg }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
           <View
             style={[
               styles.header,
@@ -3654,7 +3654,7 @@ const JobsScreen = ({ navigate }) => {
   const anySelected = Object.values(selected).some(Boolean);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: C.primaryBg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <View style={[styles.header, { paddingBottom: 18 }]}>
         <View style={styles.headerRow}>
           <View style={{ flex: 1 }}>
@@ -5715,7 +5715,7 @@ const CustomersDueScreen = ({ navigate }) => {
     </View>
   );
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: C.primaryBg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <View style={[styles.header, { paddingBottom: 18 }]}>
         <View style={styles.headerRow}>
           <TouchableOpacity
@@ -7806,7 +7806,7 @@ const LeadsScreen = ({ navigate }) => {
   const statusLbl = (s) =>
     ({ hot: "🔥 Hot", warm: "🌤 Warm", cold: "❄️ Cold" })[s] || s;
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: C.primaryBg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: C.pageBg }}>
       <View style={[styles.header, { paddingBottom: 18 }]}>
         <View style={styles.headerRow}>
           <TouchableOpacity
@@ -10091,8 +10091,8 @@ export default function App() {
 // ─── STYLES ───────────────────────────────────────────────────────────────────
 const createStyles = (C) =>
   StyleSheet.create({
-    screen: { flex: 1, backgroundColor: C.primaryBg },
-    screenGreen: { flex: 1, backgroundColor: C.primaryBg },
+    screen: { flex: 1, backgroundColor: C.pageBg },
+    screenGreen: { flex: 1, backgroundColor: C.pageBg },
     header: {
       backgroundColor: C.primaryBg,
       paddingTop: Platform.OS === "android" ? 12 : 0,
